@@ -1,0 +1,32 @@
+---
+interface Props {
+  quantity: number
+  capacity: number
+  label: string
+}
+
+const {quantity, capacity, label} = Astro.props
+const ratio = capacity > 0 ? quantity / capacity : 0
+const lowStock = ratio < 0.2
+const percent = Math.min(100, Math.round(ratio * 100))
+---
+
+<div class="rounded-xl border border-outline-variant bg-surface-container-lowest p-4">
+  <div class="mb-3 flex items-center justify-between gap-4">
+    <div>
+      <p class="font-label-md text-on-surface">{label}</p>
+      <p class="font-body-md text-on-surface-variant">{quantity} / {capacity}</p>
+    </div>
+    {lowStock && (
+      <span class="rounded-full bg-accent-warning/15 px-3 py-1 font-label-sm text-accent-warning">
+        Low stock
+      </span>
+    )}
+  </div>
+  <div class="h-3 overflow-hidden rounded-full bg-stone-gray">
+    <div
+      class:list={['h-full rounded-full transition-all', lowStock ? 'bg-accent-warning' : 'bg-sage-green']}
+      style={`width: ${percent}%`}
+    />
+  </div>
+</div>

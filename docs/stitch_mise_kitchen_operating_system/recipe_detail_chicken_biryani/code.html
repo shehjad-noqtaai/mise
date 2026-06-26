@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mise - Classic Chicken Biryani</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from system prompt -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#4e635a",
+                        "on-surface": "#1a1c1b",
+                        "on-primary-container": "#98b5a3",
+                        "secondary-fixed": "#d1e8dd",
+                        "primary-container": "#2d4739",
+                        "inverse-surface": "#2f312f",
+                        "primary-fixed-dim": "#b0cdbb",
+                        "background": "#faf9f6",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c2c8c2",
+                        "on-secondary-fixed": "#0b1f18",
+                        "tertiary-container": "#41423f",
+                        "surface-bright": "#faf9f6",
+                        "surface-variant": "#e3e2e0",
+                        "surface-container": "#efeeeb",
+                        "inverse-primary": "#b0cdbb",
+                        "primary-fixed": "#ccead6",
+                        "on-tertiary-container": "#aeaeab",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#2b2c2a",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#464744",
+                        "on-primary-fixed": "#062014",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#cee5da",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#52675e",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#374b43",
+                        "tertiary-fixed": "#e3e2df",
+                        "surface": "#faf9f6",
+                        "on-surface-variant": "#424844",
+                        "on-error": "#ffffff",
+                        "primary": "#173124",
+                        "surface-tint": "#496455",
+                        "on-tertiary-fixed": "#1b1c1a",
+                        "on-primary-fixed-variant": "#324c3e",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#b5ccc1",
+                        "on-background": "#1a1c1b",
+                        "surface-container-highest": "#e3e2e0",
+                        "surface-container-high": "#e9e8e5",
+                        "surface-container-low": "#f4f3f1",
+                        "inverse-on-surface": "#f1f1ee",
+                        "surface-dim": "#dadad7",
+                        "outline": "#727973",
+                        "tertiary-fixed-dim": "#c7c6c3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "section-gap": "48px",
+                        "stack-lg": "32px",
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "unit": "8px",
+                        "container-margin": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit to keep UI clean */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dadad7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c2c8c2;
+        }
+        
+        /* Hide scrollbar for clean horizontal scrolling */
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Ambient modal shadow from guidance */
+        .shadow-ambient {
+            box-shadow: 0 8px 32px rgba(23, 49, 36, 0.08);
+        }
+        
+        /* Checkbox styling */
+        input[type="checkbox"]:checked + label {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar (From JSON) -->
+<header class="bg-background border-b border-outline-variant flex justify-between items-center w-full px-container-margin h-16 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<!-- Back button (Task-focused page logic) -->
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<div class="font-headline-md text-headline-md font-bold text-primary">Mise</div>
+</div>
+<!-- Desktop Navigation (Hidden on mobile per rules) -->
+<nav class="hidden md:flex gap-8">
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors px-4 py-2 rounded-md font-label-md text-label-md" href="#">Dashboard</a>
+<a class="text-primary font-bold border-b-2 border-primary px-4 py-2 font-label-md text-label-md" href="#">Recipes</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors px-4 py-2 rounded-md font-label-md text-label-md" href="#">Inventory</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors px-4 py-2 rounded-md font-label-md text-label-md" href="#">Shop</a>
+</nav>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-primary flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">add_circle</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-primary flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="max-w-[1140px] mx-auto w-full">
+<!-- Hero Section (Bento-style layout) -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter p-gutter md:p-container-margin md:mt-section-gap">
+<!-- Left/Top: Image and Title -->
+<div class="md:col-span-8 flex flex-col gap-stack-md relative">
+<!-- 2:1 Aspect Ratio Image per guidance -->
+<div class="w-full aspect-[2/1] rounded-xl overflow-hidden shadow-sm relative bg-surface-container-highest">
+<img alt="Classic Chicken Biryani" class="w-full h-full object-cover absolute inset-0" data-alt="A beautifully plated Classic Chicken Biryani in a traditional copper pot, set on a rustic wooden table. Aromatic steam rises gently. Fluffy basmati rice, tender chicken pieces, golden fried onions, fresh mint, and coriander are visible. Warm, natural window lighting emphasizes the rich amber and saffron colors. Shot top-down with a high-end food magazine aesthetic, sharp focus on the food with a slightly blurred background to emphasize depth and quality. Minimalist and appetizing setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGg7FSHus86ft0k0weoHkttA3fhBxRJqRFJL95DvWXeUZ5nSQBn0M9G5YJxO9EcBiFtx1vGiXFAUtdghjX9-v1sHdeudNHqJh3LmADn_BmRGWHQstLcYEgAJ7EeZguNm-P2QmIFHWNJ034FXS7HsvaXBxnSfHhZIpuq3VgiXKwqE6L6vXqvitHCVuMvLhUQkFP_jPz-m2OfI6kk4L8gut27rSxnrElHbZriTvTkhsRf7g6vA3bNo-Iey_qvWSZyrFYl8f0wbAHL1uv"/>
+</div>
+<!-- Overlapping Title Container (Guidance) -->
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-lg rounded-xl md:w-11/12 md:-mt-12 md:ml-4 z-10 shadow-sm">
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-primary mb-stack-sm">Classic Chicken Biryani</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-2xl">
+                        A highly fragrant and deeply flavorful mixed rice dish. Marinated chicken layered with aromatic basmati rice, caramelized onions, and fresh herbs, slow-cooked to perfection.
+                    </p>
+<!-- Metadata Bar -->
+<div class="flex flex-wrap gap-stack-md items-center pb-stack-md border-b border-surface-variant mb-stack-md">
+<div class="flex items-center gap-unit text-on-surface font-label-md text-label-md">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0;">schedule</span>
+                            90 mins
+                        </div>
+<div class="w-1 h-1 rounded-full bg-outline-variant"></div>
+<div class="flex items-center gap-unit text-on-surface font-label-md text-label-md">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0;">restaurant</span>
+                            Dinner
+                        </div>
+<div class="w-1 h-1 rounded-full bg-outline-variant"></div>
+<div class="flex items-center gap-unit text-on-surface font-label-md text-label-md">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0;">bar_chart</span>
+                            Intermediate
+                        </div>
+</div>
+<!-- Nutrition Badges (Guidance: Pill shaped, label-sm, low saturation stone palette) -->
+<div class="flex flex-wrap gap-unit mb-stack-lg">
+<span class="px-3 py-1 bg-surface-container rounded-full font-label-sm text-label-sm text-on-surface-variant border border-outline-variant">650 Cal</span>
+<span class="px-3 py-1 bg-surface-container rounded-full font-label-sm text-label-sm text-on-surface-variant border border-outline-variant">42g Protein</span>
+<span class="px-3 py-1 bg-surface-container rounded-full font-label-sm text-label-sm text-on-surface-variant border border-outline-variant">58g Carbs</span>
+<span class="px-3 py-1 bg-surface-container rounded-full font-label-sm text-label-sm text-on-surface-variant border border-outline-variant">24g Fat</span>
+</div>
+</div>
+</div>
+<!-- Right/Bottom: Action Panel -->
+<div class="md:col-span-4 flex flex-col gap-stack-md">
+<!-- Cook This Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-lg shadow-sm sticky top-24">
+<button class="w-full bg-primary hover:bg-surface-tint text-on-primary font-label-md text-label-md py-4 px-6 rounded-lg flex items-center justify-center gap-2 mb-stack-lg transition-colors min-h-[48px] shadow-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                        Cook This
+                    </button>
+<!-- Servings Scaler -->
+<div class="flex items-center justify-between border border-outline-variant rounded-lg p-2 bg-surface-container">
+<span class="font-label-md text-label-md text-on-surface-variant px-2">Servings</span>
+<div class="flex items-center gap-4 bg-surface-container-lowest rounded-md px-2 py-1 shadow-sm">
+<button aria-label="Decrease servings" class="w-8 h-8 flex items-center justify-center text-outline hover:text-primary transition-colors min-h-[48px]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">remove</span>
+</button>
+<span class="font-headline-md text-headline-md text-primary w-6 text-center">4</span>
+<button aria-label="Increase servings" class="w-8 h-8 flex items-center justify-center text-outline hover:text-primary transition-colors min-h-[48px]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Details Split Layout -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-section-gap px-gutter md:px-container-margin py-section-gap">
+<!-- Ingredients (Left Column) -->
+<div class="md:col-span-4 flex flex-col gap-stack-md">
+<h2 class="font-headline-md text-headline-md text-primary mb-stack-sm flex items-center gap-2 border-b border-surface-variant pb-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">kitchen</span>
+                    Ingredients
+                </h2>
+<div class="flex flex-col gap-unit">
+<!-- Ingredient Item (In Pantry) -->
+<div class="flex items-start gap-3 p-3 hover:bg-surface-container rounded-lg transition-colors group">
+<div class="relative flex items-start pt-1">
+<input class="peer h-5 w-5 rounded border-outline text-secondary focus:ring-secondary min-h-[24px] min-w-[24px] cursor-pointer" id="ing1" type="checkbox"/>
+<label class="absolute inset-0 cursor-pointer" for="ing1"></label>
+</div>
+<label class="flex-1 cursor-pointer transition-opacity" for="ing1">
+<div class="flex justify-between items-baseline">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-primary">Chicken Thighs</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant tabular-nums">800g</span>
+</div>
+<div class="font-label-sm text-label-sm text-outline mt-1">Boneless, skinless, cut into pieces</div>
+</label>
+</div>
+<!-- Ingredient Item (Not in Pantry - Highlighted) -->
+<div class="flex items-start gap-3 p-3 bg-error-container/30 border border-error-container rounded-lg transition-colors group">
+<div class="relative flex items-start pt-1">
+<input class="peer h-5 w-5 rounded border-error text-error focus:ring-error min-h-[24px] min-w-[24px] cursor-pointer" id="ing2" type="checkbox"/>
+<label class="absolute inset-0 cursor-pointer" for="ing2"></label>
+</div>
+<label class="flex-1 cursor-pointer transition-opacity" for="ing2">
+<div class="flex justify-between items-baseline">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-error">Basmati Rice</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant tabular-nums">400g</span>
+</div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-error mt-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">error</span>
+                                Low in pantry
+                            </div>
+</label>
+</div>
+<div class="flex items-start gap-3 p-3 hover:bg-surface-container rounded-lg transition-colors group">
+<div class="relative flex items-start pt-1">
+<input class="peer h-5 w-5 rounded border-outline text-secondary focus:ring-secondary min-h-[24px] min-w-[24px] cursor-pointer" id="ing3" type="checkbox"/>
+<label class="absolute inset-0 cursor-pointer" for="ing3"></label>
+</div>
+<label class="flex-1 cursor-pointer transition-opacity" for="ing3">
+<div class="flex justify-between items-baseline">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-primary">Onions</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant tabular-nums">3 large</span>
+</div>
+<div class="font-label-sm text-label-sm text-outline mt-1">Thinly sliced for frying</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Instructions (Right Column) -->
+<div class="md:col-span-8 flex flex-col gap-stack-lg">
+<h2 class="font-headline-md text-headline-md text-primary mb-stack-sm flex items-center gap-2 border-b border-surface-variant pb-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">receipt_long</span>
+                    Method
+                </h2>
+<div class="flex flex-col gap-stack-lg">
+<!-- Step 1 (Guidance: Large green circular numbers, body-lg text, 1.6x line height) -->
+<div class="relative flex gap-stack-md group">
+<!-- Connecting line for desktop -->
+<div class="hidden md:block absolute left-6 top-16 bottom-[-32px] w-0.5 bg-surface-variant"></div>
+<div class="flex-shrink-0 relative z-10">
+<div class="w-12 h-12 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-headline-md text-headline-md shadow-sm">1</div>
+</div>
+<div class="flex-1 bg-surface-container-lowest border border-outline-variant p-stack-md rounded-xl shadow-sm hover:border-secondary transition-colors">
+<div class="flex items-start gap-3">
+<div class="relative pt-1 flex-shrink-0">
+<input class="peer h-6 w-6 rounded-full border-outline text-secondary focus:ring-secondary min-h-[48px] min-w-[48px] cursor-pointer opacity-0 absolute inset-0 z-20" id="step1" type="checkbox"/>
+<div class="h-6 w-6 rounded border-2 border-outline peer-checked:bg-secondary peer-checked:border-secondary flex items-center justify-center transition-all z-10">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<label class="font-body-lg text-body-lg text-on-surface leading-[1.6] cursor-pointer peer-checked:text-outline peer-checked:line-through transition-all pt-1" for="step1">
+<strong>Marinate the chicken.</strong> In a large bowl, combine the yogurt, ginger-garlic paste, turmeric, chili powder, biryani masala, and half of the chopped mint and coriander. Add the chicken pieces, mix well to coat, and let it marinate for at least 1 hour (overnight is best).
+                                </label>
+</div>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative flex gap-stack-md group">
+<div class="hidden md:block absolute left-6 top-16 bottom-[-32px] w-0.5 bg-surface-variant"></div>
+<div class="flex-shrink-0 relative z-10">
+<div class="w-12 h-12 rounded-full bg-surface-container border-2 border-outline-variant text-on-surface-variant flex items-center justify-center font-headline-md text-headline-md shadow-sm">2</div>
+</div>
+<div class="flex-1 bg-surface-container-lowest border border-outline-variant p-stack-md rounded-xl shadow-sm hover:border-secondary transition-colors">
+<div class="flex items-start gap-3">
+<div class="relative pt-1 flex-shrink-0">
+<input class="peer h-6 w-6 rounded-full border-outline text-secondary focus:ring-secondary min-h-[48px] min-w-[48px] cursor-pointer opacity-0 absolute inset-0 z-20" id="step2" type="checkbox"/>
+<div class="h-6 w-6 rounded border-2 border-outline peer-checked:bg-secondary peer-checked:border-secondary flex items-center justify-center transition-all z-10">
+<span class="material-symbols-outlined text-white text-[18px] opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<label class="font-body-lg text-body-lg text-on-surface leading-[1.6] cursor-pointer peer-checked:text-outline peer-checked:line-through transition-all pt-1" for="step2">
+<strong>Prepare the rice.</strong> Wash the basmati rice thoroughly until the water runs clear. Soak in water for 30 minutes. In a large pot, bring water to a boil with whole spices (cardamom, cloves, cinnamon). Add salt and the drained rice. Cook until it is 70% done (about 5-7 minutes). Drain and set aside.
+                                </label>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (From JSON) - Mobile Only per Semantic Shell Mandate -->
+<!-- Task-focused pages should hide nav, but since this is a detail view, we follow the JSON requirement to render it if present in data, but ideally it should be hidden based on the "Close/Back action" rule. I will hide it based on the "Task-Focused" rule in the mandate. -->
+<!-- The prompt says: "Automatic Suppression: You MUST exclude the navigation shell if the page intent is: ... Task-Focused: Any sub-page featuring a "Close" or "Back" action that implies a temporary departure from the main navigation flow."
+    Since this is a "Recipe Detail view" and I added a back button, it implies a departure. Therefore, NO bottom nav. -->
+</body></html>

@@ -1,0 +1,63 @@
+---
+import {getRelativeLocaleUrl} from 'astro:i18n'
+import type {Locale} from '../lib/i18n'
+
+interface Props {
+  locale: Locale
+  currentPath: string
+}
+
+const {locale, currentPath} = Astro.props
+const nav = [
+  {label: locale === 'hi-IN' ? 'डैशबोर्ड' : 'Dashboard', path: ''},
+  {label: locale === 'hi-IN' ? 'रेसिपी' : 'Recipes', path: 'recipes/'},
+  {label: locale === 'hi-IN' ? 'पेंट्री' : 'Pantry', path: 'pantry/'},
+]
+---
+
+<header class="sticky top-0 z-20 border-b border-outline-variant bg-surface/95 backdrop-blur-sm">
+  <div class="mx-auto flex max-w-[var(--container-max)] items-center justify-between px-[var(--spacing-container-margin)] py-4">
+    <a href={getRelativeLocaleUrl(locale, '/')} class="font-headline-md text-primary">Mise</a>
+    <nav class="hidden items-center gap-2 md:flex">
+      {
+        nav.map((item) => (
+          <a
+            href={getRelativeLocaleUrl(locale, item.path)}
+            class:list={[
+              'touch-target rounded-lg px-3 py-2 font-label-md transition-colors',
+              currentPath === item.path || (item.path === '' && currentPath === '/')
+                ? 'bg-primary-container text-on-primary-container'
+                : 'text-on-surface-variant hover:bg-surface-container-low',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="flex items-center gap-2">
+      <slot name="actions" />
+    </div>
+  </div>
+</header>
+
+<nav class="fixed inset-x-0 bottom-0 z-20 border-t border-outline-variant bg-surface-container-lowest md:hidden">
+  <div class="mx-auto grid max-w-[var(--container-max)] grid-cols-3 px-2 py-2">
+    {
+      nav.map((item) => (
+        <a
+          href={getRelativeLocaleUrl(locale, item.path)}
+          class:list={[
+            'touch-target flex flex-col items-center justify-center rounded-xl font-label-sm',
+            currentPath === item.path || (item.path === '' && currentPath === '/')
+              ? 'text-primary'
+              : 'text-on-surface-variant',
+          ]}
+        >
+          <span class="text-xl leading-none">{item.path === '' ? '⌂' : item.path.startsWith('recipes') ? '📖' : '🧺'}</span>
+          <span class="mt-1">{item.label}</span>
+        </a>
+      ))
+    }
+  </div>
+</nav>

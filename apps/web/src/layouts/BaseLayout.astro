@@ -1,0 +1,47 @@
+---
+import '../styles/global.css'
+import AppShell from '../components/AppShell.astro'
+import LocaleSwitcher from '../components/LocaleSwitcher.astro'
+import type {Locale} from '../lib/i18n'
+
+interface Props {
+  locale: Locale
+  title: string
+  description?: string
+  currentPath?: string
+  alternateSlugs?: Record<string, string | undefined>
+}
+
+const {
+  locale,
+  title,
+  description = 'Mise — your kitchen operating system',
+  currentPath = '/',
+  alternateSlugs,
+} = Astro.props
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title} · Mise</title>
+  </head>
+  <body class="min-h-screen bg-background pb-24 md:pb-0">
+    <AppShell locale={locale} currentPath={currentPath}>
+      <LocaleSwitcher slot="actions" locale={locale} currentPath={currentPath} alternateSlugs={alternateSlugs} />
+    </AppShell>
+    <main class="mx-auto max-w-[var(--container-max)] px-[var(--spacing-container-margin)] py-[var(--spacing-section-gap)]">
+      <slot />
+    </main>
+  </body>
+</html>

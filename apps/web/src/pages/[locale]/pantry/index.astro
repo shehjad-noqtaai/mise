@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro'
+import InventoryProgressBar from '../../../components/InventoryProgressBar.astro'
+import {getSanityClient} from '../../../lib/sanity/load-client'
+import {PANTRY_SNAPSHOT_QUERY} from '../../../lib/sanity/queries'
+import {LOCALES, localizedValue, type Locale, isLocale} from '../../../lib/i18n'
+
+export async function getStaticPaths() {
+  return LOCALES.map((locale) => ({params: {locale}}))
+}
+
+const localeParam = Astro.params.locale ?? 'en-US'
+if (!isLocale(localeParam)) {
+  return Astro.redirect('/en-US/pantry/')
+}
+const locale = localeParam as Locale
+const pantry = await getSanityClient().fetch(PANTRY_SNAPSHOT_QUERY, {locale}, {tag: 'pantry.get'})
+---
+
+<BaseLayout
+  locale={locale}
+  title={pantry?.title ?? 'Pantry'}
+  currentPath="pantry/"
+>
+  <div class="max-w-3xl">
+    <h1 class="font-display-lg text-primary">{pantry?.title ?? (locale === 'hi-IN' ? 'पेंट्री' : 'Pantry Management')}</h1>
+    <p class="mt-4 font-body-lg text-on-surface-variant">{pantry?.description}</p>
+  </div>
+
+  <div class="mt-10 grid gap-4 md:grid-cols-2">
+    {
+      pantry?.items?.map((item) => (
+        <InventoryProgressBar
+          quantity={item.quantity}
+          capacity={item.capacity}
+          label={`${localizedValue(item.ingredientName, locale) ?? 'Item'}${item.location ? ` · ${localizedValue(item.location, locale)}` : ''}`}
+        />
+      ))
+    }
+  </div>
+</BaseLayout>

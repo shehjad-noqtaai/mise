@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro'
+import StepList from '../../../components/StepList.astro'
+import NutritionBadge from '../../../components/NutritionBadge.astro'
+import {getRelativeLocaleUrl} from 'astro:i18n'
+import {RECIPE_BY_SLUG_QUERY, RECIPE_SLUGS_QUERY, RECIPE_TRANSLATIONS_QUERY} from '../../../lib/sanity/queries'
+import {getSanityClient} from '../../../lib/sanity/load-client'
+import {imageUrl} from '../../../lib/sanity/client'
+import {localizedValue, type Locale, isLocale, formatMinutes} from '../../../lib/i18n'
+
+export async function getStaticPaths() {
+  const client = getSanityClient()
+  const slugs = await client.fetch(RECIPE_SLUGS_QUERY, {}, {tag: 'recipes.paths'})
+  return slugs.map((entry: {locale: string; slug: string}) => ({
+    params: {locale: entry.locale, slug: entry.slug},
+  }))
+}
+
+const client = getSanityClient()
+const localeParam = Astro.params.locale ?? 'en-US'
+const slug = Astro.params.slug ?? ''
+if (!isLocale(localeParam)) {
+  return Astro.redirect('/en-US/recipes/')
+}
+const locale = localeParam as Locale
+
+const recipe = await client.fetch(RECIPE_BY_SLUG_QUERY, {locale, slug}, {tag: 'recipes.detail'})
+if (!recipe) {
+  return Astro.redirect(getRelativeLocaleUrl(locale, 'recipes/'))
+}
+
+const translations = recipe._id
+  ? await client.fetch(RECIPE_TRANSLATIONS_QUERY, {recipeId: recipe._id}, {tag: 'recipes.translations'})
+  : null
+
+const alternateSlugs = Object.fromEntries(
+  (translations?.translations ?? []).map((entry: {language?: string; slug?: string}) => [
+    entry.language,
+    entry.slug,
+  ]),
+)
+
+const hero = imageUrl(recipe.heroImage, 1200, 600)
+---
+
+<BaseLayout
+  locale={locale}
+  title={recipe.title}
+  description={recipe.summary}
+  currentPath={`recipes/${slug}/`}
+  alternateSlugs={alternateSlugs}
+>
+  {
+    hero && (
+      <img src={hero} alt={recipe.title} class="mb-8 aspect-[2/1] w-full rounded-xl object-cover" />
+    )
+  }
+
+  <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+    <section>
+      <h1 class="font-display-lg text-primary">{recipe.title}</h1>
+      <p class="mt-4 font-body-lg text-on-surface-variant">{recipe.summary}</p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        {recipe.prepTimeMinutes && <NutritionBadge label={`${formatMinutes(recipe.prepTimeMinutes, locale)} prep`} />}
+        {recipe.cookTimeMinutes && <NutritionBadge label={`${formatMinutes(recipe.cookTimeMinutes, locale)} cook`} />}
+        {recipe.servings && (
+          <NutritionBadge label={locale === 'hi-IN' ? `${recipe.servings} व्यक्ति` : `${recipe.servings} servings`} />
+        )}
+      </div>
+
+      <section class="mt-10">
+        <h2 class="font-headline-md text-primary">{locale === 'hi-IN' ? 'चरण' : 'Instructions'}</h2>
+        <div class="mt-6">
+          <StepList steps={recipe.steps ?? []} locale={locale} />
+        </div>
+      </section>
+    </section>
+
+    <aside class="space-y-8">
+      <section class="rounded-xl border border-outline-variant bg-surface-container-lowest p-6">
+        <h2 class="font-headline-md text-primary">{locale === 'hi-IN' ? 'सामग्री' : 'Ingredients'}</h2>
+        <ul class="mt-4 space-y-3">
+          {
+            recipe.ingredients?.map((line) => (
+              <li class="flex justify-between gap-4 border-b border-outline-variant pb-3 font-body-lg last:border-0">
+                <span>{localizedValue(line.ingredientName, locale) ?? 'Ingredient'}</span>
+                <span class="text-on-surface-variant">
+                  {line.quantity} {localizedValue(line.unit, locale) ?? ''}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      {
+        recipe.nutrition && (
+          <section class="rounded-xl border border-outline-variant bg-surface-container-low p-6">
+            <h2 class="font-headline-md text-primary">{locale === 'hi-IN' ? 'पोषण' : 'Nutrition'}</h2>
+            <dl class="mt-4 grid grid-cols-2 gap-3 font-body-md">
+              <div><dt class="text-on-surface-variant">Calories</dt><dd>{recipe.nutrition.calories}</dd></div>
+              <div><dt class="text-on-surface-variant">Protein</dt><dd>{recipe.nutrition.protein}g</dd></div>
+              <div><dt class="text-on-surface-variant">Carbs</dt><dd>{recipe.nutrition.carbs}g</dd></div>
+              <div><dt class="text-on-surface-variant">Fat</dt><dd>{recipe.nutrition.fat}g</dd></div>
+            </dl>
+          </section>
+        )
+      }
+    </aside>
+  </div>
+</BaseLayout>

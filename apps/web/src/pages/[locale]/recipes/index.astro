@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro'
+import RecipeCard from '../../../components/RecipeCard.astro'
+import {getSanityClient} from '../../../lib/sanity/load-client'
+import {RECIPES_QUERY} from '../../../lib/sanity/queries'
+import {LOCALES, type Locale, isLocale} from '../../../lib/i18n'
+
+export async function getStaticPaths() {
+  return LOCALES.map((locale) => ({params: {locale}}))
+}
+
+const localeParam = Astro.params.locale ?? 'en-US'
+if (!isLocale(localeParam)) {
+  return Astro.redirect('/en-US/recipes/')
+}
+const locale = localeParam as Locale
+const recipes = await getSanityClient().fetch(RECIPES_QUERY, {locale}, {tag: 'recipes.list'})
+---
+
+<BaseLayout
+  locale={locale}
+  title={locale === 'hi-IN' ? 'रेसिपी निर्देशिका' : 'Recipe Directory'}
+  currentPath="recipes/"
+>
+  <div class="max-w-3xl">
+    <h1 class="font-display-lg text-primary">{locale === 'hi-IN' ? 'रेसिपी निर्देशिका' : 'Recipe Directory'}</h1>
+    <p class="mt-4 font-body-lg text-on-surface-variant">
+      {
+        locale === 'hi-IN'
+          ? 'अपनी क्यूरेटेड संग्रह ब्राउज़ करें और अगला भोजन योजना बनाएं।'
+          : 'Browse your curated collection, discover new inspiration, and plan your next meal with ease.'
+      }
+    </p>
+  </div>
+
+  <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+    {
+      recipes?.map((recipe) => (
+        <RecipeCard
+          locale={locale}
+          title={recipe.title}
+          slug={recipe.slug?.current}
+          summary={recipe.summary}
+          prepTimeMinutes={recipe.prepTimeMinutes}
+          cookTimeMinutes={recipe.cookTimeMinutes}
+          heroImage={recipe.heroImage}
+        />
+      ))
+    }
+  </div>
+</BaseLayout>

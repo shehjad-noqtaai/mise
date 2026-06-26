@@ -1,0 +1,38 @@
+---
+import {getRelativeLocaleUrl} from 'astro:i18n'
+import {imageUrl} from '../lib/sanity/client'
+import {formatMinutes} from '../lib/i18n'
+import type {Locale} from '../lib/i18n'
+
+interface Props {
+  locale: Locale
+  title: string
+  slug?: string
+  summary?: string
+  prepTimeMinutes?: number
+  cookTimeMinutes?: number
+  heroImage?: unknown
+}
+
+const {locale, title, slug, summary, prepTimeMinutes, cookTimeMinutes, heroImage} = Astro.props
+const href = slug ? getRelativeLocaleUrl(locale, `recipes/${slug}/`) : '#'
+const img = imageUrl(heroImage, 640, 320)
+---
+
+<a href={href} class="group block overflow-hidden rounded-xl border border-stone-gray bg-surface-container-lowest transition-shadow hover:shadow-sm">
+  {
+    img ? (
+      <img src={img} alt={title} class="aspect-[2/1] w-full object-cover" loading="lazy" />
+    ) : (
+      <div class="aspect-[2/1] w-full bg-secondary-container" />
+    )
+  }
+  <div class="-mt-6 relative mx-4 rounded-xl border border-outline-variant bg-surface-container-lowest p-4">
+    <h3 class="font-headline-md text-primary">{title}</h3>
+    {summary && <p class="mt-2 font-body-md text-on-surface-variant line-clamp-2">{summary}</p>}
+    <div class="mt-3 flex flex-wrap gap-3 font-label-sm text-on-surface-variant">
+      {prepTimeMinutes && <span>{formatMinutes(prepTimeMinutes, locale)} prep</span>}
+      {cookTimeMinutes && <span>{formatMinutes(cookTimeMinutes, locale)} cook</span>}
+    </div>
+  </div>
+</a>

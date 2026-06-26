@@ -1,0 +1,35 @@
+---
+import {getRelativeLocaleUrl} from 'astro:i18n'
+import {LOCALES, type Locale} from '../lib/i18n'
+
+interface Props {
+  locale: Locale
+  currentPath: string
+  alternateSlugs?: Record<string, string | undefined>
+}
+
+const {locale, currentPath, alternateSlugs = {}} = Astro.props
+
+function targetPath(targetLocale: Locale) {
+  if (currentPath.startsWith('recipes/') && alternateSlugs[targetLocale]) {
+    return `recipes/${alternateSlugs[targetLocale]}/`
+  }
+  return currentPath
+}
+---
+
+<div class="flex items-center gap-1 rounded-full border border-outline-variant bg-surface-container-low p-1">
+  {
+    LOCALES.map((code) => (
+      <a
+        href={getRelativeLocaleUrl(code, targetPath(code))}
+        class:list={[
+          'touch-target rounded-full px-3 py-1 font-label-sm transition-colors',
+          code === locale ? 'bg-primary text-on-primary' : 'text-on-surface-variant hover:bg-surface-container-high',
+        ]}
+      >
+        {code === 'en-US' ? 'EN' : 'HI'}
+      </a>
+    ))
+  }
+</div>

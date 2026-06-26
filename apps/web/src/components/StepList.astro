@@ -1,0 +1,51 @@
+---
+interface Step {
+  _key: string
+  instruction: string
+  durationMinutes?: number
+  tip?: string
+}
+
+interface Props {
+  steps: Step[]
+  locale: string
+}
+
+const {steps, locale} = Astro.props
+---
+
+<ol class="space-y-[var(--spacing-stack-lg)]" data-step-list>
+  {
+    steps.map((step, index) => (
+      <li class="flex gap-4" data-step-item>
+        <label class="flex shrink-0 cursor-pointer items-start gap-3">
+          <input type="checkbox" class="step-checkbox mt-1 size-5 rounded-full border-2 border-primary accent-primary" />
+          <span class="flex size-10 items-center justify-center rounded-full bg-primary-container font-label-md text-on-primary-container">
+            {index + 1}
+          </span>
+        </label>
+        <div class="step-content min-w-0 flex-1 pt-1 transition-opacity">
+          <p class="font-body-lg leading-relaxed">{step.instruction}</p>
+          {step.durationMinutes && (
+            <p class="mt-2 font-label-sm text-on-surface-variant">
+              {locale === 'hi-IN' ? `${step.durationMinutes} मिनट` : `${step.durationMinutes} min`}
+            </p>
+          )}
+          {step.tip && <p class="mt-2 font-body-md text-secondary">{step.tip}</p>}
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<script>
+  document.querySelectorAll('[data-step-list]').forEach((list) => {
+    list.querySelectorAll('.step-checkbox').forEach((checkbox) => {
+      checkbox.addEventListener('change', (event) => {
+        const target = event.currentTarget as HTMLInputElement
+        const content = target.closest('[data-step-item]')?.querySelector('.step-content') as HTMLElement | null
+        if (content) content.style.opacity = target.checked ? '0.45' : '1'
+      })
+    })
+  })
+</script>

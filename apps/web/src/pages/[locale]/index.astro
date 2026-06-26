@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Button from '../../components/Button.astro'
+import RecipeCard from '../../components/RecipeCard.astro'
+import {getSanityClient} from '../../lib/sanity/load-client'
+import {HOME_PAGE_QUERY} from '../../lib/sanity/queries'
+import {LOCALES, type Locale, isLocale} from '../../lib/i18n'
+import {getRelativeLocaleUrl} from 'astro:i18n'
+
+export async function getStaticPaths() {
+  return LOCALES.map((locale) => ({params: {locale}}))
+}
+
+const localeParam = Astro.params.locale ?? 'en-US'
+if (!isLocale(localeParam)) {
+  return Astro.redirect('/en-US/')
+}
+const locale = localeParam as Locale
+
+const home = await getSanityClient().fetch(HOME_PAGE_QUERY, {locale}, {tag: 'home.get'})
+---
+
+<BaseLayout locale={locale} title={home?.greeting ?? 'Dashboard'} currentPath="/">
+  <section class="grid gap-[var(--spacing-section-gap)] lg:grid-cols-[1.4fr_1fr]">
+    <div>
+      <p class="font-label-md text-secondary">{locale === 'hi-IN' ? 'आज' : 'Today'}</p>
+      <h1 class="mt-2 font-display-lg text-primary">{home?.greeting ?? 'Good morning, Chef'}</h1>
+      <p class="mt-4 max-w-2xl font-body-lg text-on-surface-variant">{home?.subtitle}</p>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-3">
+        <Button href="#">{home?.quickActionLabels?.logMeal ?? 'Log a Meal'}</Button>
+        <Button href={getRelativeLocaleUrl(locale, 'recipes/')} variant="secondary">
+          {home?.quickActionLabels?.newRecipe ?? 'New Recipe'}
+        </Button>
+        <Button href={getRelativeLocaleUrl(locale, 'pantry/')} variant="ghost">
+          {home?.quickActionLabels?.addToPantry ?? 'Add to Pantry'}
+        </Button>
+      </div>
+    </div>
+
+    <section class="rounded-xl border border-outline-variant bg-surface-container-lowest p-6">
+      <h2 class="font-headline-md text-primary">{locale === 'hi-IN' ? 'आज के भोजन' : 'Meals for Today'}</h2>
+      <ul class="mt-6 space-y-4">
+        {
+          home?.mealsToday?.map((meal) => (
+            <li class="flex items-start justify-between gap-4 border-b border-outline-variant pb-4 last:border-0 last:pb-0">
+              <div>
+                <p class="font-label-sm uppercase text-secondary">{meal.mealType}</p>
+                <p class="mt-1 font-body-lg">
+                  {meal.recipeTitle ?? meal.label}
+                </p>
+              </div>
+              {meal.recipeSlug && (
+                <a
+                  href={getRelativeLocaleUrl(locale, `recipes/${meal.recipeSlug}/`)}
+                  class="font-label-md text-primary underline-offset-4 hover:underline"
+                >
+                  {locale === 'hi-IN' ? 'देखें' : 'View'}
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </section>
+
+  <section class="mt-[var(--spacing-section-gap)]">
+    <div class="mb-6 flex items-end justify-between gap-4">
+      <div>
+        <h2 class="font-headline-lg text-primary">{locale === 'hi-IN' ? 'विशेष रेसिपी' : 'Featured Recipes'}</h2>
+        <p class="mt-2 font-body-md text-on-surface-variant">
+          {locale === 'hi-IN' ? 'आपकी अगली पसंदीदा रेसिपी खोजें।' : 'Discover your next favorite from the directory.'}
+        </p>
+      </div>
+      <a href={getRelativeLocaleUrl(locale, 'recipes/')} class="font-label-md text-primary underline-offset-4 hover:underline">
+        {locale === 'hi-IN' ? 'सभी देखें' : 'View all'}
+      </a>
+    </div>
+    <div class="grid gap-6 md:grid-cols-2">
+      {
+        home?.featuredRecipes?.map((recipe) => (
+          <RecipeCard
+            locale={locale}
+            title={recipe.title}
+            slug={recipe.slug?.current}
+            summary={recipe.summary}
+            prepTimeMinutes={recipe.prepTimeMinutes}
+            cookTimeMinutes={recipe.cookTimeMinutes}
+            heroImage={recipe.heroImage}
+          />
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
