@@ -20,6 +20,12 @@ export const homePage = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'newField',
+      title: 'New Field Only Dev',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'subtitle',
       title: 'Subtitle',
       type: 'text',
