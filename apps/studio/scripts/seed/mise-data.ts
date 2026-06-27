@@ -120,6 +120,30 @@ export const ingredients = [
     name: i18nString('Tomatoes', 'टमाटर'),
     defaultUnit: i18nString('cups', 'कप'),
   },
+  {
+    _id: 'ingredient-spaghetti',
+    _type: 'ingredient',
+    name: i18nString('Spaghetti', 'स्पaghetti'),
+    defaultUnit: i18nString('oz', 'औंस'),
+  },
+  {
+    _id: 'ingredient-garlic',
+    _type: 'ingredient',
+    name: i18nString('Garlic', 'लहसुन'),
+    defaultUnit: i18nString('cloves', 'कलियाँ'),
+  },
+  {
+    _id: 'ingredient-butter',
+    _type: 'ingredient',
+    name: i18nString('Butter', 'मक्खन'),
+    defaultUnit: i18nString('tbsp', 'बड़ा चम्मच'),
+  },
+  {
+    _id: 'ingredient-parmesan',
+    _type: 'ingredient',
+    name: i18nString('Parmesan', 'पarmesan'),
+    defaultUnit: i18nString('cups', 'कप'),
+  },
 ]
 
 export const recipeCategories = [
@@ -134,6 +158,12 @@ export const recipeCategories = [
     _type: 'recipeCategory',
     title: i18nString('Comfort Food', 'आरामदायक भोजन'),
     slug: {_type: 'slug', current: 'comfort-food'},
+  },
+  {
+    _id: 'category-italian',
+    _type: 'recipeCategory',
+    title: i18nString('Italian', 'इतालवी'),
+    slug: {_type: 'slug', current: 'italian'},
   },
 ]
 
@@ -268,6 +298,65 @@ export const recipesEn = [
     ],
     nutrition: {_type: 'nutritionInfo', calories: 310, protein: 18, carbs: 42, fat: 6, fiber: 12},
   },
+  {
+    _id: 'recipe-garlic-butter-pasta-en-US',
+    _type: 'recipe',
+    language: 'en-US',
+    title: 'Garlic Butter Pasta',
+    slug: {_type: 'slug', current: 'garlic-butter-pasta'},
+    summary:
+      'Silky spaghetti tossed in fragrant garlic butter and finished with Parmesan — ready in under 30 minutes.',
+    prepTimeMinutes: 10,
+    cookTimeMinutes: 20,
+    servings: 4,
+    tags: ['weeknight', 'vegetarian', 'pasta'],
+    categories: [ref('category-italian'), ref('category-comfort')],
+    ingredients: [
+      {
+        _key: 'ing1',
+        ingredient: ref('ingredient-spaghetti'),
+        quantity: 12,
+        unit: i18nString('oz', 'औंस'),
+      },
+      {
+        _key: 'ing2',
+        ingredient: ref('ingredient-garlic'),
+        quantity: 4,
+        unit: i18nString('cloves', 'कलियाँ'),
+      },
+      {
+        _key: 'ing3',
+        ingredient: ref('ingredient-butter'),
+        quantity: 4,
+        unit: i18nString('tbsp', 'बड़ा चम्मच'),
+      },
+      {
+        _key: 'ing4',
+        ingredient: ref('ingredient-parmesan'),
+        quantity: 0.5,
+        unit: i18nString('cup', 'कप'),
+      },
+    ],
+    steps: [
+      {
+        _key: 'step1',
+        instruction: 'Bring a large pot of salted water to a boil and cook spaghetti until al dente. Reserve 1 cup pasta water.',
+        durationMinutes: 12,
+      },
+      {
+        _key: 'step2',
+        instruction: 'Melt butter in a wide skillet over medium heat. Add minced garlic and cook until fragrant, about 1 minute.',
+        durationMinutes: 2,
+      },
+      {
+        _key: 'step3',
+        instruction:
+          'Toss drained pasta in the garlic butter with a splash of pasta water until glossy. Finish with Parmesan and black pepper.',
+        durationMinutes: 3,
+      },
+    ],
+    nutrition: {_type: 'nutritionInfo', calories: 420, protein: 14, carbs: 52, fat: 16, fiber: 3},
+  },
 ]
 
 export const recipesHi = [
@@ -330,6 +419,42 @@ export const recipesHi = [
     ],
     nutrition: recipesEn[1].nutrition,
   },
+  {
+    _id: 'recipe-garlic-butter-pasta-hi-IN',
+    _type: 'recipe',
+    language: 'hi-IN',
+    title: 'लहसुन मक्खन पास्ता',
+    slug: {_type: 'slug', current: 'garlic-butter-pasta'},
+    summary:
+      'सुगंधित लहसुन मक्खन में मिला रेशमी स्पaghetti, पarmesan के साथ — 30 मिनट से कम में तैयार।',
+    prepTimeMinutes: 10,
+    cookTimeMinutes: 20,
+    servings: 4,
+    tags: ['weeknight', 'vegetarian', 'pasta'],
+    categories: [ref('category-italian'), ref('category-comfort')],
+    ingredients: recipesEn[2].ingredients,
+    steps: [
+      {
+        _key: 'step1',
+        instruction:
+          'एक बड़े बर्तन में नमकीन पानी उबालें और स्पaghetti को al dente पकाएं। 1 कप पasta पानी अलग रखें।',
+        durationMinutes: 12,
+      },
+      {
+        _key: 'step2',
+        instruction:
+          'मध्यम आंच पर चौड़ी कड़ाही में मक्खन पिघलाएं। कटा हुआ लहसुन डालकर सुगंध आने तक 1 मिनट पकाएं।',
+        durationMinutes: 2,
+      },
+      {
+        _key: 'step3',
+        instruction:
+          'छाने हुए पasta को लहसुन मक्खन में पasta पानी के छींटे के साथ चमकदार होने तक मिलाएं। पarmesan और कali mirch से सजाएं।',
+        durationMinutes: 3,
+      },
+    ],
+    nutrition: recipesEn[2].nutrition,
+  },
 ]
 
 export const translationMetadata = [
@@ -349,6 +474,15 @@ export const translationMetadata = [
     translations: [
       {_key: 'en-US', value: ref('recipe-herbed-lentils-en-US')},
       {_key: 'hi-IN', value: ref('recipe-herbed-lentils-hi-IN')},
+    ],
+  },
+  {
+    _id: 'translation.metadata.recipe-garlic-butter-pasta',
+    _type: 'translation.metadata',
+    schemaTypes: ['recipe'],
+    translations: [
+      {_key: 'en-US', value: ref('recipe-garlic-butter-pasta-en-US')},
+      {_key: 'hi-IN', value: ref('recipe-garlic-butter-pasta-hi-IN')},
     ],
   },
 ]
@@ -381,7 +515,11 @@ export const homePages = [
         recipe: ref('recipe-chicken-biryani-en-US'),
       },
     ],
-    featuredRecipes: [ref('recipe-chicken-biryani-en-US'), ref('recipe-herbed-lentils-en-US')],
+    featuredRecipes: [
+      ref('recipe-chicken-biryani-en-US'),
+      ref('recipe-herbed-lentils-en-US'),
+      ref('recipe-garlic-butter-pasta-en-US'),
+    ],
     quickActionLabels: {
       logMeal: 'Log a Meal',
       newRecipe: 'New Recipe',
@@ -415,7 +553,11 @@ export const homePages = [
         recipe: ref('recipe-chicken-biryani-hi-IN'),
       },
     ],
-    featuredRecipes: [ref('recipe-chicken-biryani-hi-IN'), ref('recipe-herbed-lentils-hi-IN')],
+    featuredRecipes: [
+      ref('recipe-chicken-biryani-hi-IN'),
+      ref('recipe-herbed-lentils-hi-IN'),
+      ref('recipe-garlic-butter-pasta-hi-IN'),
+    ],
     quickActionLabels: {
       logMeal: 'भोजन दर्ज करें',
       newRecipe: 'नई रेसिपी',

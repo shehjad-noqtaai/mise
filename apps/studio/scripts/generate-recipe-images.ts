@@ -14,6 +14,8 @@ const IMAGE_PROMPTS: Record<string, string> = {
     'Professional editorial food photography of classic chicken biryani served in a traditional brass handi pot. Fragrant saffron-streaked basmati rice layered with tender spiced chicken, topped with crispy fried onions, fresh cilantro, and a lemon wedge. Warm natural side lighting, shallow depth of field, rustic cream stone countertop with a muted sage green linen napkin. Cookbook-quality, ultra sharp, appetizing, no text, no watermark, photorealistic.',
   'herbed-lentil-stew':
     'Professional editorial food photography of herbed lentil stew in a deep ceramic bowl. Rich golden-brown dal with visible lentils, fresh parsley and thyme garnish, subtle steam, warm cozy window light. Rustic kitchen scene with cream and sage green tones, wooden spoon beside bowl, shallow depth of field. Cookbook-quality, ultra sharp, appetizing vegetarian comfort food, no text, no watermark, photorealistic.',
+  'garlic-butter-pasta':
+    'Professional editorial food photography of garlic butter pasta on a wide white ceramic plate. Twisted spaghetti glistening with golden garlic butter, freshly grated Parmesan, cracked black pepper, and a few parsley leaves. Warm natural side lighting, shallow depth of field, rustic cream stone countertop with sage green linen napkin. Cookbook-quality, ultra sharp, appetizing Italian weeknight dinner, no text, no watermark, photorealistic.',
 }
 
 function buildPrompt(title: string, summary: string | undefined, slug: string) {
