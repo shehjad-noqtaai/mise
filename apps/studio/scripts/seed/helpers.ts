@@ -12,3 +12,31 @@ export function weakRef(id: string, type: string) {
     _strengthenOnPublish: {type},
   } satisfies Reference
 }
+
+/** v5 internationalizedArray string entry for seed/bootstrap data. */
+export function i18nString(en: string, hi: string) {
+  return [
+    {
+      _type: 'internationalizedArrayStringValue' as const,
+      _key: 'en-US',
+      language: 'en-US',
+      value: en,
+    },
+    {
+      _type: 'internationalizedArrayStringValue' as const,
+      _key: 'hi-IN',
+      language: 'hi-IN',
+      value: hi,
+    },
+  ]
+}
+
+/** v5 translation.metadata entry — language field + strong reference. */
+export function translationMetadataEntry(language: string, documentId: string) {
+  return {
+    _key: language,
+    _type: 'internationalizedArrayReferenceValue' as const,
+    language,
+    value: ref(documentId),
+  }
+}

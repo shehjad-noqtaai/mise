@@ -1,5 +1,13 @@
 import {defineQuery} from 'groq'
 
+/** Resolve a field-level internationalized string for the active locale. */
+const localizedString = (fieldPath: string) =>
+  `coalesce(${fieldPath}[language == $locale][0].value, ${fieldPath}[language == "en-US"][0].value, ${fieldPath}[0].value, ${fieldPath})`
+
+/** After `[]->`, GROQ requires a projection object — not a bare function call. */
+const localizedStringFromRef = (fieldPath: string) =>
+  `{ "value": ${localizedString(fieldPath)} }.value`
+
 export const HOME_PAGE_QUERY = defineQuery(`*[_type == "homePage" && language == $locale][0]{
   title,
   greeting,
@@ -24,7 +32,12 @@ export const HOME_PAGE_QUERY = defineQuery(`*[_type == "homePage" && language ==
   }
 }`)
 
-export const RECIPES_QUERY = defineQuery(`*[_type == "recipe" && language == $locale] | order(title asc) {
+export const RECIPES_QUERY = defineQuery(`*[
+  _type == "recipe" &&
+  language == $locale &&
+  ($cuisine == "" || $cuisine in categories[]->slug.current) &&
+  ($course == "" || $course in categories[]->slug.current)
+] | order(title asc) {
   _id,
   title,
   slug,
@@ -34,7 +47,17 @@ export const RECIPES_QUERY = defineQuery(`*[_type == "recipe" && language == $lo
   servings,
   heroImage,
   tags,
-  "categories": categories[]->title
+  "categories": categories[]->${localizedStringFromRef('title')}
+}`)
+
+export const RECIPE_CATEGORIES_QUERY = defineQuery(`*[
+  _type == "recipeCategory" &&
+  kind in $kinds &&
+  defined(slug.current)
+] | order(kind asc, coalesce(sortOrder, 999) asc) {
+  kind,
+  "slug": slug.current,
+  "title": ${localizedString('title')}
 }`)
 
 export const RECIPE_BY_SLUG_QUERY = defineQuery(`*[_type == "recipe" && language == $locale && slug.current == $slug][0]{
@@ -53,7 +76,7 @@ export const RECIPE_BY_SLUG_QUERY = defineQuery(`*[_type == "recipe" && language
     quantity,
     unit,
     note,
-    "ingredientName": ingredient->name
+    "ingredientName": ${localizedString('ingredient->name')}
   },
   steps[]{
     _key,
@@ -61,7 +84,7 @@ export const RECIPE_BY_SLUG_QUERY = defineQuery(`*[_type == "recipe" && language
     durationMinutes,
     tip
   },
-  "categories": categories[]->title
+  "categories": categories[]->${localizedStringFromRef('title')}
 }`)
 
 export const PANTRY_SNAPSHOT_QUERY = defineQuery(`*[_type == "pantrySnapshot" && language == $locale][0]{
@@ -74,8 +97,8 @@ export const PANTRY_SNAPSHOT_QUERY = defineQuery(`*[_type == "pantrySnapshot" &&
     unit,
     location,
     expiresAt,
-    "ingredientName": ingredient->name,
-    "categoryTitle": category->title
+    "ingredientName": ${localizedString('ingredient->name')},
+    "categoryTitle": ${localizedString('category->title')}
   }
 }`)
 

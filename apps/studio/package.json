@@ -18,6 +18,11 @@
     "verify-translation": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/verify-translation.ts --with-user-token",
     "generate-recipe-images": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/generate-recipe-images.ts --with-user-token",
     "migrate-recipe-images": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/migrate-recipe-images-to-media-library.ts --with-user-token",
+    "migrate-translation-metadata": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/migrate-translation-metadata-v5.ts --with-user-token",
+    "migrate-field-i18n-to-plain": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/migrate-field-i18n-to-plain.ts --with-user-token",
+    "migrate-taxonomy-to-field-i18n": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/migrate-taxonomy-to-field-i18n.ts --with-user-token",
+    "migrate-recipe-category-kinds": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/migrate-recipe-category-kinds.ts --with-user-token",
+    "migrate-recipe-categories": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/migrate-recipe-categories.ts --with-user-token",
     "cleanup-orphan-assets": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/delete-orphan-assets.ts --with-user-token",
     "bootstrap": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/bootstrap.ts --with-user-token"
   },

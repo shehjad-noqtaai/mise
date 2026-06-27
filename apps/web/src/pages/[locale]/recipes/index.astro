@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro'
 import RecipeCard from '../../../components/RecipeCard.astro'
+import RecipeCategoryFilters from '../../../components/RecipeCategoryFilters.astro'
 import {loadQuery} from '../../../lib/sanity/load-query'
 import {getDraftModeProps} from '../../../lib/sanity/draft-mode'
-import {RECIPES_QUERY} from '../../../lib/sanity/queries'
-import type {RECIPES_QUERY_RESULT} from '@starter/sanity-types'
+import {RECIPE_CATEGORIES_QUERY, RECIPES_QUERY} from '../../../lib/sanity/queries'
+import type {RECIPE_CATEGORIES_QUERY_RESULT, RECIPES_QUERY_RESULT} from '@starter/sanity-types'
 import {DEFAULT_LOCALE, localeFromParam} from '../../../lib/i18n'
+import {filterGroupLabels, parseRecipeFilters} from '../../../lib/recipe-filters'
 import {getRelativeLocaleUrl} from 'astro:i18n'
 
 export const prerender = false
@@ -15,11 +17,26 @@ if (!locale) {
   return Astro.redirect(getRelativeLocaleUrl(DEFAULT_LOCALE, 'recipes/'))
 }
 
-const {data: recipes} = await loadQuery<RECIPES_QUERY_RESULT>({
-  query: RECIPES_QUERY,
-  params: {locale},
-  ...getDraftModeProps(Astro.cookies),
-})
+const filters = parseRecipeFilters(Astro.url.searchParams)
+const labels = filterGroupLabels[locale]
+const draftProps = getDraftModeProps(Astro.cookies)
+
+const [{data: categories}, {data: recipes}] = await Promise.all([
+  loadQuery<RECIPE_CATEGORIES_QUERY_RESULT>({
+    query: RECIPE_CATEGORIES_QUERY,
+    params: {locale, kinds: ['cuisine', 'course']},
+    ...draftProps,
+  }),
+  loadQuery<RECIPES_QUERY_RESULT>({
+    query: RECIPES_QUERY,
+    params: {
+      locale,
+      cuisine: filters.cuisine ?? '',
+      course: filters.course ?? '',
+    },
+    ...draftProps,
+  }),
+])
 ---
 
 <BaseLayout
@@ -38,19 +55,27 @@ const {data: recipes} = await loadQuery<RECIPES_QUERY_RESULT>({
     </p>
   </div>
 
-  <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-    {
-      recipes?.map((recipe) => (
-        <RecipeCard
-          locale={locale}
-          title={recipe.title}
-          slug={recipe.slug?.current}
-          summary={recipe.summary}
-          prepTimeMinutes={recipe.prepTimeMinutes}
-          cookTimeMinutes={recipe.cookTimeMinutes}
-          heroImage={recipe.heroImage}
-        />
-      ))
-    }
-  </div>
+  <RecipeCategoryFilters locale={locale} categories={categories} active={filters} />
+
+  {
+    recipes && recipes.length > 0 ? (
+      <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {
+          recipes.map((recipe) => (
+            <RecipeCard
+              locale={locale}
+              title={recipe.title ?? ''}
+              slug={recipe.slug?.current ?? undefined}
+              summary={recipe.summary ?? undefined}
+              prepTimeMinutes={recipe.prepTimeMinutes ?? undefined}
+              cookTimeMinutes={recipe.cookTimeMinutes ?? undefined}
+              heroImage={recipe.heroImage}
+            />
+          ))
+        }
+      </div>
+    ) : (
+      <p class="mt-10 font-body-lg text-on-surface-variant">{labels.empty}</p>
+    )
+  }
 </BaseLayout>

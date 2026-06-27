@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {ComponentIcon} from '@sanity/icons'
+import {pickInternationalizedValue} from '../../lib/internationalizedValue'
 
 export const pantryCategory = defineType({
   name: 'pantryCategory',
@@ -22,11 +23,9 @@ export const pantryCategory = defineType({
   preview: {
     select: {title: 'title'},
     prepare({title}) {
-      const label = Array.isArray(title)
-        ? (title.find((entry: {language?: string}) => entry.language === 'en-US')?.value ??
-          title[0]?.value)
-        : title
-      return {title: label ?? 'Pantry category'}
+      return {
+        title: pickInternationalizedValue(title, 'en-US') ?? 'Pantry category',
+      }
     },
   },
 })

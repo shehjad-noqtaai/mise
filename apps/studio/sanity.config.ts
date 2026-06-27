@@ -8,7 +8,6 @@ import {EarthGlobeIcon, HomeIcon} from '@sanity/icons'
 import {agentContextPlugin} from '@sanity/agent-context/studio'
 import {
   createL10n,
-  createFieldTranslationPublishGate,
   useTranslateFieldAction,
   withLocaleFilter,
 } from '@starter/l10n'
@@ -25,16 +24,18 @@ const l10nTypes = [
   'l10n.glossary',
   'l10n.styleGuide',
   'translation.metadata',
-  'fieldTranslation.metadata',
 ]
 
 const localizedDocumentTypes = ['recipe', 'homePage', 'mealPlanEntry', 'pantrySnapshot'] as const
+
+const fieldLocalizedDocumentTypes = ['ingredient', 'recipeCategory', 'pantryCategory'] as const
 
 const projectId = import.meta.env?.SANITY_STUDIO_PROJECT_ID ?? process.env.SANITY_STUDIO_PROJECT_ID!
 const dataset = import.meta.env?.SANITY_STUDIO_DATASET ?? process.env.SANITY_STUDIO_DATASET!
 
 const l10n = createL10n({
   localizedSchemaTypes: [...localizedDocumentTypes],
+  fieldLocalizedSchemaTypes: [...fieldLocalizedDocumentTypes],
   defaultLanguage: 'en-US',
 })
 
@@ -66,7 +67,10 @@ const structure = ((S) =>
         S.documentTypeList('ingredient').defaultOrdering(nameAsc),
       ),
       S.documentTypeListItem('recipeCategory').child(
-        S.documentTypeList('recipeCategory').defaultOrdering(titleAsc),
+        S.documentTypeList('recipeCategory').defaultOrdering([
+          {field: 'kind', direction: 'asc'},
+          {field: 'sortOrder', direction: 'asc'},
+        ]),
       ),
       S.documentTypeListItem('pantryCategory').child(
         S.documentTypeList('pantryCategory').defaultOrdering(titleAsc),
@@ -135,16 +139,6 @@ export default defineConfig({
           option.templateId !== 'translation.metadata' &&
           option.templateId !== 'fieldTranslation.metadata',
       ),
-    actions: (prev, context) => {
-      if (localizedDocumentTypes.includes(context.schemaType as (typeof localizedDocumentTypes)[number])) {
-        return prev
-      }
-      return prev.map((action) =>
-        action.displayName === 'SchedulePublishAction'
-          ? createFieldTranslationPublishGate(action)
-          : action,
-      )
-    },
   },
 
   plugins: [

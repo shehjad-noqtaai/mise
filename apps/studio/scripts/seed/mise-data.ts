@@ -2,17 +2,28 @@
  * Static Mise sample content for bootstrap (no Agent API required).
  */
 import {markdownToPortableText} from '@portabletext/markdown'
-import {ref} from './helpers.ts'
+import {ref, translationMetadataEntry, i18nString} from './helpers.ts'
 
 function localeRef(code: string) {
   return ref(`locale-${code}`)
 }
 
-function i18nString(en: string, hi: string) {
-  return [
-    {_type: 'internationalizedArrayStringValue', _key: 'en-US', language: 'en-US', value: en},
-    {_type: 'internationalizedArrayStringValue', _key: 'hi-IN', language: 'hi-IN', value: hi},
-  ]
+const UNIT_HI: Record<string, string> = {
+  cups: 'कप',
+  cup: 'कप',
+  lbs: 'पाउंड',
+  medium: 'मध्यम',
+  tbsp: 'बड़ा चम्मच',
+  oz: 'औंस',
+  cloves: 'कलियाँ',
+  jar: 'जार',
+}
+
+function localizeUnits<T extends {unit?: string}>(items: T[]): T[] {
+  return items.map((item) => ({
+    ...item,
+    unit: item.unit ? (UNIT_HI[item.unit] ?? item.unit) : item.unit,
+  }))
 }
 
 function translation(locale: string, text: string) {
@@ -150,20 +161,50 @@ export const recipeCategories = [
   {
     _id: 'category-indian',
     _type: 'recipeCategory',
+    kind: 'cuisine',
+    sortOrder: 1,
     title: i18nString('Indian', 'भारतीय'),
     slug: {_type: 'slug', current: 'indian'},
   },
   {
-    _id: 'category-comfort',
-    _type: 'recipeCategory',
-    title: i18nString('Comfort Food', 'आरामदायक भोजन'),
-    slug: {_type: 'slug', current: 'comfort-food'},
-  },
-  {
     _id: 'category-italian',
     _type: 'recipeCategory',
+    kind: 'cuisine',
+    sortOrder: 2,
     title: i18nString('Italian', 'इतालवी'),
     slug: {_type: 'slug', current: 'italian'},
+  },
+  {
+    _id: 'category-main-course',
+    _type: 'recipeCategory',
+    kind: 'course',
+    sortOrder: 1,
+    title: i18nString('Main Course', 'मुख्य व्यंजन'),
+    slug: {_type: 'slug', current: 'main-course'},
+  },
+  {
+    _id: 'category-side',
+    _type: 'recipeCategory',
+    kind: 'course',
+    sortOrder: 2,
+    title: i18nString('Side', 'साइड'),
+    slug: {_type: 'slug', current: 'side'},
+  },
+  {
+    _id: 'category-dessert',
+    _type: 'recipeCategory',
+    kind: 'course',
+    sortOrder: 3,
+    title: i18nString('Dessert', 'मिठाई'),
+    slug: {_type: 'slug', current: 'dessert'},
+  },
+  {
+    _id: 'category-comfort',
+    _type: 'recipeCategory',
+    kind: 'style',
+    sortOrder: 1,
+    title: i18nString('Comfort Food', 'आरामदायक भोजन'),
+    slug: {_type: 'slug', current: 'comfort-food'},
   },
 ]
 
@@ -203,37 +244,37 @@ export const recipesEn = [
     cookTimeMinutes: 60,
     servings: 6,
     tags: ['one-pot', 'weekend', 'family'],
-    categories: [ref('category-indian'), ref('category-comfort')],
+    categories: [ref('category-indian'), ref('category-main-course'), ref('category-comfort')],
     ingredients: [
       {
         _key: 'ing1',
         ingredient: ref('ingredient-basmati-rice'),
         quantity: 3,
-        unit: i18nString('cups', 'कप'),
+        unit: 'cups',
       },
       {
         _key: 'ing2',
         ingredient: ref('ingredient-chicken'),
         quantity: 2,
-        unit: i18nString('lbs', 'पाउंड'),
+        unit: 'lbs',
       },
       {
         _key: 'ing3',
         ingredient: ref('ingredient-yogurt'),
         quantity: 1,
-        unit: i18nString('cup', 'कप'),
+        unit: 'cup',
       },
       {
         _key: 'ing4',
         ingredient: ref('ingredient-onion'),
         quantity: 2,
-        unit: i18nString('medium', 'मध्यम'),
+        unit: 'medium',
       },
       {
         _key: 'ing5',
         ingredient: ref('ingredient-ghee'),
         quantity: 4,
-        unit: i18nString('tbsp', 'बड़ा चम्मच'),
+        unit: 'tbsp',
       },
     ],
     steps: [
@@ -277,19 +318,19 @@ export const recipesEn = [
     cookTimeMinutes: 35,
     servings: 4,
     tags: ['weeknight', 'vegetarian'],
-    categories: [ref('category-comfort')],
+    categories: [ref('category-comfort'), ref('category-main-course')],
     ingredients: [
       {
         _key: 'ing1',
         ingredient: ref('ingredient-onion'),
         quantity: 1,
-        unit: i18nString('medium', 'मध्यम'),
+        unit: 'medium',
       },
       {
         _key: 'ing2',
         ingredient: ref('ingredient-tomatoes'),
         quantity: 2,
-        unit: i18nString('cups', 'कप'),
+        unit: 'cups',
       },
     ],
     steps: [
@@ -310,31 +351,31 @@ export const recipesEn = [
     cookTimeMinutes: 20,
     servings: 4,
     tags: ['weeknight', 'vegetarian', 'pasta'],
-    categories: [ref('category-italian'), ref('category-comfort')],
+    categories: [ref('category-italian'), ref('category-main-course'), ref('category-comfort')],
     ingredients: [
       {
         _key: 'ing1',
         ingredient: ref('ingredient-spaghetti'),
         quantity: 12,
-        unit: i18nString('oz', 'औंस'),
+        unit: 'oz',
       },
       {
         _key: 'ing2',
         ingredient: ref('ingredient-garlic'),
         quantity: 4,
-        unit: i18nString('cloves', 'कलियाँ'),
+        unit: 'cloves',
       },
       {
         _key: 'ing3',
         ingredient: ref('ingredient-butter'),
         quantity: 4,
-        unit: i18nString('tbsp', 'बड़ा चम्मच'),
+        unit: 'tbsp',
       },
       {
         _key: 'ing4',
         ingredient: ref('ingredient-parmesan'),
         quantity: 0.5,
-        unit: i18nString('cup', 'कप'),
+        unit: 'cup',
       },
     ],
     steps: [
@@ -372,8 +413,8 @@ export const recipesHi = [
     cookTimeMinutes: 60,
     servings: 6,
     tags: ['one-pot', 'weekend', 'family'],
-    categories: [ref('category-indian'), ref('category-comfort')],
-    ingredients: recipesEn[0].ingredients,
+    categories: [ref('category-indian'), ref('category-main-course'), ref('category-comfort')],
+    ingredients: localizeUnits(recipesEn[0].ingredients),
     steps: [
       {
         _key: 'step1',
@@ -411,8 +452,8 @@ export const recipesHi = [
     cookTimeMinutes: 35,
     servings: 4,
     tags: ['weeknight', 'vegetarian'],
-    categories: [ref('category-comfort')],
-    ingredients: recipesEn[1].ingredients,
+    categories: [ref('category-comfort'), ref('category-main-course')],
+    ingredients: localizeUnits(recipesEn[1].ingredients),
     steps: [
       {_key: 'step1', instruction: 'प्याज को सुनहरा होने तक भूनें।'},
       {_key: 'step2', instruction: 'दाल, टमाटर और शोरबा डालें। नरम होने तक उबालें।'},
@@ -431,8 +472,8 @@ export const recipesHi = [
     cookTimeMinutes: 20,
     servings: 4,
     tags: ['weeknight', 'vegetarian', 'pasta'],
-    categories: [ref('category-italian'), ref('category-comfort')],
-    ingredients: recipesEn[2].ingredients,
+    categories: [ref('category-italian'), ref('category-main-course'), ref('category-comfort')],
+    ingredients: localizeUnits(recipesEn[2].ingredients),
     steps: [
       {
         _key: 'step1',
@@ -463,8 +504,8 @@ export const translationMetadata = [
     _type: 'translation.metadata',
     schemaTypes: ['recipe'],
     translations: [
-      {_key: 'en-US', value: ref('recipe-chicken-biryani-en-US')},
-      {_key: 'hi-IN', value: ref('recipe-chicken-biryani-hi-IN')},
+      translationMetadataEntry('en-US', 'recipe-chicken-biryani-en-US'),
+      translationMetadataEntry('hi-IN', 'recipe-chicken-biryani-hi-IN'),
     ],
   },
   {
@@ -472,8 +513,8 @@ export const translationMetadata = [
     _type: 'translation.metadata',
     schemaTypes: ['recipe'],
     translations: [
-      {_key: 'en-US', value: ref('recipe-herbed-lentils-en-US')},
-      {_key: 'hi-IN', value: ref('recipe-herbed-lentils-hi-IN')},
+      translationMetadataEntry('en-US', 'recipe-herbed-lentils-en-US'),
+      translationMetadataEntry('hi-IN', 'recipe-herbed-lentils-hi-IN'),
     ],
   },
   {
@@ -481,8 +522,8 @@ export const translationMetadata = [
     _type: 'translation.metadata',
     schemaTypes: ['recipe'],
     translations: [
-      {_key: 'en-US', value: ref('recipe-garlic-butter-pasta-en-US')},
-      {_key: 'hi-IN', value: ref('recipe-garlic-butter-pasta-hi-IN')},
+      translationMetadataEntry('en-US', 'recipe-garlic-butter-pasta-en-US'),
+      translationMetadataEntry('hi-IN', 'recipe-garlic-butter-pasta-hi-IN'),
     ],
   },
 ]
@@ -579,27 +620,27 @@ export const pantrySnapshots = [
         ingredient: ref('ingredient-basmati-rice'),
         quantity: 4,
         capacity: 5,
-        unit: i18nString('lbs', 'पाउंड'),
+        unit: 'lbs',
         category: ref('pantry-cat-grains'),
-        location: i18nString('Pantry shelf A', 'पेंट्री शेल्फ A'),
+        location: 'Pantry shelf A',
       },
       {
         _key: 'p2',
         ingredient: ref('ingredient-chicken'),
         quantity: 0.5,
         capacity: 2,
-        unit: i18nString('lbs', 'पाउंड'),
+        unit: 'lbs',
         category: ref('pantry-cat-protein'),
-        location: i18nString('Refrigerator', 'रेफ्रिजरेटर'),
+        location: 'Refrigerator',
       },
       {
         _key: 'p3',
         ingredient: ref('ingredient-ghee'),
         quantity: 0.15,
         capacity: 1,
-        unit: i18nString('jar', 'जार'),
+        unit: 'jar',
         category: ref('pantry-cat-spices'),
-        location: i18nString('Spice drawer', 'मसाला दराज'),
+        location: 'Spice drawer',
       },
     ],
   },
@@ -615,27 +656,27 @@ export const pantrySnapshots = [
         ingredient: ref('ingredient-basmati-rice'),
         quantity: 4,
         capacity: 5,
-        unit: i18nString('lbs', 'पाउंड'),
+        unit: 'पाउंड',
         category: ref('pantry-cat-grains'),
-        location: i18nString('Pantry shelf A', 'पेंट्री शेल्फ A'),
+        location: 'पेंट्री शेल्फ A',
       },
       {
         _key: 'p2',
         ingredient: ref('ingredient-chicken'),
         quantity: 0.5,
         capacity: 2,
-        unit: i18nString('lbs', 'पाउंड'),
+        unit: 'पाउंड',
         category: ref('pantry-cat-protein'),
-        location: i18nString('Refrigerator', 'रेफ्रिजरेटर'),
+        location: 'रेफ्रिजरेटर',
       },
       {
         _key: 'p3',
         ingredient: ref('ingredient-ghee'),
         quantity: 0.15,
         capacity: 1,
-        unit: i18nString('jar', 'जार'),
+        unit: 'जार',
         category: ref('pantry-cat-spices'),
-        location: i18nString('Spice drawer', 'मसाला दराज'),
+        location: 'मसाला दराज',
       },
     ],
   },

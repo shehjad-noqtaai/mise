@@ -8,12 +8,13 @@ export const seo = defineType({
     defineField({
       name: 'metaTitle',
       title: 'Meta Title',
-      type: 'internationalizedArrayString',
+      type: 'string',
     }),
     defineField({
       name: 'metaDescription',
       title: 'Meta Description',
-      type: 'internationalizedArrayText',
+      type: 'text',
+      rows: 3,
     }),
   ],
 })

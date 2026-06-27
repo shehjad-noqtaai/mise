@@ -5,7 +5,7 @@ import {loadQuery} from '../../../lib/sanity/load-query'
 import {getDraftModeProps} from '../../../lib/sanity/draft-mode'
 import {PANTRY_SNAPSHOT_QUERY} from '../../../lib/sanity/queries'
 import type {PANTRY_SNAPSHOT_QUERY_RESULT} from '@starter/sanity-types'
-import {DEFAULT_LOCALE, localizedValue, localeFromParam} from '../../../lib/i18n'
+import {DEFAULT_LOCALE, localeFromParam} from '../../../lib/i18n'
 import {getRelativeLocaleUrl} from 'astro:i18n'
 
 export const prerender = false
@@ -38,7 +38,7 @@ const {data: pantry} = await loadQuery<PANTRY_SNAPSHOT_QUERY_RESULT>({
         <InventoryProgressBar
           quantity={item.quantity}
           capacity={item.capacity}
-          label={`${localizedValue(item.ingredientName, locale) ?? 'Item'}${item.location ? ` · ${localizedValue(item.location, locale)}` : ''}`}
+          label={`${item.ingredientName ?? 'Item'}${item.location ? ` · ${item.location}` : ''}`}
         />
       ))
     }

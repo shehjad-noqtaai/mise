@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {pickInternationalizedValue} from '../../lib/internationalizedValue'
 
 export const recipeIngredientLine = defineType({
   name: 'recipeIngredientLine',
@@ -21,23 +22,27 @@ export const recipeIngredientLine = defineType({
     defineField({
       name: 'unit',
       title: 'Unit',
-      type: 'internationalizedArrayString',
+      type: 'string',
     }),
     defineField({
       name: 'note',
       title: 'Note',
-      type: 'internationalizedArrayString',
+      type: 'string',
       description: 'Optional prep note, e.g. "finely chopped"',
     }),
   ],
   preview: {
     select: {
       quantity: 'quantity',
+      unit: 'unit',
       ingredientName: 'ingredient.name',
+      locale: '^language',
     },
-    prepare({quantity, ingredientName}) {
+    prepare({quantity, unit, ingredientName, locale}) {
+      const name =
+        pickInternationalizedValue(ingredientName, locale ?? 'en-US') ?? 'Ingredient'
       return {
-        title: `${quantity ?? ''} ${ingredientName ?? 'Ingredient'}`.trim(),
+        title: [quantity, unit, name].filter(Boolean).join(' ').trim() || 'Ingredient',
       }
     },
   },

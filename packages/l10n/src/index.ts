@@ -8,7 +8,13 @@ export {
   localeTranslationTypeName,
   languageFieldName,
 } from './types'
-export {resolveLocaleDefaults, isValidLocale, getFlagFromCode} from './utils'
+export {
+  resolveLocaleDefaults,
+  isValidLocale,
+  getFlagFromCode,
+  pickInternationalizedValue,
+  isInternationalizedArray,
+} from './utils'
 export {GLOSSARIES_QUERY, STYLE_GUIDE_FOR_LOCALE_QUERY, SUPPORTED_LANGUAGES_QUERY} from './queries'
 
 // --- Re-exports from translations pane (UI) ---

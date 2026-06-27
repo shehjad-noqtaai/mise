@@ -16,15 +16,16 @@ export function isLocale(value: string): value is Locale {
   return localeFromParam(value) !== undefined
 }
 
-export function localizedValue<T extends {language?: string; value?: unknown}>(
-  entries: T[] | undefined,
+export function localizedValue<T extends {language?: string; _key?: string; value?: unknown}>(
+  entries: T[] | string | null | undefined,
   locale: string,
   fallback = DEFAULT_LOCALE,
 ) {
+  if (typeof entries === 'string') return entries || undefined
   if (!entries?.length) return undefined
   return (
-    entries.find((entry) => entry.language === locale)?.value ??
-    entries.find((entry) => entry.language === fallback)?.value ??
+    entries.find((entry) => entry.language === locale || entry._key === locale)?.value ??
+    entries.find((entry) => entry.language === fallback || entry._key === fallback)?.value ??
     entries[0]?.value
   )
 }

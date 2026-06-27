@@ -1,4 +1,8 @@
-import {definePlugin, type DocumentActionComponent, type SchemaTypeDefinition} from 'sanity'
+import {
+  definePlugin,
+  type DocumentActionComponent,
+  type SchemaTypeDefinition,
+} from 'sanity'
 import {documentInternationalization, type Language} from '@sanity/document-internationalization'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 
@@ -20,15 +24,23 @@ import {createFieldTranslationPublishGate} from './translations/useFieldTranslat
 
 interface L10nOptions {
   localizedSchemaTypes: readonly string[]
+  /** Document types with field-level internationalizedArray fields (not document-level i18n). */
+  fieldLocalizedSchemaTypes?: readonly string[]
   defaultLanguage?: string
 }
 
-export function createL10n({localizedSchemaTypes, defaultLanguage = 'en-US'}: L10nOptions) {
+export function createL10n({
+  localizedSchemaTypes,
+  fieldLocalizedSchemaTypes = [],
+  defaultLanguage = 'en-US',
+}: L10nOptions) {
   const translationInspector = createTranslationInspector({
     internationalizedTypes: [...localizedSchemaTypes],
     defaultLanguage,
     languageField: languageFieldName,
   })
+
+  const fieldLocalizedTypes = new Set(fieldLocalizedSchemaTypes)
 
   return {
     plugin: definePlugin({
@@ -68,22 +80,20 @@ export function createL10n({localizedSchemaTypes, defaultLanguage = 'en-US'}: L1
       },
       document: {
         inspectors: (prev) => [translationInspector, ...prev],
-        // Wrap the publish action with a confirmation gate when there are
-        // unreviewed or stale field translations.
         actions: (prev: DocumentActionComponent[], context) => {
-          // Only gate document types that have internationalized array fields.
-          // The gate hook itself is lightweight (single listenQuery) so the
-          // overhead for non-matching types is negligible, but we skip
-          // system types to be safe.
-          if (localizedSchemaTypes.includes(context.schemaType)) return prev
+          if (
+            localizedSchemaTypes.includes(context.schemaType) ||
+            !fieldLocalizedTypes.has(context.schemaType)
+          ) {
+            return prev
+          }
+
           return prev.map((action) =>
-            action.action === 'publish' ? createFieldTranslationPublishGate(action) : action,
+            action.action === 'publish'
+              ? createFieldTranslationPublishGate(action)
+              : action,
           )
         },
-        // Replace the plain locale badge from @sanity/document-internationalization
-        // with our flag-enhanced version. The i18n plugin wraps LanguageBadge in an
-        // anonymous arrow, so we identify it by exclusion: keep only named badges
-        // (Sanity defaults like "LiveEditBadge") and append ours.
         badges: (prev, context) =>
           localizedSchemaTypes.includes(context.schemaType)
             ? [...prev.filter((badge) => badge.name !== ''), LocaleBadge]
