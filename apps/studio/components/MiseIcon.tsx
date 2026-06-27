@@ -26,7 +26,18 @@ export function MiseIcon() {
         strokeWidth="1.75"
         strokeLinecap="round"
       />
-      {dev ? <rect x="6" y="6" width="8" height="4" rx="1" fill="#F97316" stroke="#FAF9F6" strokeWidth="0.75" /> : null}
+      {dev ? (
+        <rect
+          x="6"
+          y="6"
+          width="8"
+          height="4"
+          rx="1"
+          fill="#F97316"
+          stroke="#FAF9F6"
+          strokeWidth="0.75"
+        />
+      ) : null}
     </svg>
   )
 }
