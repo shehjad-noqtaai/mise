@@ -1,11 +1,12 @@
 /**
  * Generate editorial hero images for recipes missing heroImage.
  *
- * Uses Sanity Agent Actions (same backend as Studio AI Assist / MCP generate_image).
+ * Generates via Agent Actions, then migrates the result into the Mise Media Library folder.
  * Run: pnpm --filter studio generate-recipe-images
  */
 import {createClient} from '@sanity/client'
 import {getCliClient} from 'sanity/cli'
+import {migrateImageUrlToMediaLibrary} from '../lib/media-library.ts'
 
 const SCHEMA_ID = '_.schemas.default'
 
@@ -33,10 +34,73 @@ function buildPrompt(title: string, summary: string | undefined, slug: string) {
     .join(' ')
 }
 
+async function migrateRecipeHeroToMediaLibrary(
+  client: ReturnType<typeof createClient>,
+  recipeId: string,
+  slug: string,
+  title: string,
+) {
+  const {projectId, dataset, token} = client.config()
+  if (!projectId || !dataset || !token) {
+    throw new Error('Missing Sanity client configuration for Media Library migration.')
+  }
+
+  const recipe = await client.fetch<{heroImage?: {asset?: {_ref?: string}}; title?: string}>(
+    `*[_id == $id][0]{title, heroImage{asset}}`,
+    {id: recipeId},
+  )
+
+  const oldAssetId = recipe?.heroImage?.asset?._ref
+  if (!oldAssetId) return
+
+  const asset = await client.fetch<{url?: string}>(`*[_id == $id][0]{url}`, {id: oldAssetId})
+  if (!asset?.url) return
+
+  const filename = `${slug}-hero.jpg`
+  const {heroImage, linkedAssetId} = await migrateImageUrlToMediaLibrary({
+    token,
+    projectId,
+    dataset,
+    imageUrl: asset.url,
+    filename,
+    title: `${recipe.title ?? title} Hero`,
+  })
+
+  await client.patch(recipeId).set({heroImage}).commit()
+  console.log(`  ✓ migrated to Media Library (${linkedAssetId})`)
+
+  const remainingRefs = await client.fetch<number>(`count(*[references($assetId)])`, {
+    assetId: oldAssetId,
+  })
+  if (remainingRefs === 0) {
+    await client.delete(oldAssetId).catch(() => {})
+  }
+}
+
 async function main() {
-  const client = getCliClient({apiVersion: '2025-01-01'}).withConfig({
+  const client = getCliClient({apiVersion: '2025-02-19'}).withConfig({
     useCdn: false,
   })
+  const {token} = client.config()
+  if (!token) {
+    throw new Error('Missing auth token. Run with --with-user-token.')
+  }
+
+  const pendingMigration = await client.fetch<
+    Array<{_id: string; title: string; slug?: {current?: string}}>
+  >(
+    `*[_type == "recipe" && language == "en-US" && defined(heroImage.asset) && !defined(heroImage.media)]{
+      _id,
+      title,
+      slug
+    }`,
+  )
+
+  for (const recipe of pendingMigration) {
+    const slug = recipe.slug?.current ?? recipe._id
+    console.log(`→ Migrating existing hero for ${recipe.title}`)
+    await migrateRecipeHeroToMediaLibrary(client, recipe._id, slug, recipe.title)
+  }
 
   const recipes = await client.fetch<
     Array<{_id: string; title: string; summary?: string; slug?: {current?: string}; language?: string}>
@@ -50,33 +114,34 @@ async function main() {
     }`,
   )
 
-  if (!recipes.length) {
-    console.log('All English recipes already have hero images.')
+  if (!recipes.length && !pendingMigration.length) {
+    console.log('All English recipes already have Media Library hero images.')
+    await syncTranslationImages(client)
     return
   }
 
-  console.log(`Generating images for ${recipes.length} recipe(s)...`)
+  if (recipes.length) {
+    console.log(`Generating images for ${recipes.length} recipe(s)...`)
 
-  for (const recipe of recipes) {
-    const slug = recipe.slug?.current ?? recipe._id
-    const instruction = buildPrompt(recipe.title, recipe.summary, slug)
+    for (const recipe of recipes) {
+      const slug = recipe.slug?.current ?? recipe._id
+      const instruction = buildPrompt(recipe.title, recipe.summary, slug)
 
-    console.log(`→ ${recipe.title}`)
+      console.log(`→ ${recipe.title}`)
 
-    await client.agent.action.generate({
-      schemaId: SCHEMA_ID,
-      documentId: recipe._id,
-      instruction,
-      target: {path: ['heroImage', 'asset']},
-      async: true,
-    })
+      await client.agent.action.generate({
+        schemaId: SCHEMA_ID,
+        documentId: recipe._id,
+        instruction,
+        target: {path: ['heroImage', 'asset']},
+        async: true,
+      })
+    }
+
+    console.log('Image generation started in the background.')
+    console.log('Re-run after ~30s to migrate generated images into Media Library.')
   }
 
-  console.log('Image generation started in the background.')
-  console.log('Re-run after ~30s, then publish drafts in Studio or via:')
-  console.log('  sanity documents publish <id>')
-
-  // Copy hero images from en-US drafts to matching hi-IN translations
   await syncTranslationImages(client)
 }
 
@@ -96,12 +161,18 @@ async function syncTranslationImages(client: ReturnType<typeof createClient>) {
   )
 
   for (const pair of pairs) {
-    if (!pair.heroImage?.asset?._ref || !pair.hiId) continue
+    const heroImage = await client.fetch<
+      | {
+          _type?: 'image'
+          asset?: {_type: 'reference'; _ref: string}
+          media?: {_type: 'globalDocumentReference'; _ref: string; _weak: true}
+        }
+      | undefined
+    >(`*[_id == $enId][0].heroImage`, {enId: pair.enId})
 
-    await client
-      .patch(pair.hiId)
-      .set({heroImage: {_type: 'image', asset: {_type: 'reference', _ref: pair.heroImage.asset._ref}}})
-      .commit()
+    if (!heroImage?.asset?._ref || !pair.hiId) continue
+
+    await client.patch(pair.hiId).set({heroImage}).commit()
   }
 }
 

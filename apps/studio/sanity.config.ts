@@ -134,6 +134,16 @@ export default defineConfig({
   projectId,
   dataset,
 
+  mediaLibrary: {
+    enabled: true,
+  },
+
+  form: {
+    image: {
+      assetSources: (sources) => sources.filter((source) => source.name !== 'sanity-default'),
+    },
+  },
+
   unstable_clientFactory: (options) =>
     createClient({
       ...options,
