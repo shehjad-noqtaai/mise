@@ -12,6 +12,8 @@ for (const dir of [__dirname, repoRoot]) {
   }
 }
 
+const appId = process.env.SANITY_STUDIO_APP_ID?.trim()
+
 export default defineCliConfig({
   api: {
     projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? '1rkupi9j',
@@ -31,8 +33,8 @@ export default defineCliConfig({
     },
   },
   deployment: {
-    autoUpdates: true,
-    appId: 'dhe9wg4msckhg9y2zh5y4qzf',
+    autoUpdates: Boolean(appId),
+    ...(appId ? {appId} : {}),
   },
   typegen: {
     enabled: true,

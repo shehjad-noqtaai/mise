@@ -14,9 +14,14 @@ on:
           - both
         default: both
       deploy_studio:
-        description: Deploy Sanity Studio to production hostname (manual runs only)
-        type: boolean
-        default: false
+        description: Deploy Sanity Studio (manual runs only)
+        type: choice
+        options:
+          - none
+          - production
+          - development
+          - both
+        default: none
 
 env:
   WEB_DEV_WORKER_NAME: mise-web-dev
@@ -139,7 +144,7 @@ jobs:
       - name: Check required config
         run: |
           missing=0
-          for name in SANITY_STUDIO_PROJECT_ID SANITY_STUDIO_DATASET SANITY_STUDIO_HOSTNAME CLOUDFLARE_ACCOUNT_ID; do
+          for name in SANITY_STUDIO_PROJECT_ID SANITY_STUDIO_DATASET CLOUDFLARE_ACCOUNT_ID; do
             if [ -z "${!name}" ]; then
               echo "::error::Missing GitHub Actions variable (Development environment): $name"
               missing=1
@@ -155,7 +160,6 @@ jobs:
         env:
           SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
           SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
-          SANITY_STUDIO_HOSTNAME: ${{ vars.SANITY_STUDIO_HOSTNAME }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - uses: pnpm/action-setup@v4
@@ -202,10 +206,11 @@ jobs:
     if: |
       (
         github.event_name == 'workflow_dispatch' &&
-        inputs.deploy_studio == true
+        (inputs.deploy_studio == 'production' || inputs.deploy_studio == 'both')
       ) ||
       (
         github.event_name == 'push' &&
+        github.ref == 'refs/heads/main' &&
         needs.changes.outputs.studio == 'true'
       )
     runs-on: ubuntu-latest
@@ -270,6 +275,86 @@ jobs:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
           SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
           SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
+          SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID != '' && vars.SANITY_STUDIO_APP_ID || 'dhe9wg4msckhg9y2zh5y4qzf' }}
+          SANITY_STUDIO_HOSTNAME: ${{ env.STUDIO_HOSTNAME }}
+          SANITY_STUDIO_PREVIEW_URL: ${{ env.STUDIO_PREVIEW_URL }}
+          SANITY_STUDIO_URL: ${{ env.STUDIO_URL }}
+
+  studio-dev:
+    needs: changes
+    if: |
+      (
+        github.event_name == 'workflow_dispatch' &&
+        (inputs.deploy_studio == 'development' || inputs.deploy_studio == 'both')
+      ) ||
+      (
+        github.event_name == 'push' &&
+        github.ref == 'refs/heads/develop' &&
+        needs.changes.outputs.studio == 'true'
+      )
+    runs-on: ubuntu-latest
+    environment: Development
+    defaults:
+      run:
+        working-directory: apps/studio
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required config
+        run: |
+          missing=0
+          for name in SANITY_STUDIO_PROJECT_ID SANITY_STUDIO_DATASET SANITY_STUDIO_HOSTNAME; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing GitHub Actions variable (Development environment): $name"
+              missing=1
+            fi
+          done
+          for name in SANITY_AUTH_TOKEN; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing GitHub Actions secret (Development environment): $name"
+              missing=1
+            fi
+          done
+          exit "$missing"
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+          SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
+          SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
+          SANITY_STUDIO_HOSTNAME: ${{ vars.SANITY_STUDIO_HOSTNAME }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+        working-directory: .
+      - name: Prepare Studio deploy env
+        run: |
+          preview="${SANITY_STUDIO_PREVIEW_URL:-https://mise-web-dev.shehjkhan.workers.dev}"
+          hostname="${SANITY_STUDIO_HOSTNAME}"
+          hostname="${hostname#https://}"
+          hostname="${hostname#http://}"
+          hostname="${hostname%%.sanity.studio*}"
+          hostname="${hostname%%/*}"
+          if [ -z "$hostname" ]; then
+            echo "::error::SANITY_STUDIO_HOSTNAME is empty after sanitizing (use slug only, e.g. mise-kitchen-os-dev)"
+            exit 1
+          fi
+          echo "STUDIO_HOSTNAME=$hostname" >> "$GITHUB_ENV"
+          echo "STUDIO_PREVIEW_URL=$preview" >> "$GITHUB_ENV"
+          echo "STUDIO_URL=${SANITY_STUDIO_URL:-https://${hostname}.sanity.studio}" >> "$GITHUB_ENV"
+        env:
+          SANITY_STUDIO_HOSTNAME: ${{ vars.SANITY_STUDIO_HOSTNAME }}
+          SANITY_STUDIO_PREVIEW_URL: ${{ vars.SANITY_STUDIO_PREVIEW_URL }}
+          SANITY_STUDIO_URL: ${{ vars.SANITY_STUDIO_URL }}
+      - name: Deploy Sanity Studio (development)
+        run: pnpm exec sanity deploy --url "$STUDIO_HOSTNAME" -y
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+          SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
+          SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
+          SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID }}
           SANITY_STUDIO_HOSTNAME: ${{ env.STUDIO_HOSTNAME }}
           SANITY_STUDIO_PREVIEW_URL: ${{ env.STUDIO_PREVIEW_URL }}
           SANITY_STUDIO_URL: ${{ env.STUDIO_URL }}
