@@ -13,10 +13,13 @@ import {resolve} from './lib/resolve'
 
 const localPreviewUrl = 'http://localhost:4321'
 const productionPreviewUrl = 'https://mise-web.shehjkhan.workers.dev'
+const devPreviewUrl = 'https://mise-web-dev.shehjkhan.workers.dev'
 const previewUrl = process.env.SANITY_STUDIO_PREVIEW_URL ?? localPreviewUrl
 const previewInitialUrl = `${previewUrl.replace(/\/$/, '')}/en-us/`
-// Allow iframe preview from both local and deployed Astro apps regardless of which Studio build you use.
-const studioPreviewOrigins = [...new Set([previewUrl, localPreviewUrl, productionPreviewUrl])]
+// Allow iframe preview from local, dev, and production Astro apps.
+const studioPreviewOrigins = [
+  ...new Set([previewUrl, localPreviewUrl, devPreviewUrl, productionPreviewUrl]),
+]
 
 const l10nTypes = ['l10n.locale', 'l10n.glossary', 'l10n.styleGuide', 'translation.metadata']
 

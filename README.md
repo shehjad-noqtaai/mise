@@ -75,27 +75,50 @@ Add a locale: create `l10n.locale` doc → seed style guide → add to Astro `i1
 
 ## Deploy
 
+**Production** (`mise-web` → https://mise-web.shehjkhan.workers.dev):
+
 ```bash
-pnpm --filter web build && pnpm --filter web exec wrangler deploy --config dist/server/wrangler.json
+pnpm --filter web build && pnpm --filter web deploy
+```
+
+**Dev** (`mise-web-dev` → https://mise-web-dev.shehjkhan.workers.dev):
+
+```bash
+pnpm --filter web build && pnpm --filter web deploy:dev
+```
+
+Studio (production hostname):
+
+```bash
 pnpm --filter studio exec sanity deploy
 ```
 
 GitHub Actions workflow: `.github/workflows/deploy.yml`
 
+| Branch / trigger        | Deploys                                     |
+| ----------------------- | ------------------------------------------- |
+| Push to `main`          | Production web + Studio (when paths match)  |
+| Push to `develop`       | Dev web worker only (when web paths match)  |
+| Manual **Run workflow** | Choose production, dev, or both web workers |
+
 ### GitHub Actions deploy config
 
-Deploy uses the **Production** environment. Add values under **Settings → Secrets and variables → Actions → Environments → Production** (not repository-level secrets).
+**Production** uses the **Production** environment. **Dev web** uses the **Development** environment. Add values under **Settings → Secrets and variables → Actions → Environments** (not repository-level secrets).
 
-| Name                       | Type     | Used by        | Value                                                           |
-| -------------------------- | -------- | -------------- | --------------------------------------------------------------- |
-| `SANITY_STUDIO_PROJECT_ID` | Variable | web, studio    | `1rkupi9j`                                                      |
-| `SANITY_STUDIO_DATASET`    | Variable | web, studio    | `production`                                                    |
-| `CLOUDFLARE_ACCOUNT_ID`    | Variable | web            | Cloudflare account ID                                           |
-| `SANITY_AUTH_TOKEN`        | Secret   | studio         | [sanity.io/manage](https://www.sanity.io/manage) → API → Tokens |
-| `CLOUDFLARE_API_TOKEN`     | Secret   | web            | See [Cloudflare API token](#cloudflare-api-token) below         |
-| `SANITY_API_READ_TOKEN`    | Secret   | web (optional) | Read token for Presentation / draft mode                        |
+| Name                       | Type     | Used by              | Value                                                           |
+| -------------------------- | -------- | -------------------- | --------------------------------------------------------------- |
+| `SANITY_STUDIO_PROJECT_ID` | Variable | web, web-dev, studio | `1rkupi9j`                                                      |
+| `SANITY_STUDIO_DATASET`    | Variable | web, web-dev, studio | `production` (or a dev dataset on **Development**)              |
+| `CLOUDFLARE_ACCOUNT_ID`    | Variable | web, web-dev         | Cloudflare account ID                                           |
+| `SANITY_AUTH_TOKEN`        | Secret   | studio               | [sanity.io/manage](https://www.sanity.io/manage) → API → Tokens |
+| `CLOUDFLARE_API_TOKEN`     | Secret   | web, web-dev         | See [Cloudflare API token](#cloudflare-api-token) below         |
+| `SANITY_API_READ_TOKEN`    | Secret   | web, web-dev (opt.)  | Read token for Presentation / draft mode                        |
 
-Public URLs (`SANITY_STUDIO_PREVIEW_URL`, `SANITY_STUDIO_URL`) are set in the workflow file — not secrets.
+Public URLs are set in the workflow file — not secrets:
+
+- Production preview: `https://mise-web.shehjkhan.workers.dev`
+- Dev preview: `https://mise-web-dev.shehjkhan.workers.dev`
+- Studio: `https://mise-kitchen-os.sanity.studio`
 
 #### Cloudflare API token
 
