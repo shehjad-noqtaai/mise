@@ -15,10 +15,6 @@ on:
         default: both
 
 env:
-  # Public URLs — safe to commit; not secrets.
-  SANITY_STUDIO_PREVIEW_URL: https://mise-web.shehjkhan.workers.dev
-  SANITY_STUDIO_URL: https://mise-kitchen-os.sanity.studio
-  WEB_DEV_URL: https://mise-web-dev.shehjkhan.workers.dev
   WEB_DEV_WORKER_NAME: mise-web-dev
 
 jobs:
@@ -63,7 +59,7 @@ jobs:
       - name: Check required config
         run: |
           missing=0
-          for name in SANITY_STUDIO_PROJECT_ID SANITY_STUDIO_DATASET CLOUDFLARE_ACCOUNT_ID; do
+          for name in SANITY_STUDIO_PROJECT_ID SANITY_STUDIO_DATASET SANITY_STUDIO_HOSTNAME CLOUDFLARE_ACCOUNT_ID; do
             if [ -z "${!name}" ]; then
               echo "::error::Missing GitHub Actions variable (Production environment): $name"
               missing=1
@@ -79,6 +75,7 @@ jobs:
         env:
           SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
           SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
+          SANITY_STUDIO_HOSTNAME: ${{ vars.SANITY_STUDIO_HOSTNAME }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - uses: pnpm/action-setup@v4
@@ -97,7 +94,7 @@ jobs:
           SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
           PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
           PUBLIC_SANITY_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
-          SANITY_STUDIO_URL: ${{ env.SANITY_STUDIO_URL }}
+          SANITY_STUDIO_URL: ${{ vars.SANITY_STUDIO_URL || format('https://{0}.sanity.studio', vars.SANITY_STUDIO_HOSTNAME) }}
       - name: Verify Cloudflare credentials
         run: pnpm exec wrangler whoami
         env:
@@ -138,7 +135,7 @@ jobs:
       - name: Check required config
         run: |
           missing=0
-          for name in SANITY_STUDIO_PROJECT_ID SANITY_STUDIO_DATASET CLOUDFLARE_ACCOUNT_ID; do
+          for name in SANITY_STUDIO_PROJECT_ID SANITY_STUDIO_DATASET SANITY_STUDIO_HOSTNAME CLOUDFLARE_ACCOUNT_ID; do
             if [ -z "${!name}" ]; then
               echo "::error::Missing GitHub Actions variable (Development environment): $name"
               missing=1
@@ -154,6 +151,7 @@ jobs:
         env:
           SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
           SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
+          SANITY_STUDIO_HOSTNAME: ${{ vars.SANITY_STUDIO_HOSTNAME }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - uses: pnpm/action-setup@v4
@@ -172,7 +170,7 @@ jobs:
           SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
           PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
           PUBLIC_SANITY_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
-          SANITY_STUDIO_URL: ${{ env.SANITY_STUDIO_URL }}
+          SANITY_STUDIO_URL: ${{ vars.SANITY_STUDIO_URL || format('https://{0}.sanity.studio', vars.SANITY_STUDIO_HOSTNAME) }}
       - name: Verify Cloudflare credentials
         run: pnpm exec wrangler whoami
         env:
@@ -210,7 +208,7 @@ jobs:
       - name: Check required config
         run: |
           missing=0
-          for name in SANITY_STUDIO_PROJECT_ID SANITY_STUDIO_DATASET; do
+          for name in SANITY_STUDIO_PROJECT_ID SANITY_STUDIO_DATASET SANITY_STUDIO_HOSTNAME; do
             if [ -z "${!name}" ]; then
               echo "::error::Missing GitHub Actions variable (Production environment): $name"
               missing=1
@@ -227,6 +225,7 @@ jobs:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
           SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
           SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
+          SANITY_STUDIO_HOSTNAME: ${{ vars.SANITY_STUDIO_HOSTNAME }}
       - uses: pnpm/action-setup@v4
         with:
           version: 10.30.3
@@ -236,11 +235,31 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
         working-directory: .
-      - name: Deploy Sanity Studio
-        run: pnpm exec sanity deploy
+      - name: Prepare Studio deploy env
+        run: |
+          preview="${SANITY_STUDIO_PREVIEW_URL:-https://mise-web.shehjkhan.workers.dev}"
+          hostname="${SANITY_STUDIO_HOSTNAME}"
+          hostname="${hostname#https://}"
+          hostname="${hostname#http://}"
+          hostname="${hostname%%.sanity.studio*}"
+          hostname="${hostname%%/*}"
+          if [ -z "$hostname" ]; then
+            echo "::error::SANITY_STUDIO_HOSTNAME is empty after sanitizing (use slug only, e.g. mise-kitchen-os)"
+            exit 1
+          fi
+          echo "STUDIO_HOSTNAME=$hostname" >> "$GITHUB_ENV"
+          echo "STUDIO_PREVIEW_URL=$preview" >> "$GITHUB_ENV"
+          echo "STUDIO_URL=${SANITY_STUDIO_URL:-https://${hostname}.sanity.studio}" >> "$GITHUB_ENV"
+        env:
+          SANITY_STUDIO_HOSTNAME: ${{ vars.SANITY_STUDIO_HOSTNAME }}
+          SANITY_STUDIO_PREVIEW_URL: ${{ vars.SANITY_STUDIO_PREVIEW_URL }}
+          SANITY_STUDIO_URL: ${{ vars.SANITY_STUDIO_URL }}
+      - name: Deploy Sanity Studio (production)
+        run: pnpm exec sanity deploy --url "$STUDIO_HOSTNAME" -y
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
           SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
           SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
-          SANITY_STUDIO_PREVIEW_URL: ${{ env.SANITY_STUDIO_PREVIEW_URL }}
-          SANITY_STUDIO_URL: ${{ env.SANITY_STUDIO_URL }}
+          SANITY_STUDIO_HOSTNAME: ${{ env.STUDIO_HOSTNAME }}
+          SANITY_STUDIO_PREVIEW_URL: ${{ env.STUDIO_PREVIEW_URL }}
+          SANITY_STUDIO_URL: ${{ env.STUDIO_URL }}

@@ -87,11 +87,13 @@ pnpm --filter web build && pnpm --filter web deploy
 pnpm --filter web build && pnpm --filter web deploy:dev
 ```
 
-Studio (production hostname):
+Studio deploy (set `SANITY_STUDIO_HOSTNAME` — slug only, e.g. `mise-kitchen-os`, no `https://`):
 
 ```bash
-pnpm --filter studio exec sanity deploy
+SANITY_STUDIO_HOSTNAME=mise-kitchen-os pnpm --filter studio deploy
 ```
+
+Dev Studio UI: run locally (`pnpm --filter studio dev`). Dev **web** preview uses `mise-web-dev` via the Presentation tool (allowed origins include both workers).
 
 GitHub Actions workflow: `.github/workflows/deploy.yml`
 
@@ -101,24 +103,25 @@ GitHub Actions workflow: `.github/workflows/deploy.yml`
 | Push to `develop`       | Dev web worker only (when web paths match)  |
 | Manual **Run workflow** | Choose production, dev, or both web workers |
 
+> **Hosted Studio:** Sanity allows **one** `*.sanity.studio` hostname per project (`mise-kitchen-os`). Use local `pnpm --filter studio dev` for dev Studio UI. Presentation can preview the dev web worker.
+
 ### GitHub Actions deploy config
 
-**Production** uses the **Production** environment. **Dev web** uses the **Development** environment. Add values under **Settings → Secrets and variables → Actions → Environments** (not repository-level secrets).
+**Production** and **Development** are separate GitHub environments. Add values under **Settings → Secrets and variables → Actions → Environments** (not repository-level secrets).
 
-| Name                       | Type     | Used by              | Value                                                           |
-| -------------------------- | -------- | -------------------- | --------------------------------------------------------------- |
-| `SANITY_STUDIO_PROJECT_ID` | Variable | web, web-dev, studio | `1rkupi9j`                                                      |
-| `SANITY_STUDIO_DATASET`    | Variable | web, web-dev, studio | `production` (or a dev dataset on **Development**)              |
-| `CLOUDFLARE_ACCOUNT_ID`    | Variable | web, web-dev         | Cloudflare account ID                                           |
-| `SANITY_AUTH_TOKEN`        | Secret   | studio               | [sanity.io/manage](https://www.sanity.io/manage) → API → Tokens |
-| `CLOUDFLARE_API_TOKEN`     | Secret   | web, web-dev         | See [Cloudflare API token](#cloudflare-api-token) below         |
-| `SANITY_API_READ_TOKEN`    | Secret   | web, web-dev (opt.)  | Read token for Presentation / draft mode                        |
+| Name                        | Type     | Used by                 | Production example                       | Development example                                                                  |
+| --------------------------- | -------- | ----------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------ |
+| `SANITY_STUDIO_PROJECT_ID`  | Variable | all                     | `1rkupi9j`                               | `1rkupi9j`                                                                           |
+| `SANITY_STUDIO_DATASET`     | Variable | all                     | `production`                             | `production`                                                                         |
+| `SANITY_STUDIO_HOSTNAME`    | Variable | studio (prod deploy)    | `mise-kitchen-os` (slug only)            | not used for hosted Studio                                                           |
+| `SANITY_STUDIO_URL`         | Variable | web (optional)          | `https://mise-kitchen-os.sanity.studio`  | same (prod Studio URL for stega links)                                               |
+| `SANITY_STUDIO_PREVIEW_URL` | Variable | studio deploy (prod CI) | `https://mise-web.shehjkhan.workers.dev` | `https://mise-web-dev.shehjkhan.workers.dev` (copy to `.env.local` for local Studio) |
+| `CLOUDFLARE_ACCOUNT_ID`     | Variable | web, web-dev            | Cloudflare account ID                    | same                                                                                 |
+| `SANITY_AUTH_TOKEN`         | Secret   | studio                  | Sanity deploy token                      | not required                                                                         |
+| `CLOUDFLARE_API_TOKEN`      | Secret   | web, web-dev            | See below                                | same                                                                                 |
+| `SANITY_API_READ_TOKEN`     | Secret   | web, web-dev (optional) | Read token for draft mode                | optional                                                                             |
 
-Public URLs are set in the workflow file — not secrets:
-
-- Production preview: `https://mise-web.shehjkhan.workers.dev`
-- Dev preview: `https://mise-web-dev.shehjkhan.workers.dev`
-- Studio: `https://mise-kitchen-os.sanity.studio`
+`SANITY_STUDIO_URL` and `SANITY_STUDIO_PREVIEW_URL` are optional when `SANITY_STUDIO_HOSTNAME` is set — CI derives `https://<hostname>.sanity.studio` if URL is omitted.
 
 #### Cloudflare API token
 

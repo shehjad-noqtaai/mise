@@ -9,17 +9,21 @@ import {agentContextPlugin} from '@sanity/agent-context/studio'
 import {createL10n, useTranslateFieldAction, withLocaleFilter} from '@starter/l10n'
 import {schemaTypes} from './schemaTypes'
 import {MiseIcon} from './components/MiseIcon'
+import {readEnvUrl, uniqueUrls} from './lib/env-url'
 import {resolve} from './lib/resolve'
 
 const localPreviewUrl = 'http://localhost:4321'
 const productionPreviewUrl = 'https://mise-web.shehjkhan.workers.dev'
 const devPreviewUrl = 'https://mise-web-dev.shehjkhan.workers.dev'
-const previewUrl = process.env.SANITY_STUDIO_PREVIEW_URL ?? localPreviewUrl
+const previewUrl = readEnvUrl(process.env.SANITY_STUDIO_PREVIEW_URL, localPreviewUrl)
 const previewInitialUrl = `${previewUrl.replace(/\/$/, '')}/en-us/`
 // Allow iframe preview from local, dev, and production Astro apps.
-const studioPreviewOrigins = [
-  ...new Set([previewUrl, localPreviewUrl, devPreviewUrl, productionPreviewUrl]),
-]
+const studioPreviewOrigins = uniqueUrls(
+  previewUrl,
+  localPreviewUrl,
+  devPreviewUrl,
+  productionPreviewUrl,
+)
 
 const l10nTypes = ['l10n.locale', 'l10n.glossary', 'l10n.styleGuide', 'translation.metadata']
 
