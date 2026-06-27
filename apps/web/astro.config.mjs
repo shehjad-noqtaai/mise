@@ -3,8 +3,9 @@ import {defineConfig, envField} from 'astro/config'
 import cloudflare from '@astrojs/cloudflare'
 import react from '@astrojs/react'
 import sanity from '@sanity/astro'
-import {fileURLToPath} from 'node:url'
 import {dirname, resolve} from 'node:path'
+import process from 'node:process'
+import {fileURLToPath} from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const repoRoot = resolve(__dirname, '../..')
