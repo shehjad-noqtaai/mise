@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: studio
+        working-directory: apps/studio
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

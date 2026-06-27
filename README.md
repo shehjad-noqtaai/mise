@@ -6,7 +6,7 @@ Kitchen operating system monorepo: **Sanity Studio v6**, **Astro 7** frontend on
 
 | Workspace | Description |
 |-----------|-------------|
-| `studio/` | Sanity Studio v6 with Mise content schemas |
+| `apps/studio/` | Sanity Studio v6 with Mise content schemas |
 | `apps/web/` | Astro frontend (Cloudflare Workers) |
 | `packages/l10n/` | Agentic translation plugin, glossary, style guides |
 | `packages/design-tokens/` | Sage & Stone design tokens from `docs/DESIGN.md` |
@@ -29,7 +29,7 @@ Kitchen operating system monorepo: **Sanity Studio v6**, **Astro 7** frontend on
 Copy `.env.example` to `.env` and set your project ID, or run:
 
 ```bash
-cd studio
+cd apps/studio
 pnpm exec sanity projects create "Mise Kitchen OS" --organization=ofsMxPwd5 --yes --json
 pnpm exec sanity dataset create production --visibility public
 ```

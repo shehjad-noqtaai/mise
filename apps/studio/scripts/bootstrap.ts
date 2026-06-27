@@ -22,7 +22,7 @@ import {getCliClient} from 'sanity/cli'
 
 const dir = import.meta.dirname!
 const studioEnv = resolve(dir, '../.env')
-const rootEnv = resolve(dir, '../../.env')
+const rootEnv = resolve(dir, '../../../.env')
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -51,7 +51,7 @@ heading('Consolidate env')
 // Case D: neither exists, .env.example exists     → seed from .env.example (values empty)
 // Case E: nothing exists                          → fail early with guidance
 
-const rootExample = resolve(dir, '../../.env.example')
+const rootExample = resolve(dir, '../../../.env.example')
 
 function parseEnvFile(path: string): Record<string, string> {
   const vars: Record<string, string> = {}
@@ -68,7 +68,7 @@ if (!existsSync(rootEnv)) {
     console.log('Created .env from .env.example')
   } else if (!existsSync(studioEnv)) {
     throw new Error(
-      'No .env, .env.example, or studio/.env found. Run `sanity init --template` first.',
+      'No .env, .env.example, or apps/studio/.env found. Run `sanity init --template` first.',
     )
   }
 }
@@ -140,7 +140,7 @@ if (project.organizationId) {
 
 heading('Deploy blueprint')
 
-const root = resolve(dir, '../..')
+const root = resolve(dir, '../../..')
 
 run('pnpm', ['--filter', '@starter/functions', 'run', 'build'], {cwd: root})
 

@@ -1,8 +1,10 @@
 import {defineCliConfig} from 'sanity/cli'
 
+const repoRoot = `${__dirname}/../..`
+
 // Load env files — highest priority first (loadEnvFile won't overwrite).
 // Matches Vite's precedence: .env.local > .env, workspace > root.
-for (const dir of [__dirname, `${__dirname}/..`]) {
+for (const dir of [__dirname, repoRoot]) {
   for (const suffix of ['.env.local', '.env']) {
     try {
       process.loadEnvFile(`${dir}/${suffix}`)
@@ -20,7 +22,7 @@ export default defineCliConfig({
   },
   reactStrictMode: true,
   vite: {
-    envDir: '..',
+    envDir: repoRoot,
     server: {
       open: process.env.SANITY_STUDIO_SERVER_OPEN === 'true',
     },
@@ -33,11 +35,11 @@ export default defineCliConfig({
     enabled: true,
     path: [
       './src/**/*.{ts,tsx}',
-      '../packages/l10n/src/**/*.{ts,tsx}',
-      '../apps/translations-dashboard/src/**/*.{ts,tsx}',
-      '../apps/web/src/**/*.{ts,tsx}',
-      '../functions/*/index.ts',
+      '../../packages/l10n/src/**/*.{ts,tsx}',
+      '../translations-dashboard/src/**/*.{ts,tsx}',
+      '../web/src/**/*.{ts,tsx}',
+      '../../functions/*/index.ts',
     ],
-    generates: '../packages/sanity-types/sanity.types.ts',
+    generates: '../../packages/sanity-types/sanity.types.ts',
   },
 })
