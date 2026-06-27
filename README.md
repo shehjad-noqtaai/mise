@@ -97,11 +97,11 @@ Dev Studio UI: run locally (`pnpm --filter studio dev`). Dev **web** preview use
 
 GitHub Actions workflow: `.github/workflows/deploy.yml`
 
-| Branch / trigger        | Deploys                                     |
-| ----------------------- | ------------------------------------------- |
-| Push to `main`          | Production web + Studio (when paths match)  |
-| Push to `develop`       | Dev web worker only (when web paths match)  |
-| Manual **Run workflow** | Choose production, dev, or both web workers |
+| Branch / trigger        | Deploys                                                 |
+| ----------------------- | ------------------------------------------------------- |
+| Push to `main`          | Production web + Studio (when studio/web paths match)   |
+| Push to `develop`       | Dev web + Studio (when studio paths match)              |
+| Manual **Run workflow** | Web target + optional **Deploy Sanity Studio** checkbox |
 
 > **Hosted Studio:** Sanity allows **one** `*.sanity.studio` hostname per project (`mise-kitchen-os`). Use local `pnpm --filter studio dev` for dev Studio UI. Presentation can preview the dev web worker.
 

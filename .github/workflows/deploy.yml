@@ -13,6 +13,10 @@ on:
           - dev
           - both
         default: both
+      deploy_studio:
+        description: Deploy Sanity Studio to production hostname (manual runs only)
+        type: boolean
+        default: false
 
 env:
   WEB_DEV_WORKER_NAME: mise-web-dev
@@ -196,8 +200,14 @@ jobs:
   studio:
     needs: changes
     if: |
-      (github.event_name == 'workflow_dispatch' || needs.changes.outputs.studio == 'true') &&
-      (github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main')
+      (
+        github.event_name == 'workflow_dispatch' &&
+        inputs.deploy_studio == true
+      ) ||
+      (
+        github.event_name == 'push' &&
+        needs.changes.outputs.studio == 'true'
+      )
     runs-on: ubuntu-latest
     environment: Production
     defaults:
