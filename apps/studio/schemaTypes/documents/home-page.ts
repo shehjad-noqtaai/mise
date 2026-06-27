@@ -16,7 +16,7 @@ export const homePage = defineType({
     }),
     defineField({
       name: 'greeting',
-      title: 'Greeting Test Deploy',
+      title: 'Greeting',
       type: 'string',
     }),
     defineField({
