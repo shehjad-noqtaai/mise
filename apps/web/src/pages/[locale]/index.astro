@@ -85,11 +85,11 @@ const {data: home} = await loadQuery<HOME_PAGE_QUERY_RESULT>({
         home?.featuredRecipes?.map((recipe) => (
           <RecipeCard
             locale={locale}
-            title={recipe.title}
-            slug={recipe.slug?.current}
-            summary={recipe.summary}
-            prepTimeMinutes={recipe.prepTimeMinutes}
-            cookTimeMinutes={recipe.cookTimeMinutes}
+            title={recipe.title ?? ''}
+            slug={recipe.slug?.current ?? undefined}
+            summary={recipe.summary ?? undefined}
+            prepTimeMinutes={recipe.prepTimeMinutes ?? undefined}
+            cookTimeMinutes={recipe.cookTimeMinutes ?? undefined}
             heroImage={recipe.heroImage}
           />
         ))

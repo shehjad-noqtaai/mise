@@ -39,10 +39,9 @@ const {data: translations} = recipe._id
   : {data: null}
 
 const alternateSlugs = Object.fromEntries(
-  (translations?.translations ?? []).map((entry: {language?: string; slug?: string}) => [
-    entry.language,
-    entry.slug,
-  ]),
+  (translations?.translations ?? [])
+    .filter((entry) => entry.language && entry.slug)
+    .map((entry) => [entry.language!, entry.slug!]),
 )
 
 const hero = imageUrl(recipe.heroImage, 1200, 600)
@@ -50,8 +49,8 @@ const hero = imageUrl(recipe.heroImage, 1200, 600)
 
 <BaseLayout
   locale={locale}
-  title={recipe.title}
-  description={recipe.summary}
+  title={recipe.title ?? ''}
+  description={recipe.summary ?? undefined}
   currentPath={`recipes/${slug}/`}
   alternateSlugs={alternateSlugs}
 >

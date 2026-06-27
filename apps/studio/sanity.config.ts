@@ -24,8 +24,13 @@ const localizedDocumentTypes = ['recipe', 'homePage', 'mealPlanEntry', 'pantrySn
 
 const fieldLocalizedDocumentTypes = ['ingredient', 'recipeCategory', 'pantryCategory'] as const
 
-const projectId = import.meta.env?.SANITY_STUDIO_PROJECT_ID ?? process.env.SANITY_STUDIO_PROJECT_ID!
-const dataset = import.meta.env?.SANITY_STUDIO_DATASET ?? process.env.SANITY_STUDIO_DATASET!
+const projectId =
+  import.meta.env?.SANITY_STUDIO_PROJECT_ID ?? process.env.SANITY_STUDIO_PROJECT_ID ?? '1rkupi9j'
+const dataset =
+  import.meta.env?.SANITY_STUDIO_DATASET ?? process.env.SANITY_STUDIO_DATASET ?? 'production'
+
+// Schema extract runs in a headless worker — skip browser-only / network plugins there.
+const isSchemaExtract = process.env.SANITY_SCHEMA_EXTRACT === '1'
 
 const l10n = createL10n({
   localizedSchemaTypes: [...localizedDocumentTypes],
@@ -103,59 +108,62 @@ const structure = ((S) =>
 export default defineConfig({
   name: 'default',
   title: 'Mise Kitchen OS',
-  icon: MiseIcon,
+  ...(isSchemaExtract ? {} : {icon: MiseIcon}),
 
   projectId,
   dataset,
 
-  mediaLibrary: {
-    enabled: true,
-  },
-
-  form: {
-    image: {
-      assetSources: (sources) => sources.filter((source) => source.name !== 'sanity-default'),
-    },
-  },
-
-  unstable_clientFactory: (options) =>
-    createClient({
-      ...options,
-      requestTagPrefix: `${options.requestTagPrefix}.mise`,
-    }),
-
-  document: {
-    newDocumentOptions: (prev) =>
-      prev.filter(
-        (option) =>
-          option.templateId !== 'translation.metadata' &&
-          option.templateId !== 'fieldTranslation.metadata',
-      ),
-  },
-
-  plugins: [
-    structureTool({structure}),
-    presentationTool({
-      resolve,
-      previewUrl: {
-        initial: previewInitialUrl,
-        previewMode: {
-          enable: '/api/draft-mode/enable',
-          disable: '/api/draft-mode/disable',
+  ...(isSchemaExtract
+    ? {}
+    : {
+        mediaLibrary: {
+          enabled: true,
         },
-      },
-      allowOrigins: studioPreviewOrigins,
-    }),
-    visionTool(),
-    agentContextPlugin(),
-    l10n.plugin,
-    assist({
-      fieldActions: {
-        title: 'Translate',
-        useFieldActions: useTranslateFieldAction,
-      },
-    }),
-  ],
+        form: {
+          image: {
+            assetSources: (sources) => sources.filter((source) => source.name !== 'sanity-default'),
+          },
+        },
+        unstable_clientFactory: (options) =>
+          createClient({
+            ...options,
+            requestTagPrefix: `${options.requestTagPrefix}.mise`,
+          }),
+        document: {
+          newDocumentOptions: (prev) =>
+            prev.filter(
+              (option) =>
+                option.templateId !== 'translation.metadata' &&
+                option.templateId !== 'fieldTranslation.metadata',
+            ),
+        },
+      }),
+
+  plugins: isSchemaExtract
+    ? [l10n.plugin]
+    : [
+        structureTool({structure}),
+        presentationTool({
+          resolve,
+          previewUrl: {
+            initial: previewInitialUrl,
+            previewMode: {
+              enable: '/api/draft-mode/enable',
+              disable: '/api/draft-mode/disable',
+            },
+          },
+          allowOrigins: studioPreviewOrigins,
+        }),
+        visionTool(),
+        agentContextPlugin(),
+        l10n.plugin,
+        assist({
+          fieldActions: {
+            title: 'Translate',
+            useFieldActions: useTranslateFieldAction,
+          },
+        }),
+      ],
 
   schema: {
     types: l10n.injectLanguageField(schemaTypes),

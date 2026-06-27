@@ -36,8 +36,8 @@ const {data: pantry} = await loadQuery<PANTRY_SNAPSHOT_QUERY_RESULT>({
     {
       pantry?.items?.map((item) => (
         <InventoryProgressBar
-          quantity={item.quantity}
-          capacity={item.capacity}
+          quantity={item.quantity ?? 0}
+          capacity={item.capacity ?? 0}
           label={`${item.ingredientName ?? 'Item'}${item.location ? ` · ${item.location}` : ''}`}
         />
       ))

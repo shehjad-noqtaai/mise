@@ -1,4 +1,5 @@
 ---
+import type {RECIPE_CATEGORIES_QUERY_RESULT} from '@starter/sanity-types'
 import type {Locale} from '../lib/i18n'
 import {
   filterGroupLabels,
@@ -7,15 +8,9 @@ import {
   type RecipeFilters,
 } from '../lib/recipe-filters'
 
-interface CategoryOption {
-  kind?: string | null
-  slug?: string | null
-  title?: string | null
-}
-
 interface Props {
   locale: Locale
-  categories: CategoryOption[] | null | undefined
+  categories: RECIPE_CATEGORIES_QUERY_RESULT | null | undefined
   active: RecipeFilters
 }
 
@@ -27,8 +22,14 @@ const groups = [
   {key: 'course' as const, label: labels.course},
 ]
 
+function categoryLabel(title: RECIPE_CATEGORIES_QUERY_RESULT[number]['title']) {
+  return typeof title === 'string' ? title : null
+}
+
 function optionsFor(kind: 'cuisine' | 'course') {
-  return (categories ?? []).filter((cat) => cat.kind === kind && cat.slug && cat.title)
+  return (categories ?? []).filter(
+    (cat) => cat.kind === kind && cat.slug && categoryLabel(cat.title),
+  )
 }
 ---
 
@@ -70,7 +71,7 @@ function optionsFor(kind: 'cuisine' | 'course') {
                         : 'border-outline-variant bg-surface-container-lowest text-on-surface-variant hover:border-primary hover:text-primary',
                     ]}
                   >
-                    {option.title}
+                    {categoryLabel(option.title)}
                   </a>
                 )
               })

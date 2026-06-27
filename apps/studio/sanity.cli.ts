@@ -14,8 +14,8 @@ for (const dir of [__dirname, repoRoot]) {
 
 export default defineCliConfig({
   api: {
-    projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
-    dataset: process.env.SANITY_STUDIO_DATASET!,
+    projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? '1rkupi9j',
+    dataset: process.env.SANITY_STUDIO_DATASET ?? 'production',
   },
   mediaLibrary: {
     aspectsPath: 'aspects',

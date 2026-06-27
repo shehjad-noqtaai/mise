@@ -1,12 +1,10 @@
 import {defineQuery} from 'groq'
 
-/** Resolve a field-level internationalized string for the active locale. */
-const localizedString = (fieldPath: string) =>
-  `coalesce(${fieldPath}[language == $locale][0].value, ${fieldPath}[language == "en-US"][0].value, ${fieldPath}[0].value, ${fieldPath})`
-
-/** After `[]->`, GROQ requires a projection object — not a bare function call. */
-const localizedStringFromRef = (fieldPath: string) =>
-  `{ "value": ${localizedString(fieldPath)} }.value`
+// Static GROQ fragments (typegen cannot resolve dynamic helper functions).
+const localizedTitle = `coalesce(title[language == $locale][0].value, title[language == "en-US"][0].value, title[0].value, title)`
+const localizedRefTitle = `{ "value": coalesce(title[language == $locale][0].value, title[language == "en-US"][0].value, title[0].value, title) }.value`
+const localizedIngredientName = `coalesce(ingredient->name[language == $locale][0].value, ingredient->name[language == "en-US"][0].value, ingredient->name[0].value, ingredient->name)`
+const localizedCategoryTitle = `coalesce(category->title[language == $locale][0].value, category->title[language == "en-US"][0].value, category->title[0].value, category->title)`
 
 export const HOME_PAGE_QUERY = defineQuery(`*[_type == "homePage" && language == $locale][0]{
   title,
@@ -47,7 +45,7 @@ export const RECIPES_QUERY = defineQuery(`*[
   servings,
   heroImage,
   tags,
-  "categories": categories[]->${localizedStringFromRef('title')}
+  "categories": categories[]->${localizedRefTitle}
 }`)
 
 export const RECIPE_CATEGORIES_QUERY = defineQuery(`*[
@@ -57,7 +55,7 @@ export const RECIPE_CATEGORIES_QUERY = defineQuery(`*[
 ] | order(kind asc, coalesce(sortOrder, 999) asc) {
   kind,
   "slug": slug.current,
-  "title": ${localizedString('title')}
+  "title": ${localizedTitle}
 }`)
 
 export const RECIPE_BY_SLUG_QUERY =
@@ -77,7 +75,7 @@ export const RECIPE_BY_SLUG_QUERY =
     quantity,
     unit,
     note,
-    "ingredientName": ${localizedString('ingredient->name')}
+    "ingredientName": ${localizedIngredientName}
   },
   steps[]{
     _key,
@@ -85,7 +83,7 @@ export const RECIPE_BY_SLUG_QUERY =
     durationMinutes,
     tip
   },
-  "categories": categories[]->${localizedStringFromRef('title')}
+  "categories": categories[]->${localizedRefTitle}
 }`)
 
 export const PANTRY_SNAPSHOT_QUERY =
@@ -99,8 +97,8 @@ export const PANTRY_SNAPSHOT_QUERY =
     unit,
     location,
     expiresAt,
-    "ingredientName": ${localizedString('ingredient->name')},
-    "categoryTitle": ${localizedString('category->title')}
+    "ingredientName": ${localizedIngredientName},
+    "categoryTitle": ${localizedCategoryTitle}
   }
 }`)
 

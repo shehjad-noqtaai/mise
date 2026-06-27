@@ -6,15 +6,23 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  SANITY_STUDIO_PROJECT_ID: 1rkupi9j
+  SANITY_STUDIO_DATASET: production
+  PUBLIC_SANITY_PROJECT_ID: 1rkupi9j
+  PUBLIC_SANITY_DATASET: production
+
 jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.3
       - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Format check

@@ -1,5 +1,6 @@
 ---
 import {getRelativeLocaleUrl} from 'astro:i18n'
+import type {SanityImageSource} from '@sanity/image-url'
 import {imageUrl} from '../lib/sanity/client'
 import {formatMinutes} from '../lib/i18n'
 import type {Locale} from '../lib/i18n'
@@ -11,7 +12,7 @@ interface Props {
   summary?: string
   prepTimeMinutes?: number
   cookTimeMinutes?: number
-  heroImage?: unknown
+  heroImage?: SanityImageSource | null
 }
 
 const {locale, title, slug, summary, prepTimeMinutes, cookTimeMinutes, heroImage} = Astro.props

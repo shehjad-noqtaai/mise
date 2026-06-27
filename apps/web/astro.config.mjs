@@ -19,7 +19,8 @@ for (const dir of [repoRoot, __dirname]) {
   }
 }
 
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID ?? process.env.PUBLIC_SANITY_PROJECT_ID ?? ''
+const projectId =
+  process.env.SANITY_STUDIO_PROJECT_ID ?? process.env.PUBLIC_SANITY_PROJECT_ID ?? '1rkupi9j'
 const dataset =
   process.env.SANITY_STUDIO_DATASET ?? process.env.PUBLIC_SANITY_DATASET ?? 'production'
 const studioUrl = process.env.SANITY_STUDIO_URL ?? 'http://localhost:3333'
@@ -32,7 +33,6 @@ if (!projectId) {
   )
 }
 
-/** @type {import('astro').AstroUserConfig} */
 export default defineConfig({
   // Mise doesn't use Astro.session; disable KV sessions to avoid SESSION binding on Workers.
   session: {

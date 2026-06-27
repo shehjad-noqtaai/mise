@@ -1,9 +1,9 @@
 ---
 interface Step {
   _key: string
-  instruction: string
-  durationMinutes?: number
-  tip?: string
+  instruction: string | null
+  durationMinutes?: number | null
+  tip?: string | null
 }
 
 interface Props {
@@ -25,7 +25,7 @@ const {steps, locale} = Astro.props
           </span>
         </label>
         <div class="step-content min-w-0 flex-1 pt-1 transition-opacity">
-          <p class="font-body-lg leading-relaxed">{step.instruction}</p>
+          <p class="font-body-lg leading-relaxed">{step.instruction ?? ''}</p>
           {step.durationMinutes && (
             <p class="mt-2 font-label-sm text-on-surface-variant">
               {locale === 'hi-IN' ? `${step.durationMinutes} मिनट` : `${step.durationMinutes} min`}
