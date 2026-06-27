@@ -34,12 +34,15 @@ export async function loadQuery<QueryResponse>({
     ? (parsePerspective(perspectiveCookie) ?? 'drafts')
     : 'published'
 
-  const {result, resultSourceMap} = await sanityClient.fetch<QueryResponse>(query, params ?? {}, {
+  const client = draftMode
+    ? sanityClient.withConfig({useCdn: false, token})
+    : sanityClient
+
+  const {result, resultSourceMap} = await client.fetch<QueryResponse>(query, params ?? {}, {
     filterResponse: false,
     perspective,
     resultSourceMap: draftMode ? 'withKeyArraySelector' : false,
     stega: draftMode,
-    ...(draftMode ? {token} : {}),
   })
 
   return {
