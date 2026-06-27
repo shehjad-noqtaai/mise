@@ -9,14 +9,22 @@ import {agentContextPlugin} from '@sanity/agent-context/studio'
 import {createL10n, useTranslateFieldAction, withLocaleFilter} from '@starter/l10n'
 import {schemaTypes} from './schemaTypes'
 import {MiseIcon} from './components/MiseIcon'
+import {readEnvUrl, uniqueUrls} from './lib/env-url'
+import {isDevStudio} from './lib/studio-env'
 import {resolve} from './lib/resolve'
 
 const localPreviewUrl = 'http://localhost:4321'
 const productionPreviewUrl = 'https://mise-web.shehjkhan.workers.dev'
-const previewUrl = process.env.SANITY_STUDIO_PREVIEW_URL ?? localPreviewUrl
+const devPreviewUrl = 'https://mise-web-dev.shehjkhan.workers.dev'
+const previewUrl = readEnvUrl(process.env.SANITY_STUDIO_PREVIEW_URL, localPreviewUrl)
 const previewInitialUrl = `${previewUrl.replace(/\/$/, '')}/en-us/`
-// Allow iframe preview from both local and deployed Astro apps regardless of which Studio build you use.
-const studioPreviewOrigins = [...new Set([previewUrl, localPreviewUrl, productionPreviewUrl])]
+// Allow iframe preview from local, dev, and production Astro apps.
+const studioPreviewOrigins = uniqueUrls(
+  previewUrl,
+  localPreviewUrl,
+  devPreviewUrl,
+  productionPreviewUrl,
+)
 
 const l10nTypes = ['l10n.locale', 'l10n.glossary', 'l10n.styleGuide', 'translation.metadata']
 
@@ -107,7 +115,7 @@ const structure = ((S) =>
 
 export default defineConfig({
   name: 'default',
-  title: 'Mise Kitchen OS',
+  title: isDevStudio() ? 'Mise Kitchen OS (Dev)' : 'Mise Kitchen OS',
   ...(isSchemaExtract ? {} : {icon: MiseIcon}),
 
   projectId,

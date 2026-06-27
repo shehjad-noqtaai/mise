@@ -2,5 +2,6 @@
   "name": "mise-web",
   "compatibility_date": "2026-04-11",
   // Astro build writes dist/server/wrangler.json — deploy via `pnpm build && pnpm deploy`.
+  // Dev worker: same build, deploy with `--name mise-web-dev` (see package.json deploy:dev).
   // Do not set `main` or `assets` here; the generated config uses entry.mjs + dist/client.
 }

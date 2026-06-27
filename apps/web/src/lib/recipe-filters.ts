@@ -6,7 +6,8 @@ export type RecipeFilters = {
   course?: string
 }
 
-export function parseRecipeFilters(searchParams: URLSearchParams): RecipeFilters {
+export function parseRecipeFilters(searchParams: URLSearchParams | undefined): RecipeFilters {
+  if (!searchParams) return {}
   const cuisine = searchParams.get('cuisine') ?? undefined
   const course = searchParams.get('course') ?? undefined
   return {

@@ -48,13 +48,13 @@ export const resolve: PresentationPluginOptions['resolve'] = {
     }),
     homePage: defineLocations({
       select: {
-        title: 'greeting',
+        greeting: 'greeting',
         language: 'language',
       },
       resolve: (doc) => ({
         locations: [
           {
-            title: doc?.title || 'Dashboard',
+            title: doc?.greeting || 'Dashboard',
             href: `/${localePath(doc?.language)}/`,
           },
         ],

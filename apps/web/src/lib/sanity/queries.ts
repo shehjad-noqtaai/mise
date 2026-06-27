@@ -9,6 +9,7 @@ const localizedCategoryTitle = `coalesce(category->title[language == $locale][0]
 export const HOME_PAGE_QUERY = defineQuery(`*[_type == "homePage" && language == $locale][0]{
   title,
   greeting,
+  newField,
   subtitle,
   quickActionLabels,
   mealsToday[]{

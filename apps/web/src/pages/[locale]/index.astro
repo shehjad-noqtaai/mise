@@ -28,6 +28,7 @@ const {data: home} = await loadQuery<HOME_PAGE_QUERY_RESULT>({
     <div>
       <p class="font-label-md text-secondary">{locale === 'hi-IN' ? 'आज' : 'Today'}</p>
       <h1 class="mt-2 font-display-lg text-primary">{home?.greeting ?? 'Good morning, Chef'}</h1>
+      <p class="mt-2 font-display-lg text-primary">{home?.newField ?? 'New fields are here'}</p>
       <p class="mt-4 max-w-2xl font-body-lg text-on-surface-variant">{home?.subtitle}</p>
 
       <div class="mt-8 grid gap-4 sm:grid-cols-3">
