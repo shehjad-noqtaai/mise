@@ -32,6 +32,12 @@ if (!projectId) {
 
 /** @type {import('astro').AstroUserConfig} */
 export default defineConfig({
+  // Mise doesn't use Astro.session; disable KV sessions to avoid SESSION binding on Workers.
+  session: {
+    driver: {
+      entrypoint: 'unstorage/drivers/null',
+    },
+  },
   env: {
     schema: {
       SANITY_API_READ_TOKEN: envField.string({

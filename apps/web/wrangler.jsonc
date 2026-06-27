@@ -1,8 +1,6 @@
 {
   "name": "mise-web",
-  "main": "@astrojs/cloudflare/entrypoints/server",
   "compatibility_date": "2026-04-11",
-  "assets": {
-    "directory": "./dist"
-  }
+  // Astro build writes dist/server/wrangler.json — deploy via `pnpm build && pnpm deploy`.
+  // Do not set `main` or `assets` here; the generated config uses entry.mjs + dist/client.
 }
