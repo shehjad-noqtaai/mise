@@ -82,18 +82,18 @@ pnpm --filter studio exec sanity deploy
 
 GitHub Actions workflow: `.github/workflows/deploy.yml`
 
-### GitHub Actions secrets
+### GitHub Actions deploy config
 
-Add these under **Settings → Secrets and variables → Actions** in the repo ([run #11 failed](https://github.com/shehjad-noqtaai/mise/actions/runs/28277473622) because they were missing):
+Deploy uses the **Production** environment. Add values under **Settings → Secrets and variables → Actions → Environments → Production** (not repository-level secrets).
 
-| Secret                     | Used by        | Value                                                           |
-| -------------------------- | -------------- | --------------------------------------------------------------- |
-| `SANITY_STUDIO_PROJECT_ID` | web, studio    | `1rkupi9j`                                                      |
-| `SANITY_STUDIO_DATASET`    | web, studio    | `production`                                                    |
-| `SANITY_AUTH_TOKEN`        | studio         | [sanity.io/manage](https://www.sanity.io/manage) → API → Tokens |
-| `CLOUDFLARE_API_TOKEN`     | web            | Workers deploy token                                            |
-| `CLOUDFLARE_ACCOUNT_ID`    | web            | Cloudflare account ID                                           |
-| `SANITY_API_READ_TOKEN`    | web (optional) | Read token for Presentation / draft mode                        |
+| Name | Type | Used by | Value |
+| ---- | ---- | ------- | ----- |
+| `SANITY_STUDIO_PROJECT_ID` | Variable | web, studio | `1rkupi9j` |
+| `SANITY_STUDIO_DATASET` | Variable | web, studio | `production` |
+| `CLOUDFLARE_ACCOUNT_ID` | Variable | web | Cloudflare account ID |
+| `SANITY_AUTH_TOKEN` | Secret | studio | [sanity.io/manage](https://www.sanity.io/manage) → API → Tokens |
+| `CLOUDFLARE_API_TOKEN` | Secret | web | Workers deploy token |
+| `SANITY_API_READ_TOKEN` | Secret | web (optional) | Read token for Presentation / draft mode |
 
 Public URLs (`SANITY_STUDIO_PREVIEW_URL`, `SANITY_STUDIO_URL`) are set in the workflow file — not secrets.
 
