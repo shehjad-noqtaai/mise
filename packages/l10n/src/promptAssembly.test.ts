@@ -98,7 +98,7 @@ describe('buildStyleGuideSection', () => {
 
   it('includes additional instructions', () => {
     const result = buildStyleGuideSection(deDEStyleGuide)
-    expect(result).toContain('Address the reader with \u201CSie\u201D (formal)')
+    expect(result).toContain('Address the reader with "Sie" (formal)')
   })
 
   it('omits fields that are not set', () => {

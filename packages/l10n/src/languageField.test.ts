@@ -1,4 +1,9 @@
 import {describe, it, expect, vi, type Mock} from 'vitest'
+
+vi.mock('./components/LanguageInput', () => ({
+  LanguageInput: () => null,
+}))
+
 import {defineType, defineField} from 'sanity'
 import type {SanityClient} from '@sanity/client'
 import {LOCALE_EXISTS_QUERY, validateLocaleCode, injectLanguageField} from './languageField'
