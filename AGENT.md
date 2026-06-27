@@ -20,3 +20,24 @@
 
 - Use `pnpm`, not `npm`
 - Run commands from root via `pnpm --filter <pkg>` (e.g. `pnpm --filter l10n test`)
+
+# Format & lint (CI gate)
+
+CI runs `pnpm run format:check` then `pnpm run lint` on every push — both must pass.
+
+**After editing files, before finishing:**
+
+```bash
+pnpm run format    # oxfmt — fixes formatting repo-wide
+pnpm run lint      # eslint — fix reported issues
+```
+
+- Config: `.oxfmtrc.json` (oxfmt), `eslint.config.mjs` (eslint flat config)
+- If you only changed a few files, still run both from repo root — `format` is fast
+- Do not hand-format to match style; let oxfmt apply it
+
+**Editor (format + eslint fix on save):**
+
+- Install the [Oxc VS Code extension](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) (`oxc.oxc-vscode`) — works in Cursor too
+- Project settings live in `.vscode/settings.json` (format on save via oxfmt, eslint auto-fix on save)
+- Requires `pnpm install` at repo root so `node_modules/.bin/oxfmt` exists

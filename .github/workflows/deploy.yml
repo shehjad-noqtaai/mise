@@ -57,6 +57,11 @@ jobs:
           PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
           PUBLIC_SANITY_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
           SANITY_STUDIO_URL: ${{ env.SANITY_STUDIO_URL }}
+      - name: Verify Cloudflare credentials
+        run: pnpm exec wrangler whoami
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
       - name: Deploy to Cloudflare Workers
         run: pnpm exec wrangler deploy --config dist/server/wrangler.json
         env:
@@ -70,6 +75,8 @@ jobs:
             echo "Skipping SANITY_API_READ_TOKEN (optional secret not configured)"
           fi
         env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN }}
 
   studio:

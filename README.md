@@ -86,16 +86,36 @@ GitHub Actions workflow: `.github/workflows/deploy.yml`
 
 Deploy uses the **Production** environment. Add values under **Settings → Secrets and variables → Actions → Environments → Production** (not repository-level secrets).
 
-| Name | Type | Used by | Value |
-| ---- | ---- | ------- | ----- |
-| `SANITY_STUDIO_PROJECT_ID` | Variable | web, studio | `1rkupi9j` |
-| `SANITY_STUDIO_DATASET` | Variable | web, studio | `production` |
-| `CLOUDFLARE_ACCOUNT_ID` | Variable | web | Cloudflare account ID |
-| `SANITY_AUTH_TOKEN` | Secret | studio | [sanity.io/manage](https://www.sanity.io/manage) → API → Tokens |
-| `CLOUDFLARE_API_TOKEN` | Secret | web | Workers deploy token |
-| `SANITY_API_READ_TOKEN` | Secret | web (optional) | Read token for Presentation / draft mode |
+| Name                       | Type     | Used by        | Value                                                           |
+| -------------------------- | -------- | -------------- | --------------------------------------------------------------- |
+| `SANITY_STUDIO_PROJECT_ID` | Variable | web, studio    | `1rkupi9j`                                                      |
+| `SANITY_STUDIO_DATASET`    | Variable | web, studio    | `production`                                                    |
+| `CLOUDFLARE_ACCOUNT_ID`    | Variable | web            | Cloudflare account ID                                           |
+| `SANITY_AUTH_TOKEN`        | Secret   | studio         | [sanity.io/manage](https://www.sanity.io/manage) → API → Tokens |
+| `CLOUDFLARE_API_TOKEN`     | Secret   | web            | See [Cloudflare API token](#cloudflare-api-token) below         |
+| `SANITY_API_READ_TOKEN`    | Secret   | web (optional) | Read token for Presentation / draft mode                        |
 
 Public URLs (`SANITY_STUDIO_PREVIEW_URL`, `SANITY_STUDIO_URL`) are set in the workflow file — not secrets.
+
+#### Cloudflare API token
+
+Create a **new** token — error `9109` / `10000` means the token is invalid, revoked, or missing permissions.
+
+1. Open [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens) → **Create Token**
+2. Use **Edit Cloudflare Workers** template, or create a custom token with:
+   - **Account** → **Workers Scripts** → **Edit** (covers deploy and `wrangler secret put`)
+   - Restrict to your account (ID `f5f04e77078fe4d629e5f5ed929bc9d9`)
+3. Copy the token once — paste into GitHub **Production** secret `CLOUDFLARE_API_TOKEN` with **no trailing newline or spaces**
+4. Verify locally before pushing:
+
+```bash
+export CLOUDFLARE_API_TOKEN="paste-token-here"
+export CLOUDFLARE_ACCOUNT_ID="f5f04e77078fe4d629e5f5ed929bc9d9"
+pnpm --filter web exec wrangler whoami
+pnpm --filter web build && pnpm --filter web exec wrangler deploy --config dist/server/wrangler.json
+```
+
+If local deploy works but CI fails, re-save the GitHub secret — a bad paste is the most common cause.
 
 ## Design
 
