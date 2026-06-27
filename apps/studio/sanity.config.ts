@@ -1,5 +1,4 @@
 import {createClient} from '@sanity/client'
-import type {ComponentType} from 'react'
 import {defineConfig} from 'sanity'
 import {structureTool, type StructureResolver} from 'sanity/structure'
 import {presentationTool} from 'sanity/presentation'
@@ -43,46 +42,25 @@ const titleAsc = [{field: 'title', direction: 'asc'} as const]
 const dateDesc = [{field: 'date', direction: 'desc'} as const]
 const nameAsc = [{field: 'name', direction: 'asc'} as const]
 
-function createLocalizedSingleton(
-  S: Parameters<StructureResolver>[0],
-  typeName: string,
-  title: string,
-  icon?: ComponentType,
-) {
-  return S.listItem()
-    .title(title)
-    .icon(icon)
-    .child(
-      S.list()
-        .title(title)
-        .items(
-          ['en-US', 'hi-IN'].map((locale) =>
-            S.listItem()
-              .title(`${title} (${locale})`)
-              .icon(icon)
-              .child(
-                S.document()
-                  .schemaType(typeName)
-                  .documentId(`${typeName}-${locale}`)
-                  .title(`${title} (${locale})`),
-              ),
-          ),
-        ),
-    )
-}
-
 const structure = ((S) =>
   S.list()
     .title('Mise')
     .items([
-      createLocalizedSingleton(S, 'homePage', 'Dashboard', HomeIcon),
+      S.documentTypeListItem('homePage')
+        .title('Dashboard')
+        .icon(HomeIcon)
+        .child(() =>
+          withLocaleFilter(S.documentTypeList('homePage').defaultOrdering(titleAsc)),
+        ),
       S.documentTypeListItem('recipe').child(() =>
         withLocaleFilter(S.documentTypeList('recipe').defaultOrdering(titleAsc)),
       ),
       S.documentTypeListItem('mealPlanEntry').child(() =>
         withLocaleFilter(S.documentTypeList('mealPlanEntry').defaultOrdering(dateDesc)),
       ),
-      createLocalizedSingleton(S, 'pantrySnapshot', 'Pantry Snapshot'),
+      S.documentTypeListItem('pantrySnapshot').child(() =>
+        withLocaleFilter(S.documentTypeList('pantrySnapshot').defaultOrdering(titleAsc)),
+      ),
       S.divider(),
       S.documentTypeListItem('ingredient').child(
         S.documentTypeList('ingredient').defaultOrdering(nameAsc),
