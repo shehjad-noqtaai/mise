@@ -1,7 +1,11 @@
 ---
 import '../styles/global.css'
+import {stegaClean} from '@sanity/client/stega'
+import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import AppShell from '../components/AppShell.astro'
 import LocaleSwitcher from '../components/LocaleSwitcher.astro'
+import SanityVisualEditing from '../components/SanityVisualEditing'
+import DisableDraftMode from '../components/DisableDraftMode'
 import type {Locale} from '../lib/i18n'
 
 interface Props {
@@ -19,6 +23,10 @@ const {
   currentPath = '/',
   alternateSlugs,
 } = Astro.props
+
+const draftMode = Astro.cookies.has(perspectiveCookieName)
+const pageTitle = draftMode ? stegaClean(title) : title
+const pageDescription = draftMode ? stegaClean(description) : description
 ---
 
 <!doctype html>
@@ -26,7 +34,7 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
+    <meta name="description" content={pageDescription} />
     <meta name="theme-color" content="#173124" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -37,7 +45,7 @@ const {
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap"
       rel="stylesheet"
     />
-    <title>{title} · Mise</title>
+    <title>{pageTitle} · Mise</title>
   </head>
   <body class="min-h-screen bg-background pb-24 md:pb-0">
     <AppShell locale={locale} currentPath={currentPath}>
@@ -46,5 +54,13 @@ const {
     <main class="mx-auto max-w-[var(--container-max)] px-[var(--spacing-container-margin)] py-[var(--spacing-section-gap)]">
       <slot />
     </main>
+    {
+      draftMode && (
+        <>
+          <SanityVisualEditing client:only="react" />
+          <DisableDraftMode client:only="react" />
+        </>
+      )
+    }
   </body>
 </html>

@@ -1,6 +1,7 @@
 // @ts-check
-import {defineConfig} from 'astro/config'
+import {defineConfig, envField} from 'astro/config'
 import cloudflare from '@astrojs/cloudflare'
+import react from '@astrojs/react'
 import sanity from '@sanity/astro'
 import {fileURLToPath} from 'node:url'
 import {dirname, resolve} from 'node:path'
@@ -19,6 +20,7 @@ for (const dir of [repoRoot, __dirname]) {
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID ?? process.env.PUBLIC_SANITY_PROJECT_ID ?? ''
 const dataset = process.env.SANITY_STUDIO_DATASET ?? process.env.PUBLIC_SANITY_DATASET ?? 'production'
+const studioUrl = process.env.SANITY_STUDIO_URL ?? 'http://localhost:3333'
 
 if (!projectId) {
   throw new Error(
@@ -28,7 +30,16 @@ if (!projectId) {
 
 /** @type {import('astro').AstroUserConfig} */
 export default defineConfig({
-  output: 'static',
+  env: {
+    schema: {
+      SANITY_API_READ_TOKEN: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
+    },
+  },
+  output: 'server',
   adapter: cloudflare({
     imageService: 'cloudflare',
   }),
@@ -36,9 +47,13 @@ export default defineConfig({
     sanity({
       projectId,
       dataset,
-      useCdn: true,
+      useCdn: false,
       apiVersion: '2025-01-01',
+      stega: {
+        studioUrl,
+      },
     }),
+    react(),
   ],
   i18n: {
     defaultLocale: 'en-US',
@@ -49,5 +64,15 @@ export default defineConfig({
   },
   vite: {
     envDir: '../../',
+    optimizeDeps: {
+      include: [
+        'react/compiler-runtime',
+        'lodash/isObject.js',
+        'lodash/groupBy.js',
+        'lodash/keyBy.js',
+        'lodash/partition.js',
+        'lodash/sortedIndex.js',
+      ],
+    },
   },
 })

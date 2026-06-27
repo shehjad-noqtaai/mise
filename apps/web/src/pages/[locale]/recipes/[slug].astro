@@ -3,34 +3,40 @@ import BaseLayout from '../../../layouts/BaseLayout.astro'
 import StepList from '../../../components/StepList.astro'
 import NutritionBadge from '../../../components/NutritionBadge.astro'
 import {getRelativeLocaleUrl} from 'astro:i18n'
-import {RECIPE_BY_SLUG_QUERY, RECIPE_SLUGS_QUERY, RECIPE_TRANSLATIONS_QUERY} from '../../../lib/sanity/queries'
-import {getSanityClient} from '../../../lib/sanity/load-client'
+import {RECIPE_BY_SLUG_QUERY, RECIPE_TRANSLATIONS_QUERY} from '../../../lib/sanity/queries'
+import type {RECIPE_BY_SLUG_QUERY_RESULT, RECIPE_TRANSLATIONS_QUERY_RESULT} from '@starter/sanity-types'
+import {loadQuery} from '../../../lib/sanity/load-query'
+import {getDraftModeProps} from '../../../lib/sanity/draft-mode'
 import {imageUrl} from '../../../lib/sanity/client'
 import {DEFAULT_LOCALE, localizedValue, localeFromParam, formatMinutes} from '../../../lib/i18n'
 
-export async function getStaticPaths() {
-  const client = getSanityClient()
-  const slugs = await client.fetch(RECIPE_SLUGS_QUERY, {}, {tag: 'recipes.paths'})
-  return slugs.map((entry: {locale: string; slug: string}) => ({
-    params: {locale: entry.locale.toLowerCase(), slug: entry.slug},
-  }))
-}
+export const prerender = false
 
-const client = getSanityClient()
 const slug = Astro.params.slug ?? ''
 const locale = localeFromParam(Astro.params.locale)
 if (!locale) {
   return Astro.redirect(getRelativeLocaleUrl(DEFAULT_LOCALE, 'recipes/'))
 }
 
-const recipe = await client.fetch(RECIPE_BY_SLUG_QUERY, {locale, slug}, {tag: 'recipes.detail'})
+const draftProps = getDraftModeProps(Astro.cookies)
+
+const {data: recipe} = await loadQuery<RECIPE_BY_SLUG_QUERY_RESULT>({
+  query: RECIPE_BY_SLUG_QUERY,
+  params: {locale, slug},
+  ...draftProps,
+})
+
 if (!recipe) {
   return Astro.redirect(getRelativeLocaleUrl(locale, 'recipes/'))
 }
 
-const translations = recipe._id
-  ? await client.fetch(RECIPE_TRANSLATIONS_QUERY, {recipeId: recipe._id}, {tag: 'recipes.translations'})
-  : null
+const {data: translations} = recipe._id
+  ? await loadQuery<RECIPE_TRANSLATIONS_QUERY_RESULT>({
+      query: RECIPE_TRANSLATIONS_QUERY,
+      params: {recipeId: recipe._id},
+      ...draftProps,
+    })
+  : {data: null}
 
 const alternateSlugs = Object.fromEntries(
   (translations?.translations ?? []).map((entry: {language?: string; slug?: string}) => [

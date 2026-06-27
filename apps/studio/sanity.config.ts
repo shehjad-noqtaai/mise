@@ -2,6 +2,7 @@ import {createClient} from '@sanity/client'
 import type {ComponentType} from 'react'
 import {defineConfig} from 'sanity'
 import {structureTool, type StructureResolver} from 'sanity/structure'
+import {presentationTool} from 'sanity/presentation'
 import {assist} from '@sanity/assist'
 import {visionTool} from '@sanity/vision'
 import {EarthGlobeIcon, HomeIcon} from '@sanity/icons'
@@ -14,6 +15,11 @@ import {
 } from '@starter/l10n'
 import {schemaTypes} from './schemaTypes'
 import {MiseIcon} from './components/MiseIcon'
+import {resolve} from './lib/resolve'
+
+const previewUrl = process.env.SANITY_STUDIO_PREVIEW_URL ?? 'http://localhost:4321'
+const previewInitialUrl = `${previewUrl.replace(/\/$/, '')}/en-us/`
+const studioPreviewOrigins = [previewUrl, 'http://localhost:4321']
 
 const l10nTypes = [
   'l10n.locale',
@@ -155,6 +161,17 @@ export default defineConfig({
 
   plugins: [
     structureTool({structure}),
+    presentationTool({
+      resolve,
+      previewUrl: {
+        initial: previewInitialUrl,
+        previewMode: {
+          enable: '/api/draft-mode/enable',
+          disable: '/api/draft-mode/disable',
+        },
+      },
+      allowOrigins: studioPreviewOrigins,
+    }),
     visionTool(),
     agentContextPlugin(),
     l10n.plugin,

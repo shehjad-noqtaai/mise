@@ -2,21 +2,25 @@
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import Button from '../../components/Button.astro'
 import RecipeCard from '../../components/RecipeCard.astro'
-import {getSanityClient} from '../../lib/sanity/load-client'
+import {loadQuery} from '../../lib/sanity/load-query'
+import {getDraftModeProps} from '../../lib/sanity/draft-mode'
 import {HOME_PAGE_QUERY} from '../../lib/sanity/queries'
-import {DEFAULT_LOCALE, LOCALES, localeFromParam, localePathSegment} from '../../lib/i18n'
+import type {HOME_PAGE_QUERY_RESULT} from '@starter/sanity-types'
+import {DEFAULT_LOCALE, localeFromParam} from '../../lib/i18n'
 import {getRelativeLocaleUrl} from 'astro:i18n'
 
-export async function getStaticPaths() {
-  return LOCALES.map((locale) => ({params: {locale: localePathSegment(locale)}}))
-}
+export const prerender = false
 
 const locale = localeFromParam(Astro.params.locale)
 if (!locale) {
   return Astro.redirect(getRelativeLocaleUrl(DEFAULT_LOCALE, '/'))
 }
 
-const home = await getSanityClient().fetch(HOME_PAGE_QUERY, {locale}, {tag: 'home.get'})
+const {data: home} = await loadQuery<HOME_PAGE_QUERY_RESULT>({
+  query: HOME_PAGE_QUERY,
+  params: {locale},
+  ...getDraftModeProps(Astro.cookies),
+})
 ---
 
 <BaseLayout locale={locale} title={home?.greeting ?? 'Dashboard'} currentPath="/">
