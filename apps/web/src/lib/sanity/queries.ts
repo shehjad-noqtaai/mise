@@ -1,11 +1,5 @@
 import {defineQuery} from 'groq'
 
-export const LOCALES_QUERY = defineQuery(`*[_type == "l10n.locale"] | order(code asc) {
-  code,
-  title,
-  nativeName
-}`)
-
 export const HOME_PAGE_QUERY = defineQuery(`*[_type == "homePage" && language == $locale][0]{
   title,
   greeting,

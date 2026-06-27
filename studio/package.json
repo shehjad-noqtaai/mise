@@ -16,6 +16,7 @@
     "generate-sample-data": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/generate-sample-data.ts --with-user-token -- --out sample-data.ndjson",
     "import-sample-data": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/import-sample-data.ts --with-user-token",
     "verify-translation": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/verify-translation.ts --with-user-token",
+    "generate-recipe-images": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/generate-recipe-images.ts --with-user-token",
     "bootstrap": "NODE_OPTIONS='--import tsx/esm' sanity exec scripts/bootstrap.ts --with-user-token"
   },
   "dependencies": {

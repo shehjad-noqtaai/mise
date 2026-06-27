@@ -4,18 +4,17 @@ import Button from '../../components/Button.astro'
 import RecipeCard from '../../components/RecipeCard.astro'
 import {getSanityClient} from '../../lib/sanity/load-client'
 import {HOME_PAGE_QUERY} from '../../lib/sanity/queries'
-import {LOCALES, type Locale, isLocale} from '../../lib/i18n'
+import {DEFAULT_LOCALE, LOCALES, localeFromParam, localePathSegment} from '../../lib/i18n'
 import {getRelativeLocaleUrl} from 'astro:i18n'
 
 export async function getStaticPaths() {
-  return LOCALES.map((locale) => ({params: {locale}}))
+  return LOCALES.map((locale) => ({params: {locale: localePathSegment(locale)}}))
 }
 
-const localeParam = Astro.params.locale ?? 'en-US'
-if (!isLocale(localeParam)) {
-  return Astro.redirect('/en-US/')
+const locale = localeFromParam(Astro.params.locale)
+if (!locale) {
+  return Astro.redirect(getRelativeLocaleUrl(DEFAULT_LOCALE, '/'))
 }
-const locale = localeParam as Locale
 
 const home = await getSanityClient().fetch(HOME_PAGE_QUERY, {locale}, {tag: 'home.get'})
 ---

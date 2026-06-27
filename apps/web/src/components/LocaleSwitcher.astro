@@ -18,14 +18,16 @@ function targetPath(targetLocale: Locale) {
 }
 ---
 
-<div class="flex items-center gap-1 rounded-full border border-outline-variant bg-surface-container-low p-1">
+<div class="inline-flex items-center gap-0.5 rounded-full border border-outline-variant bg-surface-container-low p-1">
   {
     LOCALES.map((code) => (
       <a
         href={getRelativeLocaleUrl(code, targetPath(code))}
         class:list={[
-          'touch-target rounded-full px-3 py-1 font-label-sm transition-colors',
-          code === locale ? 'bg-primary text-on-primary' : 'text-on-surface-variant hover:bg-surface-container-high',
+          'inline-flex min-w-9 items-center justify-center rounded-full px-3 py-1.5 font-label-sm transition-colors',
+          code === locale
+            ? 'bg-primary text-on-primary shadow-sm'
+            : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface',
         ]}
       >
         {code === 'en-US' ? 'EN' : 'HI'}

@@ -8,9 +8,10 @@ interface Props {
 const {href, variant = 'primary', class: className = ''} = Astro.props
 
 const variants = {
-  primary: 'bg-primary text-on-primary hover:bg-primary-container',
-  secondary: 'border-2 border-secondary text-secondary bg-transparent hover:bg-secondary-container',
-  ghost: 'text-on-surface-variant hover:bg-surface-container-low',
+  primary: 'bg-primary text-on-primary shadow-sm hover:brightness-110 active:brightness-95',
+  secondary:
+    'border border-outline bg-surface-container-lowest text-primary hover:bg-secondary-container hover:text-on-secondary-container',
+  ghost: 'text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface',
 }
 ---
 

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 40" fill="none" role="img" aria-label="Mise">
+  <rect x="0" y="4" width="32" height="32" rx="8" fill="#173124"/>
+  <path
+    d="M8.5 26.5V13.5l5.25 8.25L19 13.5v13"
+    stroke="#FAF9F6"
+    stroke-width="2.25"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="23.25" cy="14.25" r="2.15" fill="#85A392"/>
+  <path
+    d="M21.5 27.5h3.5"
+    stroke="#B0CDBB"
+    stroke-width="1.75"
+    stroke-linecap="round"
+  />
+  <text
+    x="44"
+    y="28"
+    fill="#173124"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="24"
+    font-weight="600"
+    letter-spacing="-0.02em"
+  >
+    Mise
+  </text>
+</svg>

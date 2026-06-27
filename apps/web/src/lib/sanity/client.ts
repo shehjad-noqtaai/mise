@@ -2,11 +2,13 @@ import {createImageUrlBuilder} from '@sanity/image-url'
 import {getSanityClient} from './load-client'
 import type {SanityImageSource} from '@sanity/image-url/lib/types/types'
 
-const builder = createImageUrlBuilder(getSanityClient())
+function getBuilder() {
+  return createImageUrlBuilder(getSanityClient())
+}
 
 export function urlFor(source: SanityImageSource | null | undefined) {
   if (!source) return null
-  return builder.image(source).auto('format').fit('max')
+  return getBuilder().image(source).auto('format').fit('max')
 }
 
 export function imageUrl(

@@ -13,6 +13,7 @@ import {
   withLocaleFilter,
 } from '@starter/l10n'
 import {schemaTypes} from './schemaTypes'
+import {MiseIcon} from './components/MiseIcon'
 
 const l10nTypes = [
   'l10n.locale',
@@ -33,6 +34,8 @@ const l10n = createL10n({
 })
 
 const titleAsc = [{field: 'title', direction: 'asc'} as const]
+const dateDesc = [{field: 'date', direction: 'desc'} as const]
+const nameAsc = [{field: 'name', direction: 'asc'} as const]
 
 function createLocalizedSingleton(
   S: Parameters<StructureResolver>[0],
@@ -71,12 +74,12 @@ const structure = ((S) =>
         withLocaleFilter(S.documentTypeList('recipe').defaultOrdering(titleAsc)),
       ),
       S.documentTypeListItem('mealPlanEntry').child(() =>
-        withLocaleFilter(S.documentTypeList('mealPlanEntry').defaultOrdering(titleAsc)),
+        withLocaleFilter(S.documentTypeList('mealPlanEntry').defaultOrdering(dateDesc)),
       ),
       createLocalizedSingleton(S, 'pantrySnapshot', 'Pantry Snapshot'),
       S.divider(),
       S.documentTypeListItem('ingredient').child(
-        S.documentTypeList('ingredient').defaultOrdering(titleAsc),
+        S.documentTypeList('ingredient').defaultOrdering(nameAsc),
       ),
       S.documentTypeListItem('recipeCategory').child(
         S.documentTypeList('recipeCategory').defaultOrdering(titleAsc),
@@ -120,6 +123,7 @@ const structure = ((S) =>
 export default defineConfig({
   name: 'default',
   title: 'Mise Kitchen OS',
+  icon: MiseIcon,
 
   projectId,
   dataset,

@@ -6,23 +6,22 @@ import {getRelativeLocaleUrl} from 'astro:i18n'
 import {RECIPE_BY_SLUG_QUERY, RECIPE_SLUGS_QUERY, RECIPE_TRANSLATIONS_QUERY} from '../../../lib/sanity/queries'
 import {getSanityClient} from '../../../lib/sanity/load-client'
 import {imageUrl} from '../../../lib/sanity/client'
-import {localizedValue, type Locale, isLocale, formatMinutes} from '../../../lib/i18n'
+import {DEFAULT_LOCALE, localizedValue, localeFromParam, formatMinutes} from '../../../lib/i18n'
 
 export async function getStaticPaths() {
   const client = getSanityClient()
   const slugs = await client.fetch(RECIPE_SLUGS_QUERY, {}, {tag: 'recipes.paths'})
   return slugs.map((entry: {locale: string; slug: string}) => ({
-    params: {locale: entry.locale, slug: entry.slug},
+    params: {locale: entry.locale.toLowerCase(), slug: entry.slug},
   }))
 }
 
 const client = getSanityClient()
-const localeParam = Astro.params.locale ?? 'en-US'
 const slug = Astro.params.slug ?? ''
-if (!isLocale(localeParam)) {
-  return Astro.redirect('/en-US/recipes/')
+const locale = localeFromParam(Astro.params.locale)
+if (!locale) {
+  return Astro.redirect(getRelativeLocaleUrl(DEFAULT_LOCALE, 'recipes/'))
 }
-const locale = localeParam as Locale
 
 const recipe = await client.fetch(RECIPE_BY_SLUG_QUERY, {locale, slug}, {tag: 'recipes.detail'})
 if (!recipe) {

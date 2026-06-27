@@ -21,7 +21,7 @@ export function getSanityClient() {
   return createClient({
     projectId,
     dataset,
-    useCdn: true,
+    useCdn: import.meta.env.PROD,
     apiVersion: '2025-01-01',
   })
 }

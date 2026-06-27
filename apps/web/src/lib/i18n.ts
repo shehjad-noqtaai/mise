@@ -2,8 +2,18 @@ export const LOCALES = ['en-US', 'hi-IN'] as const
 export type Locale = (typeof LOCALES)[number]
 export const DEFAULT_LOCALE: Locale = 'en-US'
 
+/** URL path segment for each locale (Astro i18n lowercases BCP-47 tags in URLs). */
+export function localePathSegment(locale: Locale): string {
+  return locale.toLowerCase()
+}
+
+export function localeFromParam(value: string | undefined): Locale | undefined {
+  if (!value) return undefined
+  return LOCALES.find((locale) => locale.toLowerCase() === value.toLowerCase())
+}
+
 export function isLocale(value: string): value is Locale {
-  return LOCALES.includes(value as Locale)
+  return localeFromParam(value) !== undefined
 }
 
 export function localizedValue<T extends {language?: string; value?: unknown}>(

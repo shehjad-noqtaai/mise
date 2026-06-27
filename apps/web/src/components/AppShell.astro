@@ -1,6 +1,7 @@
 ---
 import {getRelativeLocaleUrl} from 'astro:i18n'
 import type {Locale} from '../lib/i18n'
+import Logo from './Logo.astro'
 
 interface Props {
   locale: Locale
@@ -17,17 +18,17 @@ const nav = [
 
 <header class="sticky top-0 z-20 border-b border-outline-variant bg-surface/95 backdrop-blur-sm">
   <div class="mx-auto flex max-w-[var(--container-max)] items-center justify-between px-[var(--spacing-container-margin)] py-4">
-    <a href={getRelativeLocaleUrl(locale, '/')} class="font-headline-md text-primary">Mise</a>
+    <Logo href={getRelativeLocaleUrl(locale, '/')} />
     <nav class="hidden items-center gap-2 md:flex">
       {
         nav.map((item) => (
           <a
             href={getRelativeLocaleUrl(locale, item.path)}
             class:list={[
-              'touch-target rounded-lg px-3 py-2 font-label-md transition-colors',
+              'inline-flex items-center justify-center rounded-full px-4 py-2 font-label-md transition-colors',
               currentPath === item.path || (item.path === '' && currentPath === '/')
-                ? 'bg-primary-container text-on-primary-container'
-                : 'text-on-surface-variant hover:bg-surface-container-low',
+                ? 'bg-primary text-on-primary shadow-sm'
+                : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface',
             ]}
           >
             {item.label}
