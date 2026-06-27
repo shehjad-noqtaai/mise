@@ -1,9 +1,5 @@
 import {useEffect, useMemo, useRef} from 'react'
-import {
-  VisualEditing,
-  type HistoryAdapter,
-  type HistoryUpdate,
-} from '@sanity/visual-editing/react'
+import {VisualEditing, type HistoryAdapter, type HistoryUpdate} from '@sanity/visual-editing/react'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import type {ClientPerspective} from '@sanity/client'
 

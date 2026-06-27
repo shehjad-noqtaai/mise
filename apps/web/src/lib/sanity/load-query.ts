@@ -27,16 +27,16 @@ export async function loadQuery<QueryResponse>({
   const draftMode = perspectiveCookie ? true : false
   const token = getSecret('SANITY_API_READ_TOKEN')
   if (draftMode && !token) {
-    throw new Error('The `SANITY_API_READ_TOKEN` environment variable is required during Visual Editing.')
+    throw new Error(
+      'The `SANITY_API_READ_TOKEN` environment variable is required during Visual Editing.',
+    )
   }
 
   const perspective: ClientPerspective = draftMode
     ? (parsePerspective(perspectiveCookie) ?? 'drafts')
     : 'published'
 
-  const client = draftMode
-    ? sanityClient.withConfig({useCdn: false, token})
-    : sanityClient
+  const client = draftMode ? sanityClient.withConfig({useCdn: false, token}) : sanityClient
 
   const {result, resultSourceMap} = await client.fetch<QueryResponse>(query, params ?? {}, {
     filterResponse: false,

@@ -285,16 +285,19 @@ export const recipesEn = [
       },
       {
         _key: 'step2',
-        instruction: 'Marinate chicken in yogurt, spices, and half the fried onions for at least 1 hour.',
+        instruction:
+          'Marinate chicken in yogurt, spices, and half the fried onions for at least 1 hour.',
         durationMinutes: 60,
       },
       {
         _key: 'step3',
-        instruction: 'Par-cook rice until 70% done, then layer with marinated chicken in a heavy pot.',
+        instruction:
+          'Par-cook rice until 70% done, then layer with marinated chicken in a heavy pot.',
       },
       {
         _key: 'step4',
-        instruction: 'Cover tightly and cook on low heat for 25 minutes. Rest 10 minutes before serving.',
+        instruction:
+          'Cover tightly and cook on low heat for 25 minutes. Rest 10 minutes before serving.',
         durationMinutes: 35,
       },
     ],
@@ -381,12 +384,14 @@ export const recipesEn = [
     steps: [
       {
         _key: 'step1',
-        instruction: 'Bring a large pot of salted water to a boil and cook spaghetti until al dente. Reserve 1 cup pasta water.',
+        instruction:
+          'Bring a large pot of salted water to a boil and cook spaghetti until al dente. Reserve 1 cup pasta water.',
         durationMinutes: 12,
       },
       {
         _key: 'step2',
-        instruction: 'Melt butter in a wide skillet over medium heat. Add minced garlic and cook until fragrant, about 1 minute.',
+        instruction:
+          'Melt butter in a wide skillet over medium heat. Add minced garlic and cook until fragrant, about 1 minute.',
         durationMinutes: 2,
       },
       {
@@ -407,8 +412,7 @@ export const recipesHi = [
     language: 'hi-IN',
     title: 'क्लासिक चिकन बiryानी',
     slug: {_type: 'slug', current: 'classic-chicken-biryani'},
-    summary:
-      'मसालेदार दही में मैरीनेट चिकन के साथ सुगंधित बासमती चावल — एक शानदार वन-पॉट डिनर।',
+    summary: 'मसालेदार दही में मैरीनेट चिकन के साथ सुगंधित बासमती चावल — एक शानदार वन-पॉट डिनर।',
     prepTimeMinutes: 45,
     cookTimeMinutes: 60,
     servings: 6,
@@ -423,19 +427,16 @@ export const recipesHi = [
       },
       {
         _key: 'step2',
-        instruction:
-          'चिकन को दही, मसालों और आधे भुने हुए प्याज के साथ कम से कम 1 घंटे के लिए मैरीनेट करें।',
+        instruction: 'चिकन को दही, मसालों और आधे भुने हुए प्याज के साथ कम से कम 1 घंटे के लिए मैरीनेट करें।',
         durationMinutes: 60,
       },
       {
         _key: 'step3',
-        instruction:
-          'चावल को 70% पकाएं, फिर मैरीनेट चिकन के साथ भारी बर्तन में परतें बनाएं।',
+        instruction: 'चावल को 70% पकाएं, फिर मैरीनेट चिकन के साथ भारी बर्तन में परतें बनाएं।',
       },
       {
         _key: 'step4',
-        instruction:
-          'कसकर ढककर 25 मिनट धीमी आंच पर पकाएं। परोसने से पहले 10 मिनट आराम दें।',
+        instruction: 'कसकर ढककर 25 मिनट धीमी आंच पर पकाएं। परोसने से पहले 10 मिनट आराम दें।',
         durationMinutes: 35,
       },
     ],
@@ -466,8 +467,7 @@ export const recipesHi = [
     language: 'hi-IN',
     title: 'लहसुन मक्खन पास्ता',
     slug: {_type: 'slug', current: 'garlic-butter-pasta'},
-    summary:
-      'सुगंधित लहसुन मक्खन में मिला रेशमी स्पaghetti, पarmesan के साथ — 30 मिनट से कम में तैयार।',
+    summary: 'सुगंधित लहसुन मक्खन में मिला रेशमी स्पaghetti, पarmesan के साथ — 30 मिनट से कम में तैयार।',
     prepTimeMinutes: 10,
     cookTimeMinutes: 20,
     servings: 4,

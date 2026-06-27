@@ -1,385 +1,569 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Mise - Dashboard</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "secondary": "#4e635a",
-                        "on-surface": "#1a1c1b",
-                        "on-primary-container": "#98b5a3",
-                        "secondary-fixed": "#d1e8dd",
-                        "primary-container": "#2d4739",
-                        "inverse-surface": "#2f312f",
-                        "primary-fixed-dim": "#b0cdbb",
-                        "background": "#faf9f6",
-                        "surface-container-lowest": "#ffffff",
-                        "outline-variant": "#c2c8c2",
-                        "on-secondary-fixed": "#0b1f18",
-                        "tertiary-container": "#41423f",
-                        "surface-bright": "#faf9f6",
-                        "surface-variant": "#e3e2e0",
-                        "surface-container": "#efeeeb",
-                        "inverse-primary": "#b0cdbb",
-                        "primary-fixed": "#ccead6",
-                        "on-tertiary-container": "#aeaeab",
-                        "on-tertiary": "#ffffff",
-                        "tertiary": "#2b2c2a",
-                        "error-container": "#ffdad6",
-                        "on-tertiary-fixed-variant": "#464744",
-                        "on-primary-fixed": "#062014",
-                        "on-secondary": "#ffffff",
-                        "secondary-container": "#cee5da",
-                        "on-primary": "#ffffff",
-                        "on-secondary-container": "#52675e",
-                        "on-error-container": "#93000a",
-                        "on-secondary-fixed-variant": "#374b43",
-                        "tertiary-fixed": "#e3e2df",
-                        "surface": "#faf9f6",
-                        "on-surface-variant": "#424844",
-                        "on-error": "#ffffff",
-                        "primary": "#173124",
-                        "surface-tint": "#496455",
-                        "on-tertiary-fixed": "#1b1c1a",
-                        "on-primary-fixed-variant": "#324c3e",
-                        "error": "#ba1a1a",
-                        "secondary-fixed-dim": "#b5ccc1",
-                        "on-background": "#1a1c1b",
-                        "surface-container-highest": "#e3e2e0",
-                        "surface-container-high": "#e9e8e5",
-                        "surface-container-low": "#f4f3f1",
-                        "inverse-on-surface": "#f1f1ee",
-                        "surface-dim": "#dadad7",
-                        "outline": "#727973",
-                        "tertiary-fixed-dim": "#c7c6c3"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "gutter": "16px",
-                        "section-gap": "48px",
-                        "stack-lg": "32px",
-                        "stack-md": "16px",
-                        "stack-sm": "8px",
-                        "unit": "8px",
-                        "container-margin": "24px"
-                    },
-                    "fontFamily": {
-                        "headline-md": ["Playfair Display"],
-                        "label-sm": ["Inter"],
-                        "display-lg": ["Playfair Display"],
-                        "headline-lg-mobile": ["Playfair Display"],
-                        "headline-lg": ["Playfair Display"],
-                        "label-md": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "body-md": ["Inter"]
-                    },
-                    "fontSize": {
-                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
-                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
-                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
-                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
-                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
-                    }
-                }
-            }
-        }
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mise - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              secondary: '#4e635a',
+              'on-surface': '#1a1c1b',
+              'on-primary-container': '#98b5a3',
+              'secondary-fixed': '#d1e8dd',
+              'primary-container': '#2d4739',
+              'inverse-surface': '#2f312f',
+              'primary-fixed-dim': '#b0cdbb',
+              background: '#faf9f6',
+              'surface-container-lowest': '#ffffff',
+              'outline-variant': '#c2c8c2',
+              'on-secondary-fixed': '#0b1f18',
+              'tertiary-container': '#41423f',
+              'surface-bright': '#faf9f6',
+              'surface-variant': '#e3e2e0',
+              'surface-container': '#efeeeb',
+              'inverse-primary': '#b0cdbb',
+              'primary-fixed': '#ccead6',
+              'on-tertiary-container': '#aeaeab',
+              'on-tertiary': '#ffffff',
+              tertiary: '#2b2c2a',
+              'error-container': '#ffdad6',
+              'on-tertiary-fixed-variant': '#464744',
+              'on-primary-fixed': '#062014',
+              'on-secondary': '#ffffff',
+              'secondary-container': '#cee5da',
+              'on-primary': '#ffffff',
+              'on-secondary-container': '#52675e',
+              'on-error-container': '#93000a',
+              'on-secondary-fixed-variant': '#374b43',
+              'tertiary-fixed': '#e3e2df',
+              surface: '#faf9f6',
+              'on-surface-variant': '#424844',
+              'on-error': '#ffffff',
+              primary: '#173124',
+              'surface-tint': '#496455',
+              'on-tertiary-fixed': '#1b1c1a',
+              'on-primary-fixed-variant': '#324c3e',
+              error: '#ba1a1a',
+              'secondary-fixed-dim': '#b5ccc1',
+              'on-background': '#1a1c1b',
+              'surface-container-highest': '#e3e2e0',
+              'surface-container-high': '#e9e8e5',
+              'surface-container-low': '#f4f3f1',
+              'inverse-on-surface': '#f1f1ee',
+              'surface-dim': '#dadad7',
+              outline: '#727973',
+              'tertiary-fixed-dim': '#c7c6c3',
+            },
+            borderRadius: {
+              DEFAULT: '0.25rem',
+              lg: '0.5rem',
+              xl: '0.75rem',
+              full: '9999px',
+            },
+            spacing: {
+              gutter: '16px',
+              'section-gap': '48px',
+              'stack-lg': '32px',
+              'stack-md': '16px',
+              'stack-sm': '8px',
+              unit: '8px',
+              'container-margin': '24px',
+            },
+            fontFamily: {
+              'headline-md': ['Playfair Display'],
+              'label-sm': ['Inter'],
+              'display-lg': ['Playfair Display'],
+              'headline-lg-mobile': ['Playfair Display'],
+              'headline-lg': ['Playfair Display'],
+              'label-md': ['Inter'],
+              'body-lg': ['Inter'],
+              'body-md': ['Inter'],
+            },
+            fontSize: {
+              'headline-md': ['24px', {lineHeight: '32px', fontWeight: '600'}],
+              'label-sm': [
+                '12px',
+                {lineHeight: '16px', letterSpacing: '0.05em', fontWeight: '500'},
+              ],
+              'display-lg': [
+                '48px',
+                {lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700'},
+              ],
+              'headline-lg-mobile': ['28px', {lineHeight: '34px', fontWeight: '700'}],
+              'headline-lg': ['32px', {lineHeight: '40px', fontWeight: '700'}],
+              'label-md': [
+                '14px',
+                {lineHeight: '20px', letterSpacing: '0.01em', fontWeight: '600'},
+              ],
+              'body-lg': ['18px', {lineHeight: '28px', fontWeight: '400'}],
+              'body-md': ['16px', {lineHeight: '24px', fontWeight: '400'}],
+            },
+          },
+        },
+      }
     </script>
-<style>
-        .progress-ring__circle {
-            transition: stroke-dashoffset 0.35s;
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-        }
-        /* Custom scrollbar for webkit */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #d1d1cb;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #b5ccc1;
-        }
+    <style>
+      .progress-ring__circle {
+        transition: stroke-dashoffset 0.35s;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+      }
+      /* Custom scrollbar for webkit */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #d1d1cb;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #b5ccc1;
+      }
     </style>
-</head>
-<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex flex-col pb-24 md:pb-0">
-<!-- TopAppBar (Web) -->
-<header class="hidden md:flex justify-between items-center w-full px-container-margin h-16 sticky top-0 z-50 bg-background border-b border-outline-variant">
-<div class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Mise</div>
-<nav class="flex gap-8 items-center h-full">
-<a class="text-primary font-bold border-b-2 border-primary h-full flex items-center font-label-md text-label-md transition-colors" href="#">Dashboard</a>
-<a class="text-on-surface-variant hover:bg-surface-container-low px-3 py-2 rounded-md transition-colors font-label-md text-label-md" href="#">Recipes</a>
-<a class="text-on-surface-variant hover:bg-surface-container-low px-3 py-2 rounded-md transition-colors font-label-md text-label-md" href="#">Inventory</a>
-<a class="text-on-surface-variant hover:bg-surface-container-low px-3 py-2 rounded-md transition-colors font-label-md text-label-md" href="#">Shop</a>
-<a class="text-on-surface-variant hover:bg-surface-container-low px-3 py-2 rounded-md transition-colors font-label-md text-label-md" href="#">Settings</a>
-</nav>
-<div class="flex items-center gap-4 text-primary">
-<button class="hover:bg-surface-container-low p-2 rounded-full transition-colors flex items-center justify-center">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">add_circle</span>
-</button>
-<button class="hover:bg-surface-container-low p-2 rounded-full transition-colors flex items-center justify-center">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
-</button>
-</div>
-</header>
-<!-- TopAppBar (Mobile Fallback for branding) -->
-<header class="md:hidden flex justify-between items-center w-full px-container-margin h-16 sticky top-0 z-50 bg-background border-b border-outline-variant">
-<div class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Mise</div>
-<div class="flex items-center gap-2 text-primary">
-<button class="p-2 flex items-center justify-center">
-<span class="material-symbols-outlined">add_circle</span>
-</button>
-<button class="p-2 flex items-center justify-center">
-<span class="material-symbols-outlined">account_circle</span>
-</button>
-</div>
-</header>
-<!-- Main Content Canvas -->
-<main class="flex-grow w-full max-w-[1140px] mx-auto px-container-margin py-section-gap grid grid-cols-4 md:grid-cols-12 gap-gutter">
-<!-- Hero Section -->
-<section class="col-span-4 md:col-span-12 mb-stack-lg">
-<h1 class="font-headline-lg-mobile md:font-display-lg text-headline-lg-mobile md:text-display-lg text-primary mb-stack-md">Good morning, Chef.</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant">Here is your culinary plan for today.</p>
-</section>
-<!-- Bento Grid Layout -->
-<!-- Meals for Today (Takes up larger space) -->
-<div class="col-span-4 md:col-span-8 flex flex-col gap-stack-md">
-<h2 class="font-headline-md text-headline-md text-secondary">Today's Menu</h2>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-unit">
-<!-- Breakfast Card -->
-<article class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col">
-<div class="h-32 bg-surface-container-high relative">
-<img class="object-cover w-full h-full" data-alt="A beautifully plated avocado toast on sourdough bread with a perfectly poached egg on top, sprinkled with red pepper flakes and microgreens. The lighting is soft morning natural light streaming through a kitchen window, casting gentle shadows. The aesthetic is bright, clean, and modern, fitting a high-end food magazine style with warm undertones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9l4rSnu6I4kMpuOXJOvoC6jB7XK6iVW5zdsiCgTUFE3iqTwj5UAGYi4PaWWmlPynXw_64yrZUU81Ny4eS28O37nVZIAmMmNx64s23tEf3RohRA5trQzccm7NorlHGW106asx_eC-PTcFjtj3XZpq90Vwz-tlYj8YwWtuRoENZ--T4ztZlw1jKgsM5IA1ORBLGJdSO4qr2uBONr5cLgd-Nwf2vqTUSBveyEj6Ae786yjWOGdZssSdzQCeHKisCPuGEXbORoDotAGVq"/>
-<div class="absolute top-2 left-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 rounded-full font-label-sm text-label-sm text-primary uppercase">Breakfast</div>
-</div>
-<div class="p-4 flex-grow flex flex-col">
-<h3 class="font-label-md text-label-md font-bold text-on-surface mb-1">Avocado Toast with Poached Egg</h3>
-<p class="font-label-sm text-label-sm text-on-surface-variant mb-4 flex-grow">15 mins prep</p>
-<button class="w-full bg-primary/5 text-primary hover:bg-primary/10 transition-colors py-2 rounded-lg font-label-md text-label-md flex justify-center items-center gap-2 h-12">
-<span class="material-symbols-outlined text-[18px]">restaurant</span>
-                            Start Cooking
-                        </button>
-</div>
-</article>
-<!-- Lunch Card -->
-<article class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col">
-<div class="h-32 bg-surface-container-high relative">
-<img class="object-cover w-full h-full" data-alt="A vibrant Mediterranean quinoa bowl featuring cherry tomatoes, cucumber, kalamata olives, feta cheese, and a lemon herb dressing. The colors are rich greens, reds, and bright whites. The styling is minimalist and organized, shot from a slight overhead angle on a stone gray countertop, emphasizing fresh, healthy ingredients in a warm, inviting domestic kitchen." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx32QTn8uNOujzzPs-y2GJe6Z6Qt6MooGo_L3sJfgjiV--VQL5VUZfYORCJHZcXvJQNvO1WkokPYS6U3_lGIRjnHnyhB-PnZWqpzHv7WFh5Ecd42oayUaPc28rohJK-JOuS40u6LNVpwxU0uGEm7Hg8QsaioAEUvEw1Ed16FNAtDIMYmLXI5CxOx2epUMWHefz-Q83JNbzrP1HWbDr1b76lylT1eSck3aouSY5t_BOtJfPfWk9Us7NJ6Jr-58MPT0t4MCRn-F1mCni"/>
-<div class="absolute top-2 left-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 rounded-full font-label-sm text-label-sm text-primary uppercase">Lunch</div>
-</div>
-<div class="p-4 flex-grow flex flex-col">
-<h3 class="font-label-md text-label-md font-bold text-on-surface mb-1">Mediterranean Quinoa Bowl</h3>
-<p class="font-label-sm text-label-sm text-on-surface-variant mb-4 flex-grow">10 mins prep</p>
-<button class="w-full bg-primary/5 text-primary hover:bg-primary/10 transition-colors py-2 rounded-lg font-label-md text-label-md flex justify-center items-center gap-2 h-12">
-<span class="material-symbols-outlined text-[18px]">restaurant</span>
-                            Start Cooking
-                        </button>
-</div>
-</article>
-<!-- Dinner Card -->
-<article class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col">
-<div class="h-32 bg-surface-container-high relative">
-<img class="object-cover w-full h-full" data-alt="A pan-seared salmon fillet with crispy skin, served alongside roasted asparagus and a light lemon butter sauce. The scene is lit with warm, dim evening light creating an intimate dining atmosphere. The plate is a clean, matte white ceramic resting on a subtle cream background. The styling is elegant, simple, and highly professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPcPAAq_BuL4Vb6WC9jIM1KVPvN4X_xmwGDKKXOWMa0Q0UOLncK-rkncWf-9Zaq2TQH1w4ylDeZ30-Z8SH7dj7vnhZQdK4n0zSWBVnBfhtf2CwPcLm9wlIgx96unStOrYYeG5fGXKJOR1CFc9f5_6w_cM-Wqh8yAkTKFMubu4ahp0u0rrM4UobMWWOgHhhmFpbUrdzIU4pFRIPDYgK0vkIDNtJ5znIE3isSbsONqHS1sxq-ZFQWGIfUZMV_XwZkoTTIEuT-W7Dd-pO"/>
-<div class="absolute top-2 left-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 rounded-full font-label-sm text-label-sm text-primary uppercase">Dinner</div>
-</div>
-<div class="p-4 flex-grow flex flex-col">
-<h3 class="font-label-md text-label-md font-bold text-on-surface mb-1">Pan-Seared Salmon &amp; Asparagus</h3>
-<p class="font-label-sm text-label-sm text-on-surface-variant mb-4 flex-grow">25 mins prep</p>
-<button class="w-full bg-primary text-on-primary hover:bg-primary/90 transition-colors py-2 rounded-lg font-label-md text-label-md flex justify-center items-center gap-2 h-12 shadow-sm">
-<span class="material-symbols-outlined text-[18px]">restaurant</span>
-                            Prepare Now
-                        </button>
-</div>
-</article>
-</div>
-</div>
-<!-- Right Column (Desktop) / Bottom Column (Mobile) -->
-<div class="col-span-4 md:col-span-4 flex flex-col gap-stack-lg mt-stack-lg md:mt-0">
-<!-- Nutrition / Calorie Tracker -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col">
-<div class="flex justify-between items-center mb-6">
-<h2 class="font-headline-md text-headline-md text-secondary">Nutrition</h2>
-<span class="material-symbols-outlined text-outline">monitor_weight</span>
-</div>
-<div class="flex items-center gap-6 mb-6">
-<!-- Circular Progress -->
-<div class="relative w-24 h-24 flex-shrink-0">
-<svg class="w-full h-full" viewbox="0 0 100 100">
-<!-- Background circle -->
-<circle class="text-surface-variant stroke-current" cx="50" cy="50" fill="transparent" r="40" stroke-width="8"></circle>
-<!-- Progress circle (approx 65%) -->
-<circle class="text-primary stroke-current progress-ring__circle" cx="50" cy="50" fill="transparent" r="40" stroke-dasharray="251.2" stroke-dashoffset="87.92" stroke-linecap="round" stroke-width="8"></circle>
-</svg>
-<div class="absolute inset-0 flex flex-col items-center justify-center">
-<span class="font-label-md text-label-md font-bold text-primary leading-none">1,450</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant text-[10px]">/ 2200 kcal</span>
-</div>
-</div>
-<!-- Macro Bars -->
-<div class="flex-grow flex flex-col gap-3">
-<div>
-<div class="flex justify-between font-label-sm text-label-sm mb-1">
-<span class="text-on-surface">Protein</span>
-<span class="text-on-surface-variant">65g / 120g</span>
-</div>
-<div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
-<div class="h-full bg-primary" style="width: 54%"></div>
-</div>
-</div>
-<div>
-<div class="flex justify-between font-label-sm text-label-sm mb-1">
-<span class="text-on-surface">Carbs</span>
-<span class="text-on-surface-variant">150g / 250g</span>
-</div>
-<div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
-<div class="h-full bg-secondary" style="width: 60%"></div>
-</div>
-</div>
-<div>
-<div class="flex justify-between font-label-sm text-label-sm mb-1">
-<span class="text-on-surface">Fats</span>
-<span class="text-on-surface-variant">45g / 70g</span>
-</div>
-<div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
-<div class="h-full bg-on-secondary-container" style="width: 64%"></div>
-</div>
-</div>
-</div>
-</div>
-<button class="w-full bg-transparent border-2 border-primary-fixed-dim text-secondary hover:bg-surface-container-low transition-colors py-2 rounded-lg font-label-md text-label-md h-12 flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-[18px]">add</span>
-                    Log a Meal
-                </button>
-</div>
-<!-- Alerts: Expiring Soon & Low Stock -->
-<div class="flex flex-col gap-stack-md">
-<!-- Expiring Soon Widget -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm">
-<div class="flex items-center gap-2 mb-4">
-<span class="material-symbols-outlined text-[#ba1a1a]">warning</span>
-<h3 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Use Soon</h3>
-</div>
-<ul class="flex flex-col gap-3">
-<li class="flex justify-between items-center bg-surface-container-low p-3 rounded-md">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
-<span class="material-symbols-outlined text-[16px]">eco</span>
-</div>
-<span class="font-body-md text-body-md text-on-surface">Baby Spinach</span>
-</div>
-<span class="font-label-sm text-label-sm text-[#ba1a1a] bg-[#ffdad6] px-2 py-1 rounded-full">Today</span>
-</li>
-<li class="flex justify-between items-center bg-surface-container-low p-3 rounded-md">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
-<span class="material-symbols-outlined text-[16px]">water_drop</span>
-</div>
-<span class="font-body-md text-body-md text-on-surface">Whole Milk</span>
-</div>
-<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-variant px-2 py-1 rounded-full">2 Days</span>
-</li>
-</ul>
-</div>
-<!-- Low Stock Widget -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm">
-<div class="flex items-center gap-2 mb-4">
-<span class="material-symbols-outlined text-secondary">inventory_2</span>
-<h3 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Low Stock Staples</h3>
-</div>
-<div class="flex flex-col gap-4">
-<!-- Item 1 -->
-<div>
-<div class="flex justify-between font-label-sm text-label-sm mb-1">
-<span class="text-on-surface">Extra Virgin Olive Oil</span>
-<span class="text-[#ba1a1a]">10%</span>
-</div>
-<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
-<div class="h-full bg-[#ba1a1a]" style="width: 10%"></div>
-</div>
-</div>
-<!-- Item 2 -->
-<div>
-<div class="flex justify-between font-label-sm text-label-sm mb-1">
-<span class="text-on-surface">Large Eggs</span>
-<span class="text-[#ba1a1a]">2 left</span>
-</div>
-<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
-<div class="h-full bg-[#ba1a1a]" style="width: 15%"></div>
-</div>
-</div>
-<!-- Item 3 -->
-<div>
-<div class="flex justify-between font-label-sm text-label-sm mb-1">
-<span class="text-on-surface">Arborio Rice</span>
-<span class="text-on-surface-variant">25%</span>
-</div>
-<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
-<div class="h-full bg-[#e3a008]" style="width: 25%"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Quick Actions (Stacked on desktop right rail) -->
-<div class="grid grid-cols-2 gap-unit">
-<button class="bg-surface-container-lowest border border-outline-variant hover:border-primary transition-colors rounded-xl p-4 flex flex-col items-center justify-center gap-2 h-24 shadow-sm text-on-surface-variant hover:text-primary">
-<span class="material-symbols-outlined">menu_book</span>
-<span class="font-label-sm text-label-sm">New Recipe</span>
-</button>
-<button class="bg-surface-container-lowest border border-outline-variant hover:border-primary transition-colors rounded-xl p-4 flex flex-col items-center justify-center gap-2 h-24 shadow-sm text-on-surface-variant hover:text-primary">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="font-label-sm text-label-sm text-center leading-tight">Add to Pantry</span>
-</button>
-</div>
-</div>
-</main>
-<!-- BottomNavBar (Mobile Only) -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface-container-lowest border-t border-outline-variant shadow-lg rounded-t-xl">
-<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-90 duration-150" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="font-label-sm text-label-sm mt-1">Dashboard</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary" href="#">
-<span class="material-symbols-outlined">menu_book</span>
-<span class="font-label-sm text-label-sm mt-1">Recipes</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary" href="#">
-<span class="material-symbols-outlined">inventory_2</span>
-<span class="font-label-sm text-label-sm mt-1">Inventory</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary" href="#">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="font-label-sm text-label-sm mt-1">Shop</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span class="font-label-sm text-label-sm mt-1">Settings</span>
-</a>
-</nav>
-<!-- Support for safe area on mobile devices -->
-<style>
-        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  </head>
+  <body
+    class="bg-background text-on-surface font-body-md antialiased min-h-screen flex flex-col pb-24 md:pb-0"
+  >
+    <!-- TopAppBar (Web) -->
+    <header
+      class="hidden md:flex justify-between items-center w-full px-container-margin h-16 sticky top-0 z-50 bg-background border-b border-outline-variant"
+    >
+      <div class="font-headline-md text-headline-md font-bold text-primary tracking-tight">
+        Mise
+      </div>
+      <nav class="flex gap-8 items-center h-full">
+        <a
+          class="text-primary font-bold border-b-2 border-primary h-full flex items-center font-label-md text-label-md transition-colors"
+          href="#"
+          >Dashboard</a
+        >
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-low px-3 py-2 rounded-md transition-colors font-label-md text-label-md"
+          href="#"
+          >Recipes</a
+        >
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-low px-3 py-2 rounded-md transition-colors font-label-md text-label-md"
+          href="#"
+          >Inventory</a
+        >
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-low px-3 py-2 rounded-md transition-colors font-label-md text-label-md"
+          href="#"
+          >Shop</a
+        >
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-low px-3 py-2 rounded-md transition-colors font-label-md text-label-md"
+          href="#"
+          >Settings</a
+        >
+      </nav>
+      <div class="flex items-center gap-4 text-primary">
+        <button
+          class="hover:bg-surface-container-low p-2 rounded-full transition-colors flex items-center justify-center"
+        >
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0"
+            >add_circle</span
+          >
+        </button>
+        <button
+          class="hover:bg-surface-container-low p-2 rounded-full transition-colors flex items-center justify-center"
+        >
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0"
+            >account_circle</span
+          >
+        </button>
+      </div>
+    </header>
+    <!-- TopAppBar (Mobile Fallback for branding) -->
+    <header
+      class="md:hidden flex justify-between items-center w-full px-container-margin h-16 sticky top-0 z-50 bg-background border-b border-outline-variant"
+    >
+      <div class="font-headline-md text-headline-md font-bold text-primary tracking-tight">
+        Mise
+      </div>
+      <div class="flex items-center gap-2 text-primary">
+        <button class="p-2 flex items-center justify-center">
+          <span class="material-symbols-outlined">add_circle</span>
+        </button>
+        <button class="p-2 flex items-center justify-center">
+          <span class="material-symbols-outlined">account_circle</span>
+        </button>
+      </div>
+    </header>
+    <!-- Main Content Canvas -->
+    <main
+      class="flex-grow w-full max-w-[1140px] mx-auto px-container-margin py-section-gap grid grid-cols-4 md:grid-cols-12 gap-gutter"
+    >
+      <!-- Hero Section -->
+      <section class="col-span-4 md:col-span-12 mb-stack-lg">
+        <h1
+          class="font-headline-lg-mobile md:font-display-lg text-headline-lg-mobile md:text-display-lg text-primary mb-stack-md"
+        >
+          Good morning, Chef.
+        </h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant">
+          Here is your culinary plan for today.
+        </p>
+      </section>
+      <!-- Bento Grid Layout -->
+      <!-- Meals for Today (Takes up larger space) -->
+      <div class="col-span-4 md:col-span-8 flex flex-col gap-stack-md">
+        <h2 class="font-headline-md text-headline-md text-secondary">Today's Menu</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-unit">
+          <!-- Breakfast Card -->
+          <article
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col"
+          >
+            <div class="h-32 bg-surface-container-high relative">
+              <img
+                class="object-cover w-full h-full"
+                data-alt="A beautifully plated avocado toast on sourdough bread with a perfectly poached egg on top, sprinkled with red pepper flakes and microgreens. The lighting is soft morning natural light streaming through a kitchen window, casting gentle shadows. The aesthetic is bright, clean, and modern, fitting a high-end food magazine style with warm undertones."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9l4rSnu6I4kMpuOXJOvoC6jB7XK6iVW5zdsiCgTUFE3iqTwj5UAGYi4PaWWmlPynXw_64yrZUU81Ny4eS28O37nVZIAmMmNx64s23tEf3RohRA5trQzccm7NorlHGW106asx_eC-PTcFjtj3XZpq90Vwz-tlYj8YwWtuRoENZ--T4ztZlw1jKgsM5IA1ORBLGJdSO4qr2uBONr5cLgd-Nwf2vqTUSBveyEj6Ae786yjWOGdZssSdzQCeHKisCPuGEXbORoDotAGVq"
+              />
+              <div
+                class="absolute top-2 left-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 rounded-full font-label-sm text-label-sm text-primary uppercase"
+              >
+                Breakfast
+              </div>
+            </div>
+            <div class="p-4 flex-grow flex flex-col">
+              <h3 class="font-label-md text-label-md font-bold text-on-surface mb-1">
+                Avocado Toast with Poached Egg
+              </h3>
+              <p class="font-label-sm text-label-sm text-on-surface-variant mb-4 flex-grow">
+                15 mins prep
+              </p>
+              <button
+                class="w-full bg-primary/5 text-primary hover:bg-primary/10 transition-colors py-2 rounded-lg font-label-md text-label-md flex justify-center items-center gap-2 h-12"
+              >
+                <span class="material-symbols-outlined text-[18px]">restaurant</span>
+                Start Cooking
+              </button>
+            </div>
+          </article>
+          <!-- Lunch Card -->
+          <article
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col"
+          >
+            <div class="h-32 bg-surface-container-high relative">
+              <img
+                class="object-cover w-full h-full"
+                data-alt="A vibrant Mediterranean quinoa bowl featuring cherry tomatoes, cucumber, kalamata olives, feta cheese, and a lemon herb dressing. The colors are rich greens, reds, and bright whites. The styling is minimalist and organized, shot from a slight overhead angle on a stone gray countertop, emphasizing fresh, healthy ingredients in a warm, inviting domestic kitchen."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx32QTn8uNOujzzPs-y2GJe6Z6Qt6MooGo_L3sJfgjiV--VQL5VUZfYORCJHZcXvJQNvO1WkokPYS6U3_lGIRjnHnyhB-PnZWqpzHv7WFh5Ecd42oayUaPc28rohJK-JOuS40u6LNVpwxU0uGEm7Hg8QsaioAEUvEw1Ed16FNAtDIMYmLXI5CxOx2epUMWHefz-Q83JNbzrP1HWbDr1b76lylT1eSck3aouSY5t_BOtJfPfWk9Us7NJ6Jr-58MPT0t4MCRn-F1mCni"
+              />
+              <div
+                class="absolute top-2 left-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 rounded-full font-label-sm text-label-sm text-primary uppercase"
+              >
+                Lunch
+              </div>
+            </div>
+            <div class="p-4 flex-grow flex flex-col">
+              <h3 class="font-label-md text-label-md font-bold text-on-surface mb-1">
+                Mediterranean Quinoa Bowl
+              </h3>
+              <p class="font-label-sm text-label-sm text-on-surface-variant mb-4 flex-grow">
+                10 mins prep
+              </p>
+              <button
+                class="w-full bg-primary/5 text-primary hover:bg-primary/10 transition-colors py-2 rounded-lg font-label-md text-label-md flex justify-center items-center gap-2 h-12"
+              >
+                <span class="material-symbols-outlined text-[18px]">restaurant</span>
+                Start Cooking
+              </button>
+            </div>
+          </article>
+          <!-- Dinner Card -->
+          <article
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col"
+          >
+            <div class="h-32 bg-surface-container-high relative">
+              <img
+                class="object-cover w-full h-full"
+                data-alt="A pan-seared salmon fillet with crispy skin, served alongside roasted asparagus and a light lemon butter sauce. The scene is lit with warm, dim evening light creating an intimate dining atmosphere. The plate is a clean, matte white ceramic resting on a subtle cream background. The styling is elegant, simple, and highly professional."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPcPAAq_BuL4Vb6WC9jIM1KVPvN4X_xmwGDKKXOWMa0Q0UOLncK-rkncWf-9Zaq2TQH1w4ylDeZ30-Z8SH7dj7vnhZQdK4n0zSWBVnBfhtf2CwPcLm9wlIgx96unStOrYYeG5fGXKJOR1CFc9f5_6w_cM-Wqh8yAkTKFMubu4ahp0u0rrM4UobMWWOgHhhmFpbUrdzIU4pFRIPDYgK0vkIDNtJ5znIE3isSbsONqHS1sxq-ZFQWGIfUZMV_XwZkoTTIEuT-W7Dd-pO"
+              />
+              <div
+                class="absolute top-2 left-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 rounded-full font-label-sm text-label-sm text-primary uppercase"
+              >
+                Dinner
+              </div>
+            </div>
+            <div class="p-4 flex-grow flex flex-col">
+              <h3 class="font-label-md text-label-md font-bold text-on-surface mb-1">
+                Pan-Seared Salmon &amp; Asparagus
+              </h3>
+              <p class="font-label-sm text-label-sm text-on-surface-variant mb-4 flex-grow">
+                25 mins prep
+              </p>
+              <button
+                class="w-full bg-primary text-on-primary hover:bg-primary/90 transition-colors py-2 rounded-lg font-label-md text-label-md flex justify-center items-center gap-2 h-12 shadow-sm"
+              >
+                <span class="material-symbols-outlined text-[18px]">restaurant</span>
+                Prepare Now
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+      <!-- Right Column (Desktop) / Bottom Column (Mobile) -->
+      <div class="col-span-4 md:col-span-4 flex flex-col gap-stack-lg mt-stack-lg md:mt-0">
+        <!-- Nutrition / Calorie Tracker -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col"
+        >
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="font-headline-md text-headline-md text-secondary">Nutrition</h2>
+            <span class="material-symbols-outlined text-outline">monitor_weight</span>
+          </div>
+          <div class="flex items-center gap-6 mb-6">
+            <!-- Circular Progress -->
+            <div class="relative w-24 h-24 flex-shrink-0">
+              <svg class="w-full h-full" viewbox="0 0 100 100">
+                <!-- Background circle -->
+                <circle
+                  class="text-surface-variant stroke-current"
+                  cx="50"
+                  cy="50"
+                  fill="transparent"
+                  r="40"
+                  stroke-width="8"
+                ></circle>
+                <!-- Progress circle (approx 65%) -->
+                <circle
+                  class="text-primary stroke-current progress-ring__circle"
+                  cx="50"
+                  cy="50"
+                  fill="transparent"
+                  r="40"
+                  stroke-dasharray="251.2"
+                  stroke-dashoffset="87.92"
+                  stroke-linecap="round"
+                  stroke-width="8"
+                ></circle>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span class="font-label-md text-label-md font-bold text-primary leading-none"
+                  >1,450</span
+                >
+                <span class="font-label-sm text-label-sm text-on-surface-variant text-[10px]"
+                  >/ 2200 kcal</span
+                >
+              </div>
+            </div>
+            <!-- Macro Bars -->
+            <div class="flex-grow flex flex-col gap-3">
+              <div>
+                <div class="flex justify-between font-label-sm text-label-sm mb-1">
+                  <span class="text-on-surface">Protein</span>
+                  <span class="text-on-surface-variant">65g / 120g</span>
+                </div>
+                <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
+                  <div class="h-full bg-primary" style="width: 54%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between font-label-sm text-label-sm mb-1">
+                  <span class="text-on-surface">Carbs</span>
+                  <span class="text-on-surface-variant">150g / 250g</span>
+                </div>
+                <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
+                  <div class="h-full bg-secondary" style="width: 60%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between font-label-sm text-label-sm mb-1">
+                  <span class="text-on-surface">Fats</span>
+                  <span class="text-on-surface-variant">45g / 70g</span>
+                </div>
+                <div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
+                  <div class="h-full bg-on-secondary-container" style="width: 64%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            class="w-full bg-transparent border-2 border-primary-fixed-dim text-secondary hover:bg-surface-container-low transition-colors py-2 rounded-lg font-label-md text-label-md h-12 flex items-center justify-center gap-2"
+          >
+            <span class="material-symbols-outlined text-[18px]">add</span>
+            Log a Meal
+          </button>
+        </div>
+        <!-- Alerts: Expiring Soon & Low Stock -->
+        <div class="flex flex-col gap-stack-md">
+          <!-- Expiring Soon Widget -->
+          <div
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm"
+          >
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-[#ba1a1a]">warning</span>
+              <h3
+                class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider"
+              >
+                Use Soon
+              </h3>
+            </div>
+            <ul class="flex flex-col gap-3">
+              <li class="flex justify-between items-center bg-surface-container-low p-3 rounded-md">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant"
+                  >
+                    <span class="material-symbols-outlined text-[16px]">eco</span>
+                  </div>
+                  <span class="font-body-md text-body-md text-on-surface">Baby Spinach</span>
+                </div>
+                <span
+                  class="font-label-sm text-label-sm text-[#ba1a1a] bg-[#ffdad6] px-2 py-1 rounded-full"
+                  >Today</span
+                >
+              </li>
+              <li class="flex justify-between items-center bg-surface-container-low p-3 rounded-md">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant"
+                  >
+                    <span class="material-symbols-outlined text-[16px]">water_drop</span>
+                  </div>
+                  <span class="font-body-md text-body-md text-on-surface">Whole Milk</span>
+                </div>
+                <span
+                  class="font-label-sm text-label-sm text-on-surface-variant bg-surface-variant px-2 py-1 rounded-full"
+                  >2 Days</span
+                >
+              </li>
+            </ul>
+          </div>
+          <!-- Low Stock Widget -->
+          <div
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm"
+          >
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-secondary">inventory_2</span>
+              <h3
+                class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider"
+              >
+                Low Stock Staples
+              </h3>
+            </div>
+            <div class="flex flex-col gap-4">
+              <!-- Item 1 -->
+              <div>
+                <div class="flex justify-between font-label-sm text-label-sm mb-1">
+                  <span class="text-on-surface">Extra Virgin Olive Oil</span>
+                  <span class="text-[#ba1a1a]">10%</span>
+                </div>
+                <div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+                  <div class="h-full bg-[#ba1a1a]" style="width: 10%"></div>
+                </div>
+              </div>
+              <!-- Item 2 -->
+              <div>
+                <div class="flex justify-between font-label-sm text-label-sm mb-1">
+                  <span class="text-on-surface">Large Eggs</span>
+                  <span class="text-[#ba1a1a]">2 left</span>
+                </div>
+                <div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+                  <div class="h-full bg-[#ba1a1a]" style="width: 15%"></div>
+                </div>
+              </div>
+              <!-- Item 3 -->
+              <div>
+                <div class="flex justify-between font-label-sm text-label-sm mb-1">
+                  <span class="text-on-surface">Arborio Rice</span>
+                  <span class="text-on-surface-variant">25%</span>
+                </div>
+                <div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+                  <div class="h-full bg-[#e3a008]" style="width: 25%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Quick Actions (Stacked on desktop right rail) -->
+        <div class="grid grid-cols-2 gap-unit">
+          <button
+            class="bg-surface-container-lowest border border-outline-variant hover:border-primary transition-colors rounded-xl p-4 flex flex-col items-center justify-center gap-2 h-24 shadow-sm text-on-surface-variant hover:text-primary"
+          >
+            <span class="material-symbols-outlined">menu_book</span>
+            <span class="font-label-sm text-label-sm">New Recipe</span>
+          </button>
+          <button
+            class="bg-surface-container-lowest border border-outline-variant hover:border-primary transition-colors rounded-xl p-4 flex flex-col items-center justify-center gap-2 h-24 shadow-sm text-on-surface-variant hover:text-primary"
+          >
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <span class="font-label-sm text-label-sm text-center leading-tight">Add to Pantry</span>
+          </button>
+        </div>
+      </div>
+    </main>
+    <!-- BottomNavBar (Mobile Only) -->
+    <nav
+      class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface-container-lowest border-t border-outline-variant shadow-lg rounded-t-xl"
+    >
+      <a
+        class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-90 duration-150"
+        href="#"
+      >
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="font-label-sm text-label-sm mt-1">Dashboard</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary"
+        href="#"
+      >
+        <span class="material-symbols-outlined">menu_book</span>
+        <span class="font-label-sm text-label-sm mt-1">Recipes</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary"
+        href="#"
+      >
+        <span class="material-symbols-outlined">inventory_2</span>
+        <span class="font-label-sm text-label-sm mt-1">Inventory</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary"
+        href="#"
+      >
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span class="font-label-sm text-label-sm mt-1">Shop</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary"
+        href="#"
+      >
+        <span class="material-symbols-outlined">settings</span>
+        <span class="font-label-sm text-label-sm mt-1">Settings</span>
+      </a>
+    </nav>
+    <!-- Support for safe area on mobile devices -->
+    <style>
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom);
+      }
     </style>
-</body></html>
+  </body>
+</html>

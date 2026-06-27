@@ -4,14 +4,14 @@ Kitchen operating system monorepo: **Sanity Studio v6**, **Astro 7** frontend on
 
 ## Stack
 
-| Workspace | Description |
-|-----------|-------------|
-| `apps/studio/` | Sanity Studio v6 with Mise content schemas |
-| `apps/web/` | Astro frontend (Cloudflare Workers) |
-| `packages/l10n/` | Agentic translation plugin, glossary, style guides |
-| `packages/design-tokens/` | Sage & Stone design tokens from `docs/DESIGN.md` |
-| `functions/` | Stale translation detection (Sanity Functions) |
-| `apps/translations-dashboard/` | Translation coverage dashboard |
+| Workspace                      | Description                                        |
+| ------------------------------ | -------------------------------------------------- |
+| `apps/studio/`                 | Sanity Studio v6 with Mise content schemas         |
+| `apps/web/`                    | Astro frontend (Cloudflare Workers)                |
+| `packages/l10n/`               | Agentic translation plugin, glossary, style guides |
+| `packages/design-tokens/`      | Sage & Stone design tokens from `docs/DESIGN.md`   |
+| `functions/`                   | Stale translation detection (Sanity Functions)     |
+| `apps/translations-dashboard/` | Translation coverage dashboard                     |
 
 ## Prerequisites
 
@@ -86,14 +86,14 @@ GitHub Actions workflow: `.github/workflows/deploy.yml`
 
 Add these under **Settings → Secrets and variables → Actions** in the repo ([run #11 failed](https://github.com/shehjad-noqtaai/mise/actions/runs/28277473622) because they were missing):
 
-| Secret | Used by | Value |
-|--------|---------|-------|
-| `SANITY_STUDIO_PROJECT_ID` | web, studio | `1rkupi9j` |
-| `SANITY_STUDIO_DATASET` | web, studio | `production` |
-| `SANITY_AUTH_TOKEN` | studio | [sanity.io/manage](https://www.sanity.io/manage) → API → Tokens |
-| `CLOUDFLARE_API_TOKEN` | web | Workers deploy token |
-| `CLOUDFLARE_ACCOUNT_ID` | web | Cloudflare account ID |
-| `SANITY_API_READ_TOKEN` | web (optional) | Read token for Presentation / draft mode |
+| Secret                     | Used by        | Value                                                           |
+| -------------------------- | -------------- | --------------------------------------------------------------- |
+| `SANITY_STUDIO_PROJECT_ID` | web, studio    | `1rkupi9j`                                                      |
+| `SANITY_STUDIO_DATASET`    | web, studio    | `production`                                                    |
+| `SANITY_AUTH_TOKEN`        | studio         | [sanity.io/manage](https://www.sanity.io/manage) → API → Tokens |
+| `CLOUDFLARE_API_TOKEN`     | web            | Workers deploy token                                            |
+| `CLOUDFLARE_ACCOUNT_ID`    | web            | Cloudflare account ID                                           |
+| `SANITY_API_READ_TOKEN`    | web (optional) | Read token for Presentation / draft mode                        |
 
 Public URLs (`SANITY_STUDIO_PREVIEW_URL`, `SANITY_STUDIO_URL`) are set in the workflow file — not secrets.
 

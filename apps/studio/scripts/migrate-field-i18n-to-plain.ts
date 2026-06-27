@@ -129,9 +129,7 @@ for (const doc of docs) {
   console.log(`Flattened ${doc._id}`)
 }
 
-const fieldMetadataIds = await client.fetch<string[]>(
-  `*[_type == "fieldTranslation.metadata"]._id`,
-)
+const fieldMetadataIds = await client.fetch<string[]>(`*[_type == "fieldTranslation.metadata"]._id`)
 
 for (const id of fieldMetadataIds) {
   await client.delete(id)

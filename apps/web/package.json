@@ -1,11 +1,8 @@
 {
   "name": "web",
-  "type": "module",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": ">=22.12.0"
-  },
+  "type": "module",
   "scripts": {
     "dev": "astro dev --port 4321",
     "build": "astro build",
@@ -38,5 +35,8 @@
     "tailwindcss": "^4.1.0",
     "typescript": "catalog:",
     "wrangler": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

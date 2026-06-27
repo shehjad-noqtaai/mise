@@ -19,7 +19,8 @@ for (const dir of [repoRoot, __dirname]) {
 }
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID ?? process.env.PUBLIC_SANITY_PROJECT_ID ?? ''
-const dataset = process.env.SANITY_STUDIO_DATASET ?? process.env.PUBLIC_SANITY_DATASET ?? 'production'
+const dataset =
+  process.env.SANITY_STUDIO_DATASET ?? process.env.PUBLIC_SANITY_DATASET ?? 'production'
 const studioUrl = process.env.SANITY_STUDIO_URL ?? 'http://localhost:3333'
 // Release / stacked perspectives (Presentation tool) require Content Releases API (2025-02-19+).
 const sanityApiVersion = '2026-06-01'

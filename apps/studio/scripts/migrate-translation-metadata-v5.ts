@@ -12,9 +12,9 @@ import {
 
 const client = getCliClient({apiVersion: '2025-02-19'}).withConfig({useCdn: false})
 
-const docs = await client.fetch<
-  Array<{_id: string; translations?: TranslationMetadataItem[]}>
->(`*[_type == "translation.metadata"]{_id, translations}`)
+const docs = await client.fetch<Array<{_id: string; translations?: TranslationMetadataItem[]}>>(
+  `*[_type == "translation.metadata"]{_id, translations}`,
+)
 
 let migrated = 0
 

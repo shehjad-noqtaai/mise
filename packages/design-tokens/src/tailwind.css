@@ -53,8 +53,8 @@
   --spacing-unit: 8px;
   --spacing-container-margin: 24px;
 
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
 
   --text-display-lg: 48px;
   --text-display-lg--line-height: 56px;

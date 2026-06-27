@@ -39,8 +39,7 @@ export const recipeIngredientLine = defineType({
       locale: '^language',
     },
     prepare({quantity, unit, ingredientName, locale}) {
-      const name =
-        pickInternationalizedValue(ingredientName, locale ?? 'en-US') ?? 'Ingredient'
+      const name = pickInternationalizedValue(ingredientName, locale ?? 'en-US') ?? 'Ingredient'
       return {
         title: [quantity, unit, name].filter(Boolean).join(' ').trim() || 'Ingredient',
       }

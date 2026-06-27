@@ -24,10 +24,7 @@ export function recipeDirectoryUrl(locale: Locale, filters: RecipeFilters = {}) 
   return getRelativeLocaleUrl(locale, path)
 }
 
-export function clearRecipeFilter(
-  current: RecipeFilters,
-  key: keyof RecipeFilters,
-): RecipeFilters {
+export function clearRecipeFilter(current: RecipeFilters, key: keyof RecipeFilters): RecipeFilters {
   const next = {...current}
   delete next[key]
   return next

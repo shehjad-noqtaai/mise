@@ -103,7 +103,13 @@ async function main() {
   }
 
   const recipes = await client.fetch<
-    Array<{_id: string; title: string; summary?: string; slug?: {current?: string}; language?: string}>
+    Array<{
+      _id: string
+      title: string
+      summary?: string
+      slug?: {current?: string}
+      language?: string
+    }>
   >(
     `*[_type == "recipe" && language == "en-US" && !defined(heroImage.asset)]{
       _id,

@@ -15,7 +15,7 @@ const categoriesBySlug: Record<string, string[]> = {
   'herbed-lentil-stew': ['category-comfort', 'category-main-course'],
   'garlic-butter-pasta': ['category-italian', 'category-main-course', 'category-comfort'],
   'cheese-cake': ['category-dessert', 'category-comfort'],
-  'cheesecake': ['category-dessert', 'category-comfort'],
+  cheesecake: ['category-dessert', 'category-comfort'],
 }
 
 function inferCategories(title: string, slug: string, tags: string[] = []) {

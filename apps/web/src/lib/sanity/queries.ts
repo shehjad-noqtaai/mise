@@ -60,7 +60,8 @@ export const RECIPE_CATEGORIES_QUERY = defineQuery(`*[
   "title": ${localizedString('title')}
 }`)
 
-export const RECIPE_BY_SLUG_QUERY = defineQuery(`*[_type == "recipe" && language == $locale && slug.current == $slug][0]{
+export const RECIPE_BY_SLUG_QUERY =
+  defineQuery(`*[_type == "recipe" && language == $locale && slug.current == $slug][0]{
   _id,
   title,
   slug,
@@ -87,7 +88,8 @@ export const RECIPE_BY_SLUG_QUERY = defineQuery(`*[_type == "recipe" && language
   "categories": categories[]->${localizedStringFromRef('title')}
 }`)
 
-export const PANTRY_SNAPSHOT_QUERY = defineQuery(`*[_type == "pantrySnapshot" && language == $locale][0]{
+export const PANTRY_SNAPSHOT_QUERY =
+  defineQuery(`*[_type == "pantrySnapshot" && language == $locale][0]{
   title,
   description,
   items[]{
@@ -102,7 +104,8 @@ export const PANTRY_SNAPSHOT_QUERY = defineQuery(`*[_type == "pantrySnapshot" &&
   }
 }`)
 
-export const RECIPE_TRANSLATIONS_QUERY = defineQuery(`*[_type == "translation.metadata" && references($recipeId)][0]{
+export const RECIPE_TRANSLATIONS_QUERY =
+  defineQuery(`*[_type == "translation.metadata" && references($recipeId)][0]{
   translations[]{
     _key,
     "slug": value->slug.current,

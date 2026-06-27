@@ -6,11 +6,7 @@
  */
 import {getCliClient} from 'sanity/cli'
 import {getPublishedId} from 'sanity'
-import {
-  ingredients,
-  pantryCategories,
-  recipeCategories,
-} from './seed/mise-data.ts'
+import {ingredients, pantryCategories, recipeCategories} from './seed/mise-data.ts'
 import {isInternationalizedArray} from '../lib/internationalizedValue'
 
 const client = getCliClient({apiVersion: '2025-02-19'}).withConfig({useCdn: false})
@@ -27,11 +23,7 @@ const FIELD_MAP: Record<(typeof TAXONOMY_TYPES)[number], readonly string[]> = {
   pantryCategory: ['title'],
 }
 
-function resolveFieldValue(
-  docId: string,
-  field: string,
-  current: unknown,
-): unknown {
+function resolveFieldValue(docId: string, field: string, current: unknown): unknown {
   if (isInternationalizedArray(current)) return current
 
   const seed = seedById.get(getPublishedId(docId))

@@ -73,7 +73,8 @@ export default defineBlueprint({
       robotToken: '$.resources.fn-robot.token',
       event: {
         on: ['publish'],
-        filter: "_type in ['recipe', 'homePage', 'mealPlanEntry', 'pantrySnapshot'] && language == 'en-US'",
+        filter:
+          "_type in ['recipe', 'homePage', 'mealPlanEntry', 'pantrySnapshot'] && language == 'en-US'",
         projection: '{_id, _rev, _type, language}',
         resource: {type: 'dataset', id: `${projectId}.${datasetName}`},
       },

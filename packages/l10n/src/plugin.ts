@@ -1,8 +1,4 @@
-import {
-  definePlugin,
-  type DocumentActionComponent,
-  type SchemaTypeDefinition,
-} from 'sanity'
+import {definePlugin, type DocumentActionComponent, type SchemaTypeDefinition} from 'sanity'
 import {documentInternationalization, type Language} from '@sanity/document-internationalization'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 
@@ -89,9 +85,7 @@ export function createL10n({
           }
 
           return prev.map((action) =>
-            action.action === 'publish'
-              ? createFieldTranslationPublishGate(action)
-              : action,
+            action.action === 'publish' ? createFieldTranslationPublishGate(action) : action,
           )
         },
         badges: (prev, context) =>

@@ -6,11 +6,7 @@ import {assist} from '@sanity/assist'
 import {visionTool} from '@sanity/vision'
 import {EarthGlobeIcon, HomeIcon} from '@sanity/icons'
 import {agentContextPlugin} from '@sanity/agent-context/studio'
-import {
-  createL10n,
-  useTranslateFieldAction,
-  withLocaleFilter,
-} from '@starter/l10n'
+import {createL10n, useTranslateFieldAction, withLocaleFilter} from '@starter/l10n'
 import {schemaTypes} from './schemaTypes'
 import {MiseIcon} from './components/MiseIcon'
 import {resolve} from './lib/resolve'
@@ -22,12 +18,7 @@ const previewInitialUrl = `${previewUrl.replace(/\/$/, '')}/en-us/`
 // Allow iframe preview from both local and deployed Astro apps regardless of which Studio build you use.
 const studioPreviewOrigins = [...new Set([previewUrl, localPreviewUrl, productionPreviewUrl])]
 
-const l10nTypes = [
-  'l10n.locale',
-  'l10n.glossary',
-  'l10n.styleGuide',
-  'translation.metadata',
-]
+const l10nTypes = ['l10n.locale', 'l10n.glossary', 'l10n.styleGuide', 'translation.metadata']
 
 const localizedDocumentTypes = ['recipe', 'homePage', 'mealPlanEntry', 'pantrySnapshot'] as const
 
@@ -53,9 +44,7 @@ const structure = ((S) =>
       S.documentTypeListItem('homePage')
         .title('Dashboard')
         .icon(HomeIcon)
-        .child(() =>
-          withLocaleFilter(S.documentTypeList('homePage').defaultOrdering(titleAsc)),
-        ),
+        .child(() => withLocaleFilter(S.documentTypeList('homePage').defaultOrdering(titleAsc))),
       S.documentTypeListItem('recipe').child(() =>
         withLocaleFilter(S.documentTypeList('recipe').defaultOrdering(titleAsc)),
       ),

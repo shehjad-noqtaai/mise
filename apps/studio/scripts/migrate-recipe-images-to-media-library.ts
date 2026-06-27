@@ -5,10 +5,7 @@
  * Run: pnpm --filter studio migrate-recipe-images
  */
 import {getCliClient} from 'sanity/cli'
-import {
-  deleteMediaLibraryAsset,
-  migrateImageUrlToMediaLibrary,
-} from '../lib/media-library.ts'
+import {deleteMediaLibraryAsset, migrateImageUrlToMediaLibrary} from '../lib/media-library.ts'
 
 const LEGACY_ASSETS = [
   {
@@ -70,7 +67,7 @@ async function main() {
       title: asset.title,
     })
 
-    const recipes = await client.fetch<Array<{_id: string}>>( 
+    const recipes = await client.fetch<Array<{_id: string}>>(
       `*[_type == "recipe" && heroImage.asset._ref == $assetId]{_id}`,
       {assetId: asset.oldAssetId},
     )

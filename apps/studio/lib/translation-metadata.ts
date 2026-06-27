@@ -17,7 +17,9 @@ export type TranslationMetadataItem = {
  * Uses strong references — weak refs trigger OptimisticallyStrengthen patches
  * that fail on liveEdit (read-only) metadata documents.
  */
-export function normalizeTranslationMetadataItem(item: TranslationMetadataItem): TranslationMetadataItem {
+export function normalizeTranslationMetadataItem(
+  item: TranslationMetadataItem,
+): TranslationMetadataItem {
   const language = item.language ?? item._key
   if (!language || !item.value?._ref) {
     return item
@@ -41,7 +43,9 @@ export function normalizeTranslationMetadataItems(
   return items.map(normalizeTranslationMetadataItem)
 }
 
-export function translationMetadataNeedsNormalization(items: TranslationMetadataItem[] | undefined): boolean {
+export function translationMetadataNeedsNormalization(
+  items: TranslationMetadataItem[] | undefined,
+): boolean {
   if (!Array.isArray(items)) return false
   return items.some((item) => {
     const normalized = normalizeTranslationMetadataItem(item)

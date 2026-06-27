@@ -120,9 +120,7 @@ const I18N_VALUE_TYPES = new Set([
   'internationalizedArrayTextValue',
 ])
 
-export function isInternationalizedArray(
-  value: unknown,
-): value is InternationalizedEntry[] {
+export function isInternationalizedArray(value: unknown): value is InternationalizedEntry[] {
   if (!Array.isArray(value) || value.length === 0) return false
   return value.every(
     (entry) =>
@@ -142,9 +140,7 @@ export function pickInternationalizedValue(
   if (typeof value === 'string') return value || undefined
   if (!isInternationalizedArray(value)) return undefined
 
-  const match = value.find(
-    (entry) => entry.language === locale || entry._key === locale,
-  )
+  const match = value.find((entry) => entry.language === locale || entry._key === locale)
   if (match?.value != null) return match.value
 
   const fallbackEntry = value.find(
