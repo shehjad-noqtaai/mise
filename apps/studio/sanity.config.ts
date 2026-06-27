@@ -10,6 +10,7 @@ import {createL10n, useTranslateFieldAction, withLocaleFilter} from '@starter/l1
 import {schemaTypes} from './schemaTypes'
 import {MiseIcon} from './components/MiseIcon'
 import {readEnvUrl, uniqueUrls} from './lib/env-url'
+import {isDevStudio} from './lib/studio-env'
 import {resolve} from './lib/resolve'
 
 const localPreviewUrl = 'http://localhost:4321'
@@ -114,7 +115,7 @@ const structure = ((S) =>
 
 export default defineConfig({
   name: 'default',
-  title: 'Mise Kitchen OS',
+  title: isDevStudio() ? 'Mise Kitchen OS (Dev)' : 'Mise Kitchen OS',
   ...(isSchemaExtract ? {} : {icon: MiseIcon}),
 
   projectId,
