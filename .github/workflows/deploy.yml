@@ -11,7 +11,32 @@ env:
   SANITY_STUDIO_URL: https://mise-kitchen-os.sanity.studio
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      web: ${{ steps.filter.outputs.web }}
+      studio: ${{ steps.filter.outputs.studio }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            web:
+              - 'apps/web/**'
+              - 'packages/design-tokens/**'
+              - 'pnpm-lock.yaml'
+              - 'package.json'
+              - '.github/workflows/deploy.yml'
+            studio:
+              - 'apps/studio/**'
+              - 'pnpm-lock.yaml'
+              - 'package.json'
+              - '.github/workflows/deploy.yml'
+
   web:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.web == 'true'
     runs-on: ubuntu-latest
     environment: Production
     defaults:
@@ -80,6 +105,8 @@ jobs:
           SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN }}
 
   studio:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.studio == 'true'
     runs-on: ubuntu-latest
     environment: Production
     defaults:
