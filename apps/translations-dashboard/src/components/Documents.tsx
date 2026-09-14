@@ -164,13 +164,13 @@ const Documents = () => {
   }
   return (
     <TranslationStatusProvider fallbackLocaleMap={fallbackLocaleMap} localeIds={localeIds}>
-      <Grid className="h-full" columns={6}>
+      <Grid className="h-full" gridTemplateColumns={6}>
         {/* Left side of the screen */}
-        <Card className="relative" columnEnd={4} columnStart={1}>
+        <Card className="relative" gridColumnEnd={4} gridColumnStart={1}>
           <Suspense fallback={<Loading />}>
             {/* Fixed header */}
             <div className="bg-white pt-4 px-4 pb-2 border-b border-gray-200  sticky top-0 z-10">
-              <Stack space={3}>
+              <Stack gap={3}>
                 <DocumentTypeSelector />
                 <StatusSelector />
                 {(status === 'untranslated' ||
@@ -197,7 +197,6 @@ const Documents = () => {
                             disabled={shouldDisableDocumentSelection}
                             mode="ghost"
                             onClick={clearSelection}
-                            size={1}
                             text="Deselect All"
                             tone="default"
                           />
@@ -263,7 +262,7 @@ const Documents = () => {
           </Suspense>
         </Card>
         {/* Right side of the screen */}
-        <Card borderLeft className="relative" columnEnd={7} columnStart={4}>
+        <Card borderLeft className="relative" gridColumnEnd={7} gridColumnStart={4}>
           <ErrorBoundary featureName="Document Details">
             <Suspense fallback={<Loading />}>
               {!isBatchMode ? (

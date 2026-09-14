@@ -7,8 +7,11 @@
  * Uses the existing InlineDiff component for word-level diffs.
  */
 
-import {CheckmarkCircleIcon, ResetIcon, TranslateIcon} from '@sanity/icons'
-import {Box, Button, Card, Flex, Popover, Stack, Text, useClickOutsideEvent} from '@sanity/ui'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {ResetIcon} from '@sanity/icons/Reset'
+import {TranslateIcon} from '@sanity/icons/Translate'
+import {Box, Button, Card, Flex, Stack, Text, useClickOutsideEvent} from '@sanity/ui'
+import {Popover} from '@sanity/ui/popover'
 import {useCallback, useRef, useState} from 'react'
 import {useTranslation} from 'sanity'
 
@@ -66,7 +69,7 @@ export function StaleDiffPopover({
 
   const content = (
     <Card ref={popoverRef} padding={3} radius={2} style={{maxWidth: 400, minWidth: 280}}>
-      <Stack space={3}>
+      <Stack gap={3}>
         <Text size={1} weight="semibold">
           {t('stale-diff.title')}
         </Text>

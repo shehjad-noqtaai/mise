@@ -49,7 +49,7 @@ const DocumentItem = ({
         radius={1}
         tone="caution"
       >
-        <Stack space={2}>
+        <Stack gap={2}>
           <Flex align="center" gap={2}>
             <Box className="w-1.5 h-1.5 bg-yellow-500 rounded-full flex-shrink-0" />
             <Text size={1} weight="medium">
@@ -60,7 +60,7 @@ const DocumentItem = ({
             <Text className="text-yellow-500 leading-none" size={0}>
               ⚠️
             </Text>
-            <Stack className="flex-1" space={1}>
+            <Stack className="flex-1" gap={1}>
               <Text muted size={0}>
                 Unable to validate - may still be processed
               </Text>
@@ -130,7 +130,7 @@ const DocumentItem = ({
       ref={itemRef}
       tone={cardTone}
     >
-      <Stack space={2}>
+      <Stack gap={2}>
         <Flex align="center" gap={2}>
           <Box className={`w-1.5 h-1.5 ${statusColorClass} rounded-full flex-shrink-0`} />
           <Text className="flex-1" size={1} weight="medium">
@@ -146,7 +146,7 @@ const DocumentItem = ({
           <Text className={`${statusTextColorClass} leading-none`} size={0}>
             {statusIcon}
           </Text>
-          <Stack className="flex-1" space={1}>
+          <Stack className="flex-1" gap={1}>
             <Text muted size={0}>
               {statusMessage}
             </Text>

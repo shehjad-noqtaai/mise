@@ -1,4 +1,5 @@
-import {type BadgeTone, Badge, Box, Flex, Text, Tooltip} from '@sanity/ui'
+import {type BadgeTone, Badge, Box, Flex, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 
 type StatusBadgeProps = {
   icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>

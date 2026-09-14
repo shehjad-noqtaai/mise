@@ -1,0 +1,101 @@
+---
+import {getRelativeLocaleUrl} from 'astro:i18n'
+import BaseLayout from '../../../layouts/BaseLayout.astro'
+import {DEFAULT_LOCALE, localeFromParam} from '../../../lib/i18n'
+import {loadVideoShowcase} from '../../../lib/video-showcase'
+
+export const prerender = false
+
+const locale = localeFromParam(Astro.params.locale)
+if (!locale) {
+  return Astro.redirect(getRelativeLocaleUrl(DEFAULT_LOCALE, 'video-demo/'))
+}
+
+const showcase = await loadVideoShowcase()
+
+const pages = [
+  {
+    href: getRelativeLocaleUrl(locale, 'video-demo/dataset/'),
+    title: 'Dataset file asset',
+    blurb:
+      'The clip as a plain sanity.fileAsset: one fixed-quality MP4 downloaded progressively from cdn.sanity.io by every viewer.',
+  },
+  {
+    href: getRelativeLocaleUrl(locale, 'video-demo/streaming/'),
+    title: 'Media Library streaming',
+    blurb:
+      'The same clip transcoded by the Media Library video add-on: HLS segments streamed just-in-time at a quality matched to each viewer.',
+  },
+]
+
+const comparison = [
+  {
+    label: 'What is transferred',
+    dataset: 'The whole file (browsers often buffer all of it, watched or not)',
+    streaming: 'Only the segments the viewer actually watches, plus a small buffer',
+  },
+  {
+    label: 'Quality per viewer',
+    dataset: 'One fixed rendition for everyone',
+    streaming: 'Adaptive ladder — each viewer gets what their network sustains',
+  },
+  {
+    label: 'Bandwidth accounting',
+    dataset: 'Counts against the project bandwidth quota',
+    streaming: 'Metered as Media Library video delivery on its own video CDN',
+  },
+  {
+    label: 'Startup',
+    dataset: 'Waits on enough of the MP4 to begin decoding',
+    streaming: 'First low-bitrate segments start playback almost immediately',
+  },
+]
+---
+
+<BaseLayout locale={locale} title={showcase?.title ?? 'Video Demo'} currentPath="video-demo/">
+  <h1 class="font-display-lg text-primary">{showcase?.title ?? 'Video Demo'}</h1>
+  <p class="mt-4 max-w-3xl font-body-lg text-on-surface-variant">
+    The same clip delivered two ways, each on its own page so you can watch the network tab in
+    isolation and compare what actually goes over the wire.
+  </p>
+
+  <div class="mt-10 grid gap-6 md:grid-cols-2">
+    {
+      pages.map((page) => (
+        <a
+          href={page.href}
+          class="rounded-xl border border-outline-variant bg-surface-container-lowest p-6 transition hover:border-primary"
+        >
+          <h2 class="font-headline-md text-primary">{page.title}</h2>
+          <p class="mt-2 font-body-md text-on-surface-variant">{page.blurb}</p>
+        </a>
+      ))
+    }
+  </div>
+
+  <section class="mt-12">
+    <h2 class="font-headline-md text-primary">Bandwidth at a glance</h2>
+    <div class="mt-4 overflow-x-auto rounded-xl border border-outline-variant">
+      <table class="w-full min-w-[640px] text-left font-body-md">
+        <thead class="bg-surface-container-low">
+          <tr>
+            <th class="p-4 font-medium"></th>
+            <th class="p-4 font-medium text-primary">Dataset file asset</th>
+            <th class="p-4 font-medium text-primary">Media Library streaming</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            comparison.map((row) => (
+              <tr class="border-t border-outline-variant">
+                <th class="p-4 font-medium text-on-surface-variant">{row.label}</th>
+                <td class="p-4">{row.dataset}</td>
+                <td class="p-4">{row.streaming}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</BaseLayout>

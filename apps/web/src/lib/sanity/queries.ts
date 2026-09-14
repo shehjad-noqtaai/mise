@@ -9,7 +9,6 @@ const localizedCategoryTitle = `coalesce(category->title[language == $locale][0]
 export const HOME_PAGE_QUERY = defineQuery(`*[_type == "homePage" && language == $locale][0]{
   title,
   greeting,
-  newField,
   subtitle,
   quickActionLabels,
   mealsToday[]{
@@ -116,4 +115,23 @@ export const RECIPE_TRANSLATIONS_QUERY =
 export const RECIPE_SLUGS_QUERY = defineQuery(`*[_type == "recipe" && defined(slug.current)]{
   "locale": language,
   "slug": slug.current
+}`)
+
+// datasetVideo is a plain sanity.fileAsset in this dataset (normal -> join).
+// streamingVideo lives in the org Media Library behind a Global Dataset Reference,
+// so it must be followed with documents::get() and read with an authorized client.
+export const VIDEO_SHOWCASE_QUERY = defineQuery(`*[_type == "videoShowcase"][0]{
+  title,
+  "datasetVideo": datasetVideo.asset->{
+    url,
+    mimeType,
+    size,
+    originalFilename
+  },
+  "streamingVideo": documents::get(streamingVideo.asset){
+    _id,
+    "aspectRatio": metadata.aspectRatio,
+    "duration": metadata.duration,
+    "playbackId": metadata.playbacks[policy == "public"][0]._id
+  }
 }`)

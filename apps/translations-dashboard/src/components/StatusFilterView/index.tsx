@@ -90,8 +90,8 @@ function StatusFilterView({
   // Celebration state: 0 documents for this status
   if (data.length === 0) {
     return (
-      <Stack space={4}>
-        <Stack space={3} style={{textAlign: 'center'}}>
+      <Stack gap={4}>
+        <Stack gap={3} style={{textAlign: 'center'}}>
           <Flex align="center" gap={2} justify="center">
             <Text size={3}>
               <Icon />
@@ -107,9 +107,9 @@ function StatusFilterView({
   const subtitle = STATUS_SUBTITLES[status]
 
   return (
-    <Stack space={4}>
+    <Stack gap={4}>
       {/* Header */}
-      <Stack space={3} style={{textAlign: 'center'}}>
+      <Stack gap={3} style={{textAlign: 'center'}}>
         <Flex align="center" gap={2} justify="center">
           <Text size={3}>
             <Icon />

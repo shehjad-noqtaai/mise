@@ -12,7 +12,7 @@
  * are published.
  */
 
-import {WarningOutlineIcon} from '@sanity/icons'
+import {WarningOutlineIcon} from '@sanity/icons/WarningOutline'
 import {Badge, Box, Button, Card, Flex, Heading, Stack, Text} from '@sanity/ui'
 
 import type {StaleDocumentEntry, StaleDocumentsResult} from '../hooks/useStaleDocuments'
@@ -41,7 +41,7 @@ function StaleDocumentsSection({onViewAll, state, totalStaleCount}: StaleDocumen
 
   return (
     <Card border padding={4} radius={2} tone="caution">
-      <Stack space={4}>
+      <Stack gap={4}>
         {/* Header */}
         <Flex align="center" gap={2}>
           <Text size={1}>
@@ -55,7 +55,7 @@ function StaleDocumentsSection({onViewAll, state, totalStaleCount}: StaleDocumen
 
         {/* Stale document rows */}
         {data.length > 0 && (
-          <Stack space={2}>
+          <Stack gap={2}>
             {data.map((entry) => (
               <StaleDocumentRow entry={entry} key={entry.documentId} />
             ))}
@@ -97,9 +97,7 @@ function StaleDocumentRow({entry}: {entry: StaleDocumentEntry}) {
               text
               title={entry.documentId}
             />
-            <Badge mode="outline" tone="default">
-              {entry.documentType}
-            </Badge>
+            <Badge tone="default">{entry.documentType}</Badge>
           </Flex>
         </Box>
 

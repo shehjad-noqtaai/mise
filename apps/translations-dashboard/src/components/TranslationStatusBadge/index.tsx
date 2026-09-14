@@ -9,7 +9,10 @@
 import type {StatusDisplay, TranslationStatus} from '@starter/l10n'
 
 import {getStatusDisplay} from '@starter/l10n'
-import {CheckmarkCircleIcon, CircleIcon, ClockIcon, EditIcon} from '@sanity/icons'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {CircleIcon} from '@sanity/icons/Circle'
+import {ClockIcon} from '@sanity/icons/Clock'
+import {EditIcon} from '@sanity/icons/Edit'
 import {Badge, Flex, Text} from '@sanity/ui'
 import {useRef} from 'react'
 

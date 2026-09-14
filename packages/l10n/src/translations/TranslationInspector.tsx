@@ -10,7 +10,7 @@
  * Field-level path needs no language field — translations are inline arrays.
  */
 
-import {ErrorOutlineIcon} from '@sanity/icons'
+import {ErrorOutlineIcon} from '@sanity/icons/ErrorOutline'
 import {Box, Card, Flex, Spinner, Stack, Text} from '@sanity/ui'
 import type {DocumentInspectorProps} from 'sanity'
 
@@ -81,7 +81,7 @@ function DocLevelInspector({
   if (langResult.error) {
     return (
       <Card padding={4} tone="critical" border radius={2}>
-        <Stack space={3}>
+        <Stack gap={3}>
           <Flex align="center" gap={2}>
             <Text size={1}>
               <ErrorOutlineIcon />

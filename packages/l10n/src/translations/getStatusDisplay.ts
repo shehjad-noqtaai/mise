@@ -8,14 +8,12 @@
  * See `/spike-overview/design-language` for the full design spec.
  */
 
-import {
-  AddCircleIcon,
-  CheckmarkCircleIcon,
-  CircleIcon,
-  EditIcon,
-  ErrorOutlineIcon,
-  SyncIcon,
-} from '@sanity/icons'
+import {AddCircleIcon} from '@sanity/icons/AddCircle'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {CircleIcon} from '@sanity/icons/Circle'
+import {EditIcon} from '@sanity/icons/Edit'
+import {ErrorOutlineIcon} from '@sanity/icons/ErrorOutline'
+import {SyncIcon} from '@sanity/icons/Sync'
 import type {BadgeTone} from '@sanity/ui'
 import type {ComponentType, CSSProperties} from 'react'
 

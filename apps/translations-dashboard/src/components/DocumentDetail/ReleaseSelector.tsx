@@ -19,7 +19,7 @@ export function ReleaseSelector({
   if (releases.length === 0 && !disabled) {
     return (
       <Card padding={4} radius={2} shadow={1} tone="caution">
-        <Stack space={3}>
+        <Stack gap={3}>
           <Text size={2} weight="semibold">
             No Active Releases
           </Text>

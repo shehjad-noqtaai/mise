@@ -52,18 +52,15 @@ export default defineConfig({
   projectId,
   dataset,
 
-  beta: {
-    documentGroupInventory: {
-      enabled: true,
-    },
+  // Registers the sanity.video type used by defineVideoField, so it must stay
+  // enabled during schema extract too.
+  mediaLibrary: {
+    enabled: true,
   },
 
   ...(isSchemaExtract
     ? {}
     : {
-        mediaLibrary: {
-          enabled: true,
-        },
         form: {
           image: {
             assetSources: (sources) => sources.filter((source) => source.name !== 'sanity-default'),

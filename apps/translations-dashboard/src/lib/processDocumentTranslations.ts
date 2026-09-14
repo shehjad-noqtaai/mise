@@ -4,7 +4,7 @@
  * with a configurable concurrency limit and reports per-locale progress.
  */
 
-import type {User} from 'sanity'
+import type {CurrentUser} from '@sanity/sdk'
 import type {SanityClient} from 'sanity'
 
 import {getPublishedId} from 'sanity'
@@ -44,7 +44,7 @@ export async function processDocumentTranslationsWithProgress(
   client: SanityClient,
   onProgress: TranslationProgressCallback,
   selectedRelease: null | string,
-  currentUser: null | User,
+  currentUser: null | CurrentUser,
   updateLocaleStatus: (
     metadataId: string,
     localeId: string,

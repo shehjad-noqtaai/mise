@@ -1,5 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {DocumentTextIcon} from '@sanity/icons'
+import {DocumentTextIcon} from '@sanity/icons/DocumentText'
 import {isUniqueOtherThanLanguage} from '../../lib/isUniqueOtherThanLanguage'
 import {recipeIngredientLineMember} from '../objects/recipe-ingredient-line'
 import {recipeStepMember} from '../objects/recipe-step'

@@ -24,7 +24,7 @@ import {
   type AssistFieldActionNode,
   type AssistFieldActionProps,
 } from '@sanity/assist'
-import {TranslateIcon} from '@sanity/icons'
+import {TranslateIcon} from '@sanity/icons/Translate'
 import {randomKey} from '@sanity/util/content'
 
 import type {InternationalizedArrayItem} from 'sanity-plugin-internationalized-array'

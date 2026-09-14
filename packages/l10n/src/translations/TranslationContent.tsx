@@ -4,16 +4,15 @@
  * state, and the main table rendering.
  */
 
-import {
-  CheckmarkCircleIcon,
-  CloseIcon,
-  DatabaseIcon,
-  PackageIcon,
-  SparklesIcon,
-  SpinnerIcon,
-  TranslateIcon,
-} from '@sanity/icons'
-import {Badge, Box, Button, Card, Checkbox, Flex, Spinner, Stack, Text, Tooltip} from '@sanity/ui'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {CloseIcon} from '@sanity/icons/Close'
+import {DatabaseIcon} from '@sanity/icons/Database'
+import {PackageIcon} from '@sanity/icons/Package'
+import {SparklesIcon} from '@sanity/icons/Sparkles'
+import {SpinnerIcon} from '@sanity/icons/Spinner'
+import {TranslateIcon} from '@sanity/icons/Translate'
+import {Badge, Box, Button, Card, Checkbox, Flex, Spinner, Stack, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 import {Suspense, use, useCallback, useMemo, useRef, useState} from 'react'
 import {ErrorBoundary} from './ErrorBoundary'
 import {
@@ -205,7 +204,7 @@ function StackedProgressBar({
 
   return (
     <Card padding={3} radius={2} tone="neutral" border>
-      <Stack space={3}>
+      <Stack gap={3}>
         <Flex align="center" justify="space-between">
           <Text size={1} weight="semibold">
             {t('translations.progress', {completed: completedCount, total: counts.total})}
@@ -625,7 +624,7 @@ function LocaleRow({
           {locale.flag && <Text size={4}>{locale.flag}</Text>}
           <StatusDot locale={locale} allLocales={allLocales} baseDocumentId={baseDocumentId} />
           {showFullName ? (
-            <Stack space={2}>
+            <Stack gap={2}>
               {isClickable && !rowClickable ? (
                 <Tooltip
                   content={
@@ -708,7 +707,7 @@ export function ErrorState({message, onRetry}: {message: string; onRetry: () => 
   const {t} = useTranslation(l10nLocaleNamespace)
   return (
     <Card padding={4} tone="critical">
-      <Stack space={3}>
+      <Stack gap={3}>
         <Text align="center" size={1}>
           {message}
         </Text>
@@ -1049,7 +1048,7 @@ function TranslationContentInner({
           )}
         </Flex>
         <Box flex={1} overflow="auto" padding={3}>
-          <Stack space={4}>
+          <Stack gap={4}>
             <TranslatedDocTaskCard
               localeId={documentLanguage!}
               workflowEntry={currentLocaleEntry}
@@ -1158,7 +1157,7 @@ function TranslationContentInner({
         )}
       </Flex>
       <Box flex={1} overflow="auto" padding={3}>
-        <Stack space={4}>
+        <Stack gap={4}>
           {releaseName && (
             <Card tone="transparent" padding={3} radius={2} border>
               <Flex align="center" gap={2} aria-live="polite">

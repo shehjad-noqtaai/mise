@@ -1,4 +1,6 @@
-import {ThemeProvider, ToastProvider} from '@sanity/ui'
+import '@sanity/ui/styles.css'
+import {ThemeProvider} from '@sanity/ui'
+import {ToastProvider} from '@sanity/ui/toast'
 import {buildTheme} from '@sanity/ui/theme'
 import {createGlobalStyle} from 'styled-components'
 

@@ -13,7 +13,7 @@ export default function DocumentTypeSelector() {
 
   return (
     <div className="bg-white px-4 pb-2 border-b border-gray-200 sticky top-0 z-10 flex justify-center">
-      <TabList space={2}>
+      <TabList gap={2}>
         {supportedTypes.map((type) => (
           <Tab
             aria-controls={`${type}-panel`}

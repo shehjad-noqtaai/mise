@@ -18,7 +18,7 @@
 import type {TranslationWorkflowStatus} from '@starter/l10n'
 import type {DocumentId} from '@sanity/id-utils'
 
-import {ArrowLeftIcon} from '@sanity/icons'
+import {ArrowLeftIcon} from '@sanity/icons/ArrowLeft'
 import {Button, Stack} from '@sanity/ui'
 import {useCallback, useMemo, useState} from 'react'
 import {useNavigate, useSearchParams} from 'react-router-dom'
@@ -241,7 +241,7 @@ function TranslationsRoute() {
   }
 
   return (
-    <Stack className="h-full overflow-y-auto" space={5}>
+    <Stack className="h-full overflow-y-auto" gap={5}>
       <div className="px-4 pt-4 pb-0">
         <Button
           fontSize={1}

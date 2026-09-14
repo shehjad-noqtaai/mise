@@ -1,6 +1,7 @@
 import type {TranslationWorkflowStatus} from '@starter/l10n'
 
-import {Badge, Box, Flex, Text, Tooltip} from '@sanity/ui'
+import {Badge, Box, Flex, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 import {createColumnHelper} from '@tanstack/react-table'
 
 import type {StatusFilteredDocument} from '../../hooks/useStatusFilteredDocuments'

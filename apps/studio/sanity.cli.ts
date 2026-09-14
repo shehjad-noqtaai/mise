@@ -1,4 +1,5 @@
 import {defineCliConfig} from 'sanity/cli'
+import path from 'node:path'
 
 const repoRoot = `${__dirname}/../..`
 
@@ -28,6 +29,15 @@ export default defineCliConfig({
   reactStrictMode: true,
   vite: {
     envDir: repoRoot,
+    resolve: {
+      alias: [
+        {
+          // @sanity/icons v5 removed barrel exports; legacy plugins still import from '@sanity/icons'.
+          find: /^@sanity\/icons$/,
+          replacement: path.resolve(__dirname, 'lib/sanity-icons-barrel.ts'),
+        },
+      ],
+    },
     server: {
       open: process.env.SANITY_STUDIO_SERVER_OPEN === 'true',
     },

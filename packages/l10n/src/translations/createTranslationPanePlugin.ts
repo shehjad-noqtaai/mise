@@ -1,4 +1,4 @@
-import {TranslateIcon} from '@sanity/icons'
+import {TranslateIcon} from '@sanity/icons/Translate'
 import {useMemo} from 'react'
 import {
   DEFAULT_STUDIO_CLIENT_OPTIONS,

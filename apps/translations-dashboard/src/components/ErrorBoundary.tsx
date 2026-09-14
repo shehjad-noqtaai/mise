@@ -1,4 +1,4 @@
-import {ResetIcon} from '@sanity/icons'
+import {ResetIcon} from '@sanity/icons/Reset'
 import {Button, Card, Flex, Stack, Text} from '@sanity/ui'
 import {Component, type ErrorInfo, type ReactNode} from 'react'
 
@@ -41,7 +41,7 @@ class ErrorBoundary extends Component<Props, State> {
 
       return (
         <Card padding={4} radius={2} tone="critical">
-          <Stack space={3}>
+          <Stack gap={3}>
             <Text size={1} weight="medium">
               Something went wrong in {label}.
             </Text>

@@ -9,7 +9,8 @@
  * Cells are clickable — clicking navigates to the gap-closer route.
  */
 
-import {Box, Card, Flex, Heading, Stack, Text, Tooltip} from '@sanity/ui'
+import {Box, Card, Flex, Heading, Stack, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 import React, {useCallback} from 'react'
 
 import type {CoverageCell, CoverageMatrixRow} from '../../hooks/useCoverageMatrix'
@@ -85,7 +86,7 @@ function HeatmapCell({cell, isActive, locale, onClick, row}: HeatmapCellProps) {
       animate
       content={
         <Box padding={2}>
-          <Stack space={1}>
+          <Stack gap={1}>
             {tooltipText.split('\n').map((line, i) => (
               <Text key={i} size={1}>
                 {line}
@@ -118,7 +119,7 @@ function HeatmapCell({cell, isActive, locale, onClick, row}: HeatmapCellProps) {
 export function HeatmapSkeleton() {
   return (
     <Card padding={4} radius={2} tone="default">
-      <Stack space={3}>
+      <Stack gap={3}>
         <div className="skeleton" style={{height: 20, width: 160}} />
         <div style={{display: 'grid', gap: 8, gridTemplateColumns: '140px repeat(6, 1fr)'}}>
           {Array.from({length: 28}).map((_, i) => (
@@ -157,7 +158,7 @@ function CoverageHeatmap({activeCell, data, localeColumns, onCellClick}: Coverag
 
   return (
     <Card border padding={5} radius={4} tone="default">
-      <Stack space={5}>
+      <Stack gap={5}>
         <Heading align="center" size={2}>
           Translation Coverage
         </Heading>

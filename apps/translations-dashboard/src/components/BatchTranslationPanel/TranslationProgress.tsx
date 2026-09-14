@@ -1,5 +1,6 @@
-import {LockIcon} from '@sanity/icons'
-import {Badge, Box, Card, Flex, Spinner, Stack, Text, Tooltip} from '@sanity/ui'
+import {LockIcon} from '@sanity/icons/Lock'
+import {Badge, Box, Card, Flex, Spinner, Stack, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 
 import type {
   DocumentTranslationProgress,
@@ -125,7 +126,7 @@ const TranslationProgress = ({
 
   return (
     <Box className="border-l-2 border-gray-200 ml-2" paddingLeft={3}>
-      <Stack space={2}>
+      <Stack gap={2}>
         {languageStatuses.map((langStatus) => (
           <Card
             border
@@ -138,7 +139,7 @@ const TranslationProgress = ({
             <Flex align="center" gap={2} justify="space-between">
               <Flex align="center" className="flex-1 min-w-0" gap={2}>
                 <Box className={`w-2 h-2 rounded-full shrink-0 ${langStatus.dotColor}`} />
-                <Stack className="flex-1 min-w-0" space={1}>
+                <Stack className="flex-1 min-w-0" gap={1}>
                   <Flex align="center" gap={2}>
                     <Text size={1} weight="medium">
                       {langStatus.languageTitle}

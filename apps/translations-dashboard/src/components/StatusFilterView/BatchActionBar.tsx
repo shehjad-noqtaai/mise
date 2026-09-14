@@ -2,14 +2,12 @@ import type {TranslationWorkflowStatus} from '@starter/l10n'
 import type {ReleaseDocument} from '@sanity/sdk'
 
 import {getStatusDisplay} from '@starter/l10n'
-import {
-  CheckmarkCircleIcon,
-  DocumentsIcon,
-  EarthGlobeIcon,
-  SparklesIcon,
-  SpinnerIcon,
-  TranslateIcon,
-} from '@sanity/icons'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {DocumentsIcon} from '@sanity/icons/Documents'
+import {EarthGlobeIcon} from '@sanity/icons/EarthGlobe'
+import {SparklesIcon} from '@sanity/icons/Sparkles'
+import {SpinnerIcon} from '@sanity/icons/Spinner'
+import {TranslateIcon} from '@sanity/icons/Translate'
 import {Button, Card, Flex, Label, Stack, Text} from '@sanity/ui'
 import React, {useMemo} from 'react'
 
@@ -25,7 +23,7 @@ export function CelebrationState({status}: {status: TranslationWorkflowStatus}) 
 
   return (
     <Card padding={5} radius={2} tone="positive">
-      <Stack space={3} style={{textAlign: 'center'}}>
+      <Stack gap={3} style={{textAlign: 'center'}}>
         <Text size={3}>
           <CheckmarkCircleIcon />
         </Text>
@@ -52,7 +50,7 @@ const skeletonBlock = (width: number | string, height: number): React.CSSPropert
 
 export function StatusFilterSkeleton() {
   return (
-    <Stack space={3}>
+    <Stack gap={3}>
       <style>{`@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }`}</style>
       <div style={skeletonBlock(280, 24)} />
       <div style={skeletonBlock(160, 16)} />

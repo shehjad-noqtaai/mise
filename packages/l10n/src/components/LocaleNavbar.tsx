@@ -1,7 +1,10 @@
 import {useEffect, useRef, useState, useTransition} from 'react'
 import styled from 'styled-components'
-import {Box, Button, Card, Flex, Popover, Stack, Text} from '@sanity/ui'
-import {CheckmarkIcon, ChevronDownIcon, EarthGlobeIcon} from '@sanity/icons'
+import {Box, Button, Card, Flex, Stack, Text} from '@sanity/ui'
+import {Popover} from '@sanity/ui/popover'
+import {CheckmarkIcon} from '@sanity/icons/Checkmark'
+import {ChevronDownIcon} from '@sanity/icons/ChevronDown'
+import {EarthGlobeIcon} from '@sanity/icons/EarthGlobe'
 import {useTranslation, type NavbarProps} from 'sanity'
 import {l10nLocaleNamespace} from '../i18n'
 import {globalLocaleFilter$} from '../localeFilterState'
@@ -79,7 +82,7 @@ function LocaleSwitcherButton() {
         fontSize={1}
         padding={2}
         paddingRight={3}
-        space={2}
+        gap={2}
         text={`\u2009\u2014\u2009`}
         disabled
       />
@@ -126,7 +129,7 @@ function LocaleSwitcherButton() {
         fontSize={1}
         padding={2}
         paddingRight={3}
-        space={2}
+        gap={2}
         text={buttonLabel}
         tone={hasFilter ? 'primary' : 'default'}
         selected={hasFilter || open}
@@ -203,7 +206,7 @@ function LocaleDropdownContent({
       aria-multiselectable="true"
       onKeyDown={handleListboxKeyDown}
     >
-      <Stack space={1} padding={1}>
+      <Stack gap={1} padding={1}>
         <DropdownRow
           role="option"
           aria-selected={allChecked}

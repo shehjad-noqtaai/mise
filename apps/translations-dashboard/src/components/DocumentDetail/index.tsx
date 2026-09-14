@@ -72,7 +72,7 @@ const DocumentDetailContent = ({selectedPost}: {selectedPost: DocumentHandle}) =
   }
 
   return (
-    <Stack padding={4} ref={detailRef} space={4}>
+    <Stack padding={4} ref={detailRef} gap={4}>
       <Header
         documentId={data._id}
         language={data.language}

@@ -1,4 +1,5 @@
-import {EarthGlobeIcon, HomeIcon} from '@sanity/icons'
+import {EarthGlobeIcon} from '@sanity/icons/EarthGlobe'
+import {HomeIcon} from '@sanity/icons/Home'
 import {withLocaleFilter} from '@starter/l10n'
 import type {StructureResolver} from 'sanity/structure'
 

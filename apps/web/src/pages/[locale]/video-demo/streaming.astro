@@ -1,0 +1,130 @@
+---
+import {getRelativeLocaleUrl} from 'astro:i18n'
+import BaseLayout from '../../../layouts/BaseLayout.astro'
+import MuxVideoPlayer from '../../../components/MuxVideoPlayer'
+import {DEFAULT_LOCALE, localeFromParam} from '../../../lib/i18n'
+import {fetchHlsRenditions, formatDuration, loadVideoShowcase} from '../../../lib/video-showcase'
+
+export const prerender = false
+
+const locale = localeFromParam(Astro.params.locale)
+if (!locale) {
+  return Astro.redirect(getRelativeLocaleUrl(DEFAULT_LOCALE, 'video-demo/streaming/'))
+}
+
+const showcase = await loadVideoShowcase()
+const streamingVideo = showcase?.streamingVideo
+
+const renditions = streamingVideo?.playbackId
+  ? await fetchHlsRenditions(streamingVideo.playbackId, streamingVideo.duration)
+  : []
+---
+
+<BaseLayout locale={locale} title="Streaming video" currentPath="video-demo/">
+  <a
+    href={getRelativeLocaleUrl(locale, 'video-demo/')}
+    class="font-body-md text-on-surface-variant hover:text-primary"
+  >
+    ← Video demo overview
+  </a>
+
+  <h1 class="mt-4 font-display-lg text-primary">Media Library streaming</h1>
+  <p class="mt-4 max-w-3xl font-body-lg text-on-surface-variant">
+    A <code>sanity.videoAsset</code> transcoded for adaptive streaming, delivered as HLS segments
+    from <code>stream.m.sanity-cdn.com</code> and played with Mux Player.
+  </p>
+
+  {
+    streamingVideo?.playbackId ? (
+      <div class="mt-8 w-full max-w-3xl overflow-hidden rounded-xl">
+        <MuxVideoPlayer
+          client:load
+          playbackId={streamingVideo.playbackId}
+          aspectRatio={streamingVideo.aspectRatio}
+          title={showcase?.title ?? undefined}
+        />
+      </div>
+    ) : (
+      <p class="mt-8 font-body-md text-on-surface-variant">
+        No playback ID yet — the video may still be processing.
+      </p>
+    )
+  }
+
+  <dl class="mt-6 grid max-w-3xl grid-cols-2 gap-3 font-body-md md:grid-cols-4">
+    <div>
+      <dt class="text-on-surface-variant">Playback ID</dt>
+      <dd class="break-all">{streamingVideo?.playbackId ?? '—'}</dd>
+    </div>
+    <div>
+      <dt class="text-on-surface-variant">Duration</dt>
+      <dd>{formatDuration(streamingVideo?.duration) ?? '—'}</dd>
+    </div>
+    <div>
+      <dt class="text-on-surface-variant">Aspect ratio</dt>
+      <dd>{streamingVideo?.aspectRatio?.toFixed(2) ?? '—'}</dd>
+    </div>
+    <div>
+      <dt class="text-on-surface-variant">Delivery</dt>
+      <dd>HLS adaptive streaming</dd>
+    </div>
+  </dl>
+
+  {
+    renditions.length > 0 && (
+      <section class="mt-12 max-w-3xl">
+        <h2 class="font-headline-md text-primary">Adaptive bitrate ladder</h2>
+        <p class="mt-2 font-body-md text-on-surface-variant">
+          Read live from the HLS manifest. The player picks a rung based on the viewer's measured
+          throughput and switches mid-playback as conditions change.
+        </p>
+        <div class="mt-4 overflow-x-auto rounded-xl border border-outline-variant">
+          <table class="w-full min-w-[480px] text-left font-body-md">
+            <thead class="bg-surface-container-low">
+              <tr>
+                <th class="p-4 font-medium">Resolution</th>
+                <th class="p-4 font-medium">Avg bitrate</th>
+                <th class="p-4 font-medium">Full watch costs</th>
+              </tr>
+            </thead>
+            <tbody>
+              {renditions.map((rendition) => (
+                <tr class="border-t border-outline-variant">
+                  <td class="p-4">{rendition.resolution}</td>
+                  <td class="p-4">{rendition.kbps} kbps</td>
+                  <td class="p-4">
+                    {rendition.fullWatchMB !== undefined ? `≈ ${rendition.fullWatchMB} MB` : '—'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="mt-12 max-w-3xl rounded-xl border border-outline-variant bg-surface-container-lowest p-6">
+    <h2 class="font-headline-md text-primary">Bandwidth impact</h2>
+    <ul class="mt-4 list-disc space-y-3 pl-5 font-body-md">
+      <li>
+        Playback fetches short segments just-in-time, so a viewer who stops after two seconds only
+        transferred a couple of segments — not the whole video.
+      </li>
+      <li>
+        Each viewer gets the rung of the ladder their connection sustains; slow networks
+        automatically drop to a cheaper rendition instead of stalling.
+      </li>
+      <li>
+        You can cap spend from the frontend: this player sets
+        <code> maxResolution="1080p"</code>, and <code>preload="metadata"</code> avoids buffering
+        before the viewer presses play.
+      </li>
+      <li>
+        Delivery comes from the dedicated video CDN and is metered as
+        <strong> Media Library video usage</strong> — it does not draw from the project bandwidth
+        quota.
+      </li>
+    </ul>
+  </section>
+</BaseLayout>

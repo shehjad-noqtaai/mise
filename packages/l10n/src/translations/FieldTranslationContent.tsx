@@ -10,8 +10,12 @@
  * - Action bar: translate empty + approve all buttons
  */
 
-import {CheckmarkCircleIcon, CloseIcon, SparklesIcon, TranslateIcon} from '@sanity/icons'
-import {Badge, Box, Button, Card, Flex, Stack, Text, Tooltip} from '@sanity/ui'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {CloseIcon} from '@sanity/icons/Close'
+import {SparklesIcon} from '@sanity/icons/Sparkles'
+import {TranslateIcon} from '@sanity/icons/Translate'
+import {Badge, Box, Button, Card, Flex, Stack, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 import {useMemo} from 'react'
 import {useTranslation} from 'sanity'
 
@@ -219,10 +223,10 @@ export function FieldTranslationContent({
 
         {/* Content */}
         <Box flex={1} overflow="auto" padding={3}>
-          <Stack space={4}>
+          <Stack gap={4}>
             {/* Progress summary */}
             <Card padding={3} radius={2} tone="neutral" border>
-              <Stack space={3}>
+              <Stack gap={3}>
                 <Flex align="center" justify="space-between">
                   <Text size={1} weight="semibold">
                     {t('field-translations.progress', {approved: approvedCount, total: totalCount})}
@@ -455,7 +459,7 @@ export function FieldTranslationContent({
 
         {/* Action bar */}
         <Card padding={3} borderTop style={{position: 'sticky', bottom: 0, zIndex: 1}}>
-          <Stack space={2}>
+          <Stack gap={2}>
             {missingCount > 0 && (
               <Button
                 fontSize={1}

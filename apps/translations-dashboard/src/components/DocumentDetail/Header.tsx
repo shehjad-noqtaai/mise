@@ -1,4 +1,4 @@
-import {CloseIcon} from '@sanity/icons'
+import {CloseIcon} from '@sanity/icons/Close'
 import {Button, Flex, Heading} from '@sanity/ui'
 
 type PostHeaderProps = {
