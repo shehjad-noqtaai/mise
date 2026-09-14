@@ -1,5 +1,5 @@
 import {defineField, defineType} from 'sanity'
-import {BasketIcon} from '@sanity/icons'
+import {BasketIcon} from '@sanity/icons/Basket'
 import {pickInternationalizedValue} from '../../lib/internationalizedValue'
 
 export const ingredient = defineType({

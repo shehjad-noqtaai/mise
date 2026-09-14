@@ -1,5 +1,5 @@
 import {defineType, defineField} from 'sanity'
-import {BookIcon} from '@sanity/icons'
+import {BookIcon} from '@sanity/icons/Book'
 import {isUniqueOtherThanLanguage} from '../lib/isUniqueOtherThanLanguage'
 
 export const editorialTopic = defineType({

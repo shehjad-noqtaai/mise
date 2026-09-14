@@ -1,5 +1,7 @@
-import {ArrowRightIcon, LockIcon} from '@sanity/icons'
-import {Badge, Box, Flex, Text, Tooltip} from '@sanity/ui'
+import {ArrowRightIcon} from '@sanity/icons/ArrowRight'
+import {LockIcon} from '@sanity/icons/Lock'
+import {Badge, Box, Flex, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 
 export function DestinationInfo({
   effectiveReleaseName,

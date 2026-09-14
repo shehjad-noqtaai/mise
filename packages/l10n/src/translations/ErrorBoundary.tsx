@@ -6,7 +6,7 @@
  * preventing unhandled crashes when paired with `<Suspense>`.
  */
 
-import {ResetIcon} from '@sanity/icons'
+import {ResetIcon} from '@sanity/icons/Reset'
 import {Button, Card, Flex, Stack, Text} from '@sanity/ui'
 import {type ReactNode, useCallback} from 'react'
 import {ErrorBoundary as ReactErrorBoundary, type FallbackProps} from 'react-error-boundary'
@@ -29,7 +29,7 @@ function ErrorFallback({
 
   return (
     <Card padding={4} tone="critical">
-      <Stack space={3}>
+      <Stack gap={3}>
         <Text size={1} weight="semibold">
           {featureName ? t('error.with-feature', {featureName}) : t('error.generic')}
         </Text>

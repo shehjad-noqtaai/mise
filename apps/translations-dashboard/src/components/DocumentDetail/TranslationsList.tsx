@@ -1,6 +1,6 @@
 import type {Locale} from '../../helpers/getLocales'
 
-import {SparklesIcon} from '@sanity/icons'
+import {SparklesIcon} from '@sanity/icons/Sparkles'
 import {DocumentId} from '@sanity/id-utils'
 import {useClient} from '@sanity/sdk-react'
 import {Button, Card, Flex, Stack, Text} from '@sanity/ui'
@@ -297,7 +297,7 @@ const TranslationsList = ({
 
   return (
     <Card border padding={3}>
-      <Stack space={3}>
+      <Stack gap={3}>
         {/* Release Selector */}
         <ReleaseSelector
           disabled={false}
@@ -318,14 +318,13 @@ const TranslationsList = ({
               icon={SparklesIcon}
               mode="default"
               onClick={translateAllLanguages}
-              size={1}
               text="Translate All"
               tone="primary"
             />
           )}
         </Flex>
 
-        <Stack space={2}>
+        <Stack gap={2}>
           {isLoadingStates ? (
             // Show loading skeletons while fetching translation states
             <>

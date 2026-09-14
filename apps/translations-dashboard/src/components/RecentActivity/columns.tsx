@@ -1,7 +1,8 @@
 import type {TranslationWorkflowStatus} from '@starter/l10n'
 
 import {getStatusDisplay} from '@starter/l10n'
-import {Badge, Box, Card, Flex, Stack, Text, Tooltip} from '@sanity/ui'
+import {Badge, Box, Card, Flex, Stack, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 import {createColumnHelper} from '@tanstack/react-table'
 
 import {InitialsAvatar} from '../../lib/avatar'
@@ -77,24 +78,20 @@ function TransitionBadge({
   const toDisplay = getStatusDisplay(to)
 
   if (!from) {
-    return (
-      <Badge mode="outline" tone={toDisplay.tone}>
-        {toDisplay.label}
-      </Badge>
-    )
+    return <Badge tone={toDisplay.tone}>{toDisplay.label}</Badge>
   }
 
   const fromDisplay = getStatusDisplay(from)
 
   return (
     <Flex align="center" gap={1} wrap="nowrap">
-      <Badge mode="outline" padding={2} tone={fromDisplay.tone}>
+      <Badge padding={2} tone={fromDisplay.tone}>
         {fromDisplay.label}
       </Badge>
       <Text muted size={0}>
         →
       </Text>
-      <Badge mode="outline" padding={2} tone={toDisplay.tone}>
+      <Badge padding={2} tone={toDisplay.tone}>
         {toDisplay.label}
       </Badge>
     </Flex>
@@ -151,7 +148,7 @@ export const columns = [
       const type = info.getValue()
       if (!type) return null
       return (
-        <Badge mode="outline" padding={2} tone="primary">
+        <Badge padding={2} tone="primary">
           {getDocTypeLabel(type)}
         </Badge>
       )
@@ -168,7 +165,7 @@ export const columns = [
   }),
   columnHelper.accessor('localeTag', {
     cell: (info) => (
-      <Badge mode="outline" padding={2} tone="primary">
+      <Badge padding={2} tone="primary">
         {info.getValue()}
       </Badge>
     ),
@@ -214,7 +211,7 @@ export const COLUMN_WIDTHS: Record<string, number> = {
 export function RecentActivitySkeleton() {
   return (
     <Card padding={4} radius={2}>
-      <Stack space={3}>
+      <Stack gap={3}>
         <div className="skeleton" style={{height: 20, width: 160}} />
         <Flex gap={2}>
           <div className="skeleton" style={{height: 28, width: 100}} />

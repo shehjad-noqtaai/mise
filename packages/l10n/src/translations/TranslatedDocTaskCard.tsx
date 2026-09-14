@@ -13,16 +13,15 @@
  * `usingFallback` maps to `missing` (same task: generate a direct translation).
  */
 
-import {
-  CheckmarkCircleIcon,
-  CircleIcon,
-  ClockIcon,
-  EditIcon,
-  LaunchIcon,
-  SparklesIcon,
-  WarningOutlineIcon,
-} from '@sanity/icons'
-import {Badge, Box, Button, Card, Flex, Heading, Stack, Text, Tooltip} from '@sanity/ui'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {CircleIcon} from '@sanity/icons/Circle'
+import {ClockIcon} from '@sanity/icons/Clock'
+import {EditIcon} from '@sanity/icons/Edit'
+import {LaunchIcon} from '@sanity/icons/Launch'
+import {SparklesIcon} from '@sanity/icons/Sparkles'
+import {WarningOutlineIcon} from '@sanity/icons/WarningOutline'
+import {Badge, Box, Button, Card, Flex, Heading, Stack, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 import {ShieldCheck} from 'lucide-react'
 import type {ComponentType} from 'react'
 import {useEffect, useState} from 'react'
@@ -167,7 +166,7 @@ function NeedsReviewContent({
 
   return (
     <>
-      <Stack space={4}>
+      <Stack gap={4}>
         <Flex gap={2} wrap="wrap">
           <Badge tone="default" fontSize={1} padding={2}>
             <Flex align="center" gap={2}>
@@ -183,7 +182,7 @@ function NeedsReviewContent({
       </Stack>
 
       <Box style={{borderTop: '1px solid var(--card-border-color)', paddingTop: 12}}>
-        <Stack space={3}>
+        <Stack gap={3}>
           <Button
             text={t('task-card.open-source')}
             icon={LaunchIcon}
@@ -247,7 +246,7 @@ function ApprovedContent({workflowEntry}: {workflowEntry: WorkflowStateEntry}) {
   const reviewer = useUser(workflowEntry.reviewedBy)
 
   return (
-    <Stack space={2}>
+    <Stack gap={2}>
       {workflowEntry.reviewedBy && (
         <Flex align="center" gap={2}>
           {reviewer?.imageUrl && (
@@ -316,10 +315,10 @@ function StaleContent({
   )
 
   return (
-    <Stack space={4}>
+    <Stack gap={4}>
       {/* Caution header card */}
       <Card padding={4} radius={2} tone="caution" border>
-        <Stack space={3}>
+        <Stack gap={3}>
           <Flex align="center" gap={2}>
             <Text size={4}>
               <WarningOutlineIcon />
@@ -430,7 +429,7 @@ export function TranslatedDocTaskCard({
 
   return (
     <Card padding={4} radius={4} tone={config.tone} border>
-      <Stack space={4}>
+      <Stack gap={4}>
         {/* Header */}
         <Flex align="center" gap={3}>
           <Text size={4}>

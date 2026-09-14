@@ -1,4 +1,5 @@
-import {EmptyIcon, Progress50Icon} from '@sanity/icons'
+import {EmptyIcon} from '@sanity/icons/Empty'
+import {Progress50Icon} from '@sanity/icons/Progress50'
 import {type DocumentHandle, useDocumentProjection} from '@sanity/sdk-react'
 import {Flex, Text} from '@sanity/ui'
 import {Suspense, useRef} from 'react'

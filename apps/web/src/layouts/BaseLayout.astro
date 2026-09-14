@@ -24,7 +24,7 @@ const {
   alternateSlugs,
 } = Astro.props
 
-const draftMode = Astro.cookies.has(perspectiveCookieName)
+const draftMode = Astro.cookies?.has(perspectiveCookieName) ?? false
 const pageTitle = draftMode ? stegaClean(title) : title
 const pageDescription = draftMode ? stegaClean(description) : description
 ---

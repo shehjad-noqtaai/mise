@@ -1,0 +1,89 @@
+---
+import {getRelativeLocaleUrl} from 'astro:i18n'
+import BaseLayout from '../../../layouts/BaseLayout.astro'
+import {DEFAULT_LOCALE, localeFromParam} from '../../../lib/i18n'
+import {formatBytes, loadVideoShowcase} from '../../../lib/video-showcase'
+
+export const prerender = false
+
+const locale = localeFromParam(Astro.params.locale)
+if (!locale) {
+  return Astro.redirect(getRelativeLocaleUrl(DEFAULT_LOCALE, 'video-demo/dataset/'))
+}
+
+const showcase = await loadVideoShowcase()
+const datasetVideo = showcase?.datasetVideo
+const fileSize = formatBytes(datasetVideo?.size)
+---
+
+<BaseLayout locale={locale} title="Dataset video" currentPath="video-demo/">
+  <a
+    href={getRelativeLocaleUrl(locale, 'video-demo/')}
+    class="font-body-md text-on-surface-variant hover:text-primary"
+  >
+    ← Video demo overview
+  </a>
+
+  <h1 class="mt-4 font-display-lg text-primary">Dataset file asset</h1>
+  <p class="mt-4 max-w-3xl font-body-lg text-on-surface-variant">
+    A <code>sanity.fileAsset</code> served verbatim from <code>cdn.sanity.io</code> — progressive
+    download of a single fixed-quality MP4, played with a plain <code>&lt;video&gt;</code> tag.
+  </p>
+
+  {
+    datasetVideo?.url ? (
+      <video
+        controls
+        preload="metadata"
+        src={datasetVideo.url}
+        class="mt-8 w-full max-w-3xl rounded-xl"
+      >
+        Your browser does not support the video tag.
+      </video>
+    ) : (
+      <p class="mt-8 font-body-md text-on-surface-variant">No dataset video uploaded.</p>
+    )
+  }
+
+  <dl class="mt-6 grid max-w-3xl grid-cols-2 gap-3 font-body-md md:grid-cols-4">
+    <div>
+      <dt class="text-on-surface-variant">File</dt>
+      <dd>{datasetVideo?.originalFilename ?? '—'}</dd>
+    </div>
+    <div>
+      <dt class="text-on-surface-variant">Size</dt>
+      <dd>{fileSize ?? '—'}</dd>
+    </div>
+    <div>
+      <dt class="text-on-surface-variant">MIME type</dt>
+      <dd>{datasetVideo?.mimeType ?? '—'}</dd>
+    </div>
+    <div>
+      <dt class="text-on-surface-variant">Delivery</dt>
+      <dd>Progressive download</dd>
+    </div>
+  </dl>
+
+  <section class="mt-12 max-w-3xl rounded-xl border border-outline-variant bg-surface-container-lowest p-6">
+    <h2 class="font-headline-md text-primary">Bandwidth impact</h2>
+    <ul class="mt-4 list-disc space-y-3 pl-5 font-body-md">
+      <li>
+        Every viewer downloads this exact file{fileSize ? ` (${fileSize})` : ''} — there is no
+        quality ladder, so a phone on 3G pulls the same bytes as a desktop on fiber.
+      </li>
+      <li>
+        With <code>preload="metadata"</code> only a small probe is fetched up front, but once
+        playback starts most browsers buffer far ahead — often the whole file — even if the viewer
+        stops after two seconds.
+      </li>
+      <li>
+        The transfer is served from <code>cdn.sanity.io</code> and counts against the
+        <strong> project bandwidth quota</strong>, the same pool as images and API assets.
+      </li>
+      <li>
+        Cost scales with file size × viewers: a 100 MB source uploaded as-is costs up to 100 MB per
+        viewer. There is no server-side transcoding, so what editors upload is what users get.
+      </li>
+    </ul>
+  </section>
+</BaseLayout>

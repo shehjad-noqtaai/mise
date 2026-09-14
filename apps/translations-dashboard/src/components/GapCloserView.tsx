@@ -12,7 +12,10 @@
 import type {ReleaseDocument} from '@sanity/sdk'
 import type {SortingState} from '@tanstack/react-table'
 
-import {CheckmarkCircleIcon, SparklesIcon, SpinnerIcon, TranslateIcon} from '@sanity/icons'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {SparklesIcon} from '@sanity/icons/Sparkles'
+import {SpinnerIcon} from '@sanity/icons/Spinner'
+import {TranslateIcon} from '@sanity/icons/Translate'
 import {Badge, Button, Card, Flex, Heading, Label, Stack, Text} from '@sanity/ui'
 import {
   createColumnHelper,
@@ -312,7 +315,7 @@ function GapCloserView({
   if (totalMissing === 0) {
     return (
       <Card padding={5} radius={2} tone="positive">
-        <Stack className="text-center" space={3}>
+        <Stack className="text-center" gap={3}>
           <Text size={3}>
             <CheckmarkCircleIcon />
           </Text>
@@ -332,9 +335,9 @@ function GapCloserView({
     isTranslating && documents.length > 0 ? (translatedIds.size / documents.length) * 100 : 0
 
   return (
-    <Stack space={4}>
+    <Stack gap={4}>
       {/* Scoped header */}
-      <Stack className="text-center" space={3}>
+      <Stack className="text-center" gap={3}>
         <Heading as="h2" size={3}>
           {localeFlag} <strong>{docTypeLabel}</strong> missing in <strong>{localeName}</strong>
         </Heading>
@@ -345,9 +348,9 @@ function GapCloserView({
 
       {/* Action card — source status + CTAs + release picker */}
       <Card border padding={4} radius={2}>
-        <Stack space={4}>
+        <Stack gap={4}>
           {/* Source status breakdown */}
-          <Stack space={3}>
+          <Stack gap={3}>
             <Text className="uppercase tracking-widest" muted size={0} weight="semibold">
               Source document status
             </Text>
@@ -435,7 +438,7 @@ function GapCloserView({
       </Card>
 
       {/* Document table — TanStack Table */}
-      <Stack space={2}>
+      <Stack gap={2}>
         <Text muted size={0}>
           Sorted by source status: published first
         </Text>
@@ -509,13 +512,13 @@ function GapCloserView({
 
 function GapCloserSkeleton() {
   return (
-    <Stack space={4}>
-      <Stack space={2}>
+    <Stack gap={4}>
+      <Stack gap={2}>
         <div className="skeleton" style={{height: 28, width: 384}} />
         <div className="skeleton" style={{height: 16, width: 192}} />
       </Stack>
       <Card border padding={4} radius={2}>
-        <Stack space={4}>
+        <Stack gap={4}>
           <div className="skeleton" style={{height: 16, width: 128}} />
           <Flex gap={4}>
             <div className="skeleton" style={{height: 20, width: 96}} />
@@ -525,7 +528,7 @@ function GapCloserSkeleton() {
           <div className="skeleton" style={{height: 40, width: 288}} />
         </Stack>
       </Card>
-      <Stack space={2}>
+      <Stack gap={2}>
         <div className="skeleton" style={{height: 16, width: 192}} />
         <Card border radius={2}>
           {Array.from({length: 5}).map((_, i) => (

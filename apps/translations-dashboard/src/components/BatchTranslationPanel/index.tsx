@@ -323,7 +323,7 @@ const BatchTranslationPanel = (_props: BatchTranslationPanelProps) => {
       radius={2}
       shadow={1}
     >
-      <Stack className="overflow-y-auto flex-1 h-full" space={4}>
+      <Stack className="overflow-y-auto flex-1 h-full" gap={4}>
         <Heading align="center" as="h2" size={2} weight="semibold">
           Batch Translation
         </Heading>

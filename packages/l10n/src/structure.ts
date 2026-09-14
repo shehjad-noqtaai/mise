@@ -20,6 +20,8 @@ export function withLocaleFilter(list: DocumentListBuilder) {
       if (selectedLocales.length === 0) return list
 
       const existingFilter = list.getFilter()
+      if (!existingFilter) return list
+
       const existingParams = list.getParams() ?? {}
 
       return list

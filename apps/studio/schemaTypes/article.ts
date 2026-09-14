@@ -1,5 +1,5 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
-import {DocumentTextIcon} from '@sanity/icons'
+import {DocumentTextIcon} from '@sanity/icons/DocumentText'
 import {isUniqueOtherThanLanguage} from '../lib/isUniqueOtherThanLanguage'
 
 export const article = defineType({

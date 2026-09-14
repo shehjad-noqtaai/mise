@@ -1,5 +1,5 @@
 import {useClient} from '@sanity/sdk-react'
-import {useToast} from '@sanity/ui'
+import {useToast} from '@sanity/ui/toast'
 import {useCallback, useState} from 'react'
 import {getPublishedId, type SanityDocument} from 'sanity'
 

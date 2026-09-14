@@ -133,6 +133,8 @@ export function useInternationalizedFields(
   const schema = useSchema()
 
   return useMemo(() => {
+    if (!schema?.get) return []
+
     const docType = schema.get(documentType)
     if (!docType) return []
 

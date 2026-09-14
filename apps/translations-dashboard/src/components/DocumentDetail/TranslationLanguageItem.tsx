@@ -191,7 +191,7 @@ const TranslationLanguageItem = ({
           radius={3}
           style={{backgroundColor: bgColor, borderColor}}
         >
-          <Stack padding={3} space={2}>
+          <Stack padding={3} gap={2}>
             <Flex align="center" gap={2} justify="space-between" wrap="wrap">
               <Flex align="center" className="flex-1 min-w-0" gap={2}>
                 <div
@@ -222,7 +222,7 @@ const TranslationLanguageItem = ({
         padding={3}
         radius={2}
       >
-        <Stack space={2}>
+        <Stack gap={2}>
           <Flex align="center" gap={2} justify="space-between" wrap="wrap">
             <Badge className="flex-shrink-0" fontSize={1} padding={2} radius={4} tone="critical">
               {languageId}
@@ -236,7 +236,7 @@ const TranslationLanguageItem = ({
               {error}
             </Text>
           )}
-          <Button mode="ghost" onClick={onRetry} size={1} text="Retry" tone="critical" />
+          <Button mode="ghost" onClick={onRetry} text="Retry" tone="critical" />
         </Stack>
       </Card>
     )

@@ -1,5 +1,5 @@
 import {defineField, defineType} from 'sanity'
-import {StackCompactIcon} from '@sanity/icons'
+import {StackCompactIcon} from '@sanity/icons/StackCompact'
 import {pantryItemMember} from '../objects/pantry-item'
 
 export const pantrySnapshot = defineType({

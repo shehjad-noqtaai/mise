@@ -11,8 +11,10 @@
  * Uses @sanity/ui Badge tones for color, pulled at runtime for dark mode compat.
  */
 
-import {CheckmarkCircleIcon, TranslateIcon} from '@sanity/icons'
-import {Box, Card, Flex, Heading, Stack, Text, Tooltip} from '@sanity/ui'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {TranslateIcon} from '@sanity/icons/Translate'
+import {Box, Card, Flex, Heading, Stack, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 
 import type {TranslationSummary} from '../../hooks/useTranslationSummary'
 
@@ -64,7 +66,7 @@ function SummaryBar({data, selectedLocale, selectedLocaleName}: SummaryBarProps)
         animate
         content={
           <Box padding={2}>
-            <Stack space={2}>
+            <Stack gap={2}>
               <Text size={1} weight="semibold">
                 Launch Readiness{scopeLabel}
               </Text>
@@ -82,7 +84,7 @@ function SummaryBar({data, selectedLocale, selectedLocaleName}: SummaryBarProps)
         portal
       >
         <Card flex={1} padding={4} radius={4} shadow={1} tone="positive">
-          <Stack space={4}>
+          <Stack gap={4}>
             <Heading size={5}>
               {showPercentage
                 ? `${data.launchReadiness}%`
@@ -105,7 +107,7 @@ function SummaryBar({data, selectedLocale, selectedLocaleName}: SummaryBarProps)
         animate
         content={
           <Box padding={2}>
-            <Stack space={2}>
+            <Stack gap={2}>
               <Text size={1} weight="semibold">
                 Translated{scopeLabel}
               </Text>
@@ -123,7 +125,7 @@ function SummaryBar({data, selectedLocale, selectedLocaleName}: SummaryBarProps)
         portal
       >
         <Card border flex={1} padding={4} radius={4}>
-          <Stack space={4}>
+          <Stack gap={4}>
             <Heading size={5}>
               {showPercentage
                 ? `${data.translatedPercentage}%`

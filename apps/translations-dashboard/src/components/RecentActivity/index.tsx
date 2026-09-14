@@ -224,13 +224,13 @@ function RecentActivity({
 
   return (
     <Card border padding={5} radius={4}>
-      <Stack space={4}>
+      <Stack gap={4}>
         <Heading align="center" size={2}>
           Recent Activity
         </Heading>
 
         <div className="flex justify-center">
-          <TabList space={1}>
+          <TabList gap={1}>
             {hasUser && (
               <Tab
                 aria-controls={PANEL_YOURS_ID}

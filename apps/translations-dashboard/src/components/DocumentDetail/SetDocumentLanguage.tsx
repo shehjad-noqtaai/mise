@@ -45,7 +45,7 @@ const SetDocumentLanguage = ({
   return (
     <>
       <Card border padding={3} tone="primary">
-        <Stack space={3}>
+        <Stack gap={3}>
           <Flex align="center" gap={2}>
             <Badge
               className={documentId && sourceDocument ? 'cursor-pointer' : 'cursor-default'}

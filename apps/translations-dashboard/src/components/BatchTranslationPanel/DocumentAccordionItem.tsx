@@ -1,6 +1,9 @@
 import type {Locale} from '../../helpers/getLocales'
 
-import {CheckmarkCircleIcon, EmptyIcon, Progress50Icon, Progress75Icon} from '@sanity/icons'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {EmptyIcon} from '@sanity/icons/Empty'
+import {Progress50Icon} from '@sanity/icons/Progress50'
+import {Progress75Icon} from '@sanity/icons/Progress75'
 import {Box, Card, Flex, Heading, Spinner, Stack, Text} from '@sanity/ui'
 
 import type {BaseDocument} from '../../types/documents'
@@ -44,7 +47,7 @@ const DocumentAccordionItem = ({
 
   return (
     <Card className="max-h-300 overflow-y-auto sticky top-0">
-      <Stack space={3}>
+      <Stack gap={3}>
         {isValidating && (
           <Flex align="center" gap={2} paddingY={2}>
             <Spinner size={0} />
@@ -154,7 +157,7 @@ const DocumentAccordionItem = ({
                     </Flex>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <Stack space={2}>
+                    <Stack gap={2}>
                       {languages
                         .filter((lang) => lang.id !== typedDoc.language)
                         .map((language) => {

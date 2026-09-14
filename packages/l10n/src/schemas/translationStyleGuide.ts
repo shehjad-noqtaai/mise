@@ -1,5 +1,5 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
-import {ComposeIcon} from '@sanity/icons'
+import {ComposeIcon} from '@sanity/icons/Compose'
 import {styleGuideTypeName, localeTypeName} from '../types'
 
 export const translationStyleGuide = defineType({

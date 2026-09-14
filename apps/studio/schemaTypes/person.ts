@@ -1,6 +1,5 @@
 import {defineType, defineField} from 'sanity'
-import {UserIcon} from '@sanity/icons'
-
+import {UserIcon} from '@sanity/icons/User'
 export const person = defineType({
   name: 'person',
   title: 'Person',

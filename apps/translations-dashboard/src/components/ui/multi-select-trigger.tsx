@@ -1,6 +1,6 @@
 import type * as React from 'react'
 
-import {CloseCircleIcon} from '@sanity/icons'
+import {CloseCircleIcon} from '@sanity/icons/CloseCircle'
 import {Badge, Flex, Text} from '@sanity/ui'
 import {ChevronDown} from 'lucide-react'
 

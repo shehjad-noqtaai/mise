@@ -1,6 +1,7 @@
 import {useId, useMemo} from 'react'
-import {Autocomplete, Card, Flex, Spinner, Stack, Text} from '@sanity/ui'
-import {EarthGlobeIcon} from '@sanity/icons'
+import {Card, Flex, Spinner, Stack, Text} from '@sanity/ui'
+import {Autocomplete} from '@sanity/ui/autocomplete'
+import {EarthGlobeIcon} from '@sanity/icons/EarthGlobe'
 import {set, useTranslation, type StringInputProps} from 'sanity'
 import {useOpenTranslationsInspector} from '../translations/useOpenTranslationsInspector'
 import {useLocales} from '../L10nProvider'
@@ -23,7 +24,7 @@ function renderOption(option: LocaleOption) {
     <Card as="button" padding={2}>
       <Flex align="center" gap={2}>
         <Text size={2}>{option.flag || <EarthGlobeIcon />}</Text>
-        <Stack space={2} flex={1}>
+        <Stack gap={2} flex={1}>
           <Text size={1} weight="medium">
             {option.title}
           </Text>
@@ -97,7 +98,7 @@ export function LanguageInput(props: StringInputProps) {
           >
             <Flex align="center" gap={2}>
               <Text size={2}>{flag || <EarthGlobeIcon />}</Text>
-              <Stack space={2} flex={1}>
+              <Stack gap={2} flex={1}>
                 <Text size={1} weight="medium">
                   {title}
                 </Text>

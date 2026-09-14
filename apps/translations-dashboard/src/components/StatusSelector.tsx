@@ -22,7 +22,7 @@ const StatusSelector = () => {
   }
 
   return (
-    <Grid columns={[2, 2, 2, 4]} gap={1}>
+    <Grid gridTemplateColumns={[2, 2, 2, 4]} gap={1}>
       {STATUSES.map((statusOption) => (
         <Button
           key={statusOption}

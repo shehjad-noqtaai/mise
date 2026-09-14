@@ -1,5 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {DocumentTextIcon} from '@sanity/icons'
+import {DocumentTextIcon} from '@sanity/icons/DocumentText'
 import {isUniqueOtherThanLanguage} from '../../lib/isUniqueOtherThanLanguage'
 import {recipeIngredientLineMember} from '../objects/recipe-ingredient-line'
 import {recipeStepMember} from '../objects/recipe-step'
@@ -28,6 +28,11 @@ export const recipe = defineType({
       title: 'Summary',
       type: 'text',
       rows: 3,
+    }),
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'string',
     }),
     defineField({
       name: 'heroImage',

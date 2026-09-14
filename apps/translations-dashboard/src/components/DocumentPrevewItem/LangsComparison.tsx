@@ -28,7 +28,7 @@ const LangsComparison = ({
   }
 
   return (
-    <Stack space={2}>
+    <Stack gap={2}>
       {langs?.map((lang) => {
         //@ts-ignore
         const hasTranslation = translations?.some(

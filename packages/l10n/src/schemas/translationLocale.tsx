@@ -1,8 +1,7 @@
 import {defineType, defineField, type FieldsetDefinition} from 'sanity'
 import {localeTypeName} from '../types'
 import {isValidLocale, getFlagFromCode} from '../utils'
-import {EarthGlobeIcon} from '@sanity/icons'
-
+import {EarthGlobeIcon} from '@sanity/icons/EarthGlobe'
 const nameFieldset = {
   name: 'name',
   title: 'Name',

@@ -207,7 +207,7 @@ function BlockDiffRow({blockDiff}: {blockDiff: BlockDiff}) {
         )}
 
         {blockDiff.type === 'added' && (
-          <Stack space={2}>
+          <Stack gap={2}>
             <Badge tone="positive" fontSize={0}>
               {t('diff.block-added')}
             </Badge>
@@ -218,7 +218,7 @@ function BlockDiffRow({blockDiff}: {blockDiff: BlockDiff}) {
         )}
 
         {blockDiff.type === 'removed' && (
-          <Stack space={2}>
+          <Stack gap={2}>
             <Badge tone="critical" fontSize={0}>
               {t('diff.block-removed')}
             </Badge>
@@ -296,7 +296,7 @@ export function PortableTextDiff({
   const hiddenCount = changeCount - maxBlocks
 
   return (
-    <Stack space={3}>
+    <Stack gap={3}>
       {visibleDiffs.map((blockDiff, idx) => (
         <BlockDiffRow
           key={`${blockDiff.type}-${blockDiff.blockNumber}-${idx}`}

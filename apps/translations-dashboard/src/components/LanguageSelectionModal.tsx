@@ -1,4 +1,4 @@
-import {CloseIcon} from '@sanity/icons'
+import {CloseIcon} from '@sanity/icons/Close'
 import {Button, Card, Flex, Stack, Text} from '@sanity/ui'
 import {useCallback, useState} from 'react'
 import type {SanityDocument} from 'sanity'
@@ -88,7 +88,7 @@ const LanguageSelectionModal = ({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <Card padding={4} radius={3} shadow={3} className="w-[90%] max-w-[400px]">
-        <Stack space={4}>
+        <Stack gap={4}>
           <Flex align="center" gap={2} justify="space-between">
             <Text size={3} weight="semibold">
               {title}
@@ -101,7 +101,7 @@ const LanguageSelectionModal = ({
             document to continue with translation creation.
           </Text>
 
-          <Stack space={2}>
+          <Stack gap={2}>
             {availableLanguages.map((language) => (
               <Button
                 className="justify-start"

@@ -1,4 +1,5 @@
 import {defineCliConfig} from 'sanity/cli'
+import path from 'node:path'
 
 const repoRoot = `${__dirname}/../..`
 
@@ -11,6 +12,8 @@ for (const dir of [__dirname, repoRoot]) {
     } catch {}
   }
 }
+
+const appId = process.env.SANITY_STUDIO_APP_ID?.trim()
 
 export default defineCliConfig({
   api: {
@@ -26,13 +29,22 @@ export default defineCliConfig({
   reactStrictMode: true,
   vite: {
     envDir: repoRoot,
+    resolve: {
+      alias: [
+        {
+          // @sanity/icons v5 removed barrel exports; legacy plugins still import from '@sanity/icons'.
+          find: /^@sanity\/icons$/,
+          replacement: path.resolve(__dirname, 'lib/sanity-icons-barrel.ts'),
+        },
+      ],
+    },
     server: {
       open: process.env.SANITY_STUDIO_SERVER_OPEN === 'true',
     },
   },
   deployment: {
-    autoUpdates: true,
-    appId: 'dhe9wg4msckhg9y2zh5y4qzf',
+    autoUpdates: Boolean(appId),
+    ...(appId ? {appId} : {}),
   },
   typegen: {
     enabled: true,

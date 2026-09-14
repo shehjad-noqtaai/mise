@@ -8,16 +8,14 @@
  * Design spec: design-language v3.8, "AI Stale Change Analysis" section.
  */
 
-import {
-  CheckmarkCircleIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  CircleIcon,
-  EditIcon,
-  InfoOutlineIcon,
-  SparklesIcon,
-  WarningOutlineIcon,
-} from '@sanity/icons'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {ChevronDownIcon} from '@sanity/icons/ChevronDown'
+import {ChevronRightIcon} from '@sanity/icons/ChevronRight'
+import {CircleIcon} from '@sanity/icons/Circle'
+import {EditIcon} from '@sanity/icons/Edit'
+import {InfoOutlineIcon} from '@sanity/icons/InfoOutline'
+import {SparklesIcon} from '@sanity/icons/Sparkles'
+import {WarningOutlineIcon} from '@sanity/icons/WarningOutline'
 import * as Accordion from '@radix-ui/react-accordion'
 import {Badge, Button, Card, Flex, Heading, Label, Spinner, Stack, Text} from '@sanity/ui'
 import {useCallback, useMemo, useState} from 'react'
@@ -112,7 +110,7 @@ function MaterialityBadge({
 
   return (
     <Card tone={config.tone} padding={4} radius={4} border>
-      <Stack space={4}>
+      <Stack gap={4}>
         <Flex align="center" gap={3}>
           <Text size={4}>
             <Icon />
@@ -183,9 +181,9 @@ function TranslationPreview({
   }
 
   return (
-    <Stack space={4}>
+    <Stack gap={4}>
       {currentText && (
-        <Stack space={2}>
+        <Stack gap={2}>
           <Label size={2} weight="semibold" muted>
             Current
           </Label>
@@ -197,7 +195,7 @@ function TranslationPreview({
         </Stack>
       )}
       {suggestedText && (
-        <Stack space={2}>
+        <Stack gap={2}>
           <Label size={2} weight="semibold" muted>
             Suggested
           </Label>
@@ -256,7 +254,7 @@ function ImpactChips({suggestion}: {suggestion: StaleAnalysisSuggestion}) {
   return (
     <Flex gap={1} wrap="wrap">
       {tags.map((tag) => (
-        <Badge key={tag} fontSize={0} tone="caution" mode="outline">
+        <Badge key={tag} fontSize={0} tone="caution">
           {tag}
         </Badge>
       ))}
@@ -309,7 +307,7 @@ function SuggestionAccordionHeader({
         <Text size={2} muted={isMuted}>
           {leadingIcon}
         </Text>
-        <Stack space={1} style={{flex: 1}}>
+        <Stack gap={1} style={{flex: 1}}>
           <Text size={2} weight="semibold" muted={isMuted}>
             {fieldLabel}
           </Text>
@@ -346,9 +344,9 @@ function SuggestionAccordionPanel({
   return (
     <Accordion.Content className={styles.panel} forceMount={undefined}>
       <div className={styles.panelContent}>
-        <Stack space={4}>
+        <Stack gap={4}>
           {/* --- Recommendation section --- */}
-          <Stack space={3}>
+          <Stack gap={3}>
             <Card padding={3} radius={2} tone="suggest" border>
               <Text size={2} weight="semibold">
                 {t('stale-analysis.recommendation', {
@@ -368,7 +366,7 @@ function SuggestionAccordionPanel({
           </Stack>
 
           {/* --- Reason section --- */}
-          <Stack space={3}>
+          <Stack gap={3}>
             <Label size={2} weight="semibold" muted>
               {t('stale-analysis.reason')}
             </Label>
@@ -380,7 +378,7 @@ function SuggestionAccordionPanel({
 
           {/* --- Word-level diff (progressive disclosure) --- */}
           {isRetranslate && hasPreTranslation && (
-            <Stack space={2}>
+            <Stack gap={2}>
               <Flex
                 align="center"
                 gap={1}
@@ -417,7 +415,7 @@ function SuggestionAccordionPanel({
           )}
 
           {/* --- Actions --- */}
-          <Stack space={2}>
+          <Stack gap={2}>
             <Button
               text={isRetranslate ? t('stale-analysis.apply') : t('stale-analysis.keep')}
               icon={CheckmarkCircleIcon}
@@ -464,7 +462,7 @@ export function AIAnalysisLoading() {
 export function AIAnalysisError({error, onRetry}: {error: Error; onRetry: () => void}) {
   const {t} = useTranslation(l10nLocaleNamespace)
   return (
-    <Stack space={3} padding={3}>
+    <Stack gap={3} padding={3}>
       <Text size={1}>{t('stale-analysis.error')}</Text>
       <Button text={t('retry')} onClick={onRetry} mode="ghost" />
       <Text size={1} muted>
@@ -512,7 +510,7 @@ export function StaleAIAnalysisStickyBar({
       style={{position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 1}}
     >
       {allResolved ? (
-        <Stack space={3}>
+        <Stack gap={3}>
           <Flex gap={2} wrap="wrap">
             {retranslatedCount > 0 && (
               <Badge tone="positive" fontSize={1} padding={2}>
@@ -771,9 +769,9 @@ export function StaleAIAnalysis({
 
   return (
     <>
-      <Stack space={4}>
+      <Stack gap={4}>
         {/* Materiality badge with merged explanation */}
-        <Stack space={3}>
+        <Stack gap={3}>
           <Label size={2}>{t('stale-analysis.summary')}</Label>
           <MaterialityBadge materiality={analysis.materiality} explanation={explanation} />
         </Stack>
@@ -789,7 +787,7 @@ export function StaleAIAnalysis({
           <Label size={2} style={{marginBottom: 12}}>
             {t('stale-analysis.fields-to-review')}
           </Label>
-          <Stack space={2}>
+          <Stack gap={2}>
             {analysis.suggestions.map((suggestion) => {
               const status = suggestionStatuses[suggestion.fieldName] ?? 'pending'
               const isRetranslate = suggestion.recommendation === 'retranslate'

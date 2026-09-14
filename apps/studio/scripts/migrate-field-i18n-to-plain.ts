@@ -1,5 +1,6 @@
 /**
  * Flatten field-level internationalizedArray values to plain strings/text.
+ * Includes draft documents (where stale i18n shapes often linger after schema changes).
  * Removes fieldTranslation.metadata documents (no longer used).
  *
  * Run: pnpm --filter studio migrate-field-i18n-to-plain
@@ -103,10 +104,10 @@ function flattenDocument(doc: Record<string, unknown>): Record<string, unknown> 
 const docs = await client.fetch<Array<Record<string, unknown>>>(
   `*[
     !(_id in path("_.**")) &&
-    !(_id in path("drafts.**")) &&
     !(_type in $skipTypes)
   ]`,
   {skipTypes: [...SKIP_TYPES]},
+  {perspective: 'raw'},
 )
 
 let migrated = 0

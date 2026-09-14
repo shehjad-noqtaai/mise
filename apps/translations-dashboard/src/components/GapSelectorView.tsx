@@ -95,7 +95,7 @@ function GapSelectorView({coverageMatrix, localeInfo}: GapSelectorViewProps) {
   if (topGaps.length === 0) {
     return (
       <Card padding={5} radius={2} tone="positive">
-        <Stack className="text-center" space={3}>
+        <Stack className="text-center" gap={3}>
           <Text size={3}>✓</Text>
           <Heading size={3}>All translations complete</Heading>
           <Text muted size={1}>
@@ -107,8 +107,8 @@ function GapSelectorView({coverageMatrix, localeInfo}: GapSelectorViewProps) {
   }
 
   return (
-    <Stack space={4}>
-      <Stack className="text-center" space={3}>
+    <Stack gap={4}>
+      <Stack className="text-center" gap={3}>
         <Heading as="h2" size={3}>
           Choose a gap to close
         </Heading>
@@ -133,7 +133,7 @@ function GapSelectorView({coverageMatrix, localeInfo}: GapSelectorViewProps) {
             radius={2}
             tone="default"
           >
-            <Stack space={3}>
+            <Stack gap={3}>
               <Flex align="center" gap={2}>
                 <Text size={2}>{gap.localeFlag}</Text>
                 <Text size={1} weight="semibold">
@@ -167,8 +167,8 @@ function GapSelectorView({coverageMatrix, localeInfo}: GapSelectorViewProps) {
 
 function GapSelectorSkeleton() {
   return (
-    <Stack space={4}>
-      <Stack space={2}>
+    <Stack gap={4}>
+      <Stack gap={2}>
         <div className="skeleton" style={{height: 28, width: 256}} />
         <div className="skeleton" style={{height: 16, width: 384}} />
       </Stack>
@@ -178,7 +178,7 @@ function GapSelectorSkeleton() {
       >
         {Array.from({length: 6}).map((_, i) => (
           <Card border key={i} padding={4} radius={2}>
-            <Stack space={3}>
+            <Stack gap={3}>
               <div className="skeleton" style={{height: 20, width: 128}} />
               <div className="skeleton" style={{height: 16, width: 192}} />
               <div className="skeleton" style={{height: 3, width: '100%'}} />

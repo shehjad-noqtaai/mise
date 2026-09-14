@@ -1,6 +1,5 @@
 import {defineField, defineType} from 'sanity'
-import {CalendarIcon} from '@sanity/icons'
-
+import {CalendarIcon} from '@sanity/icons/Calendar'
 export const mealPlanEntry = defineType({
   name: 'mealPlanEntry',
   title: 'Meal Plan Entry',

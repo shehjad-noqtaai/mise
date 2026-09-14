@@ -1,5 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {HomeIcon} from '@sanity/icons'
+import {HomeIcon} from '@sanity/icons/Home'
 import {mealPlanEntryMember} from '../objects/meal-plan-entry'
 
 export const homePage = defineType({
@@ -16,7 +16,7 @@ export const homePage = defineType({
     }),
     defineField({
       name: 'greeting',
-      title: 'Greeting',
+      title: 'Greeting Change only dev',
       type: 'string',
     }),
     defineField({

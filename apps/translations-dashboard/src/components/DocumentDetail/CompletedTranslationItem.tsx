@@ -1,6 +1,7 @@
 import type {DocumentHandle} from '@sanity/sdk-react'
 
-import {Badge, Box, Card, Flex, Stack, Text, Tooltip} from '@sanity/ui'
+import {Badge, Box, Card, Flex, Stack, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 
 import OpenInStudioButton from '../OpenInStudioButton'
 import {TranslationDocumentWrapper} from './TranslationDocument'
@@ -81,7 +82,7 @@ export function CompletedTranslationItem({
       radius={3}
       style={{backgroundColor: bgColor, borderColor}}
     >
-      <Stack padding={3} space={2}>
+      <Stack padding={3} gap={2}>
         <Flex align="center" gap={2} justify="space-between" wrap="wrap">
           <Flex align="center" className="flex-1 min-w-0" gap={2}>
             <div

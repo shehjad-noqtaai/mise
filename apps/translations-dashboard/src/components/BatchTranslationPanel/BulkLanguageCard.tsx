@@ -23,7 +23,7 @@ const BulkLanguageCard = ({
 
   return (
     <Card padding={3} radius={1} tone="caution">
-      <Stack space={3}>
+      <Stack gap={3}>
         <Text size={1} weight="medium">
           💡 Bulk Language Setting Available
         </Text>
@@ -34,7 +34,6 @@ const BulkLanguageCard = ({
         <Button
           disabled={isBulkSettingLanguage}
           onClick={onBulkSetLanguage}
-          size={1}
           text={`Set ${invalidDocuments.length} document${invalidDocuments.length > 1 ? 's' : ''} to ${defaultLanguage}`}
           tone="primary"
         />
@@ -49,7 +48,7 @@ const BulkLanguageProgressCard = ({
   bulkLanguageProgress: BulkLanguageProgress
 }) => (
   <Card padding={3} radius={1} tone="default">
-    <Stack space={2}>
+    <Stack gap={2}>
       <Flex align="center" gap={2}>
         <Spinner size={0} />
         <Text size={1}>

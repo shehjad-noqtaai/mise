@@ -19,8 +19,9 @@ import type {TranslationWorkflowStatus} from '@starter/l10n'
 import type {CardTone} from '@sanity/ui'
 
 import {getStatusDisplay} from '@starter/l10n'
-import {CheckmarkCircleIcon} from '@sanity/icons'
-import {Box, Card, Flex, Heading, Stack, Text, Tooltip} from '@sanity/ui'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {Box, Card, Flex, Heading, Stack, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 import {useCallback} from 'react'
 import {useNavigate} from 'react-router-dom'
 
@@ -55,7 +56,7 @@ export function StatusCardsSkeleton() {
     <Flex gap={3}>
       {Array.from({length: 4}).map((_, i) => (
         <Card flex={1} key={i} padding={3} radius={2}>
-          <Stack space={2}>
+          <Stack gap={2}>
             <div className="skeleton" style={{height: 14, width: 80}} />
             <div className="skeleton" style={{height: 28, width: 48}} />
             <div className="skeleton" style={{height: 12, width: 40}} />
@@ -132,7 +133,7 @@ function StatusCard({
           onClick={isZero ? undefined : onClick}
           type="button"
         >
-          <Stack space={4}>
+          <Stack gap={4}>
             <Flex align="center" gap={2}>
               {celebrate ? (
                 <Text size={3} style={{color: 'var(--card-positive-fg-color)'}}>

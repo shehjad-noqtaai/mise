@@ -5,6 +5,7 @@ import {pantryCategory} from './documents/pantry-category'
 import {pantrySnapshot} from './documents/pantry-snapshot'
 import {recipe} from './documents/recipe'
 import {recipeCategory} from './documents/recipe-category'
+import {videoShowcase} from './documents/video-showcase'
 import {mealPlanEntryObject} from './objects/meal-plan-entry'
 import {nutritionInfo} from './objects/nutrition-info'
 import {pantryItem} from './objects/pantry-item'
@@ -28,4 +29,5 @@ export const schemaTypes = [
   homePage,
   mealPlanEntry,
   pantrySnapshot,
+  videoShowcase,
 ]

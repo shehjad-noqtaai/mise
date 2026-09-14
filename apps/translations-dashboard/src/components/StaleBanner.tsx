@@ -11,7 +11,7 @@
  * Reads stale count from the same aggregate data layer — no additional queries.
  */
 
-import {WarningOutlineIcon} from '@sanity/icons'
+import {WarningOutlineIcon} from '@sanity/icons/WarningOutline'
 import {Box, Button, Card, Flex, Text} from '@sanity/ui'
 import {useCallback, useEffect, useMemo, useState} from 'react'
 
